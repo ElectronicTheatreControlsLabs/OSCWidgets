@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "C8D5414727DAB8A7FBED7B798C39ECCACE0CE17E",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "C8D5414727DAB8A7FBED7B798C39ECCACE0CE17E" : 0,
+    "370309A70B3F9F282FC68CDC816C547C93A95E8B" : 0
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "059FCC3F-DBFA-4EE3-8E7A-8DB295E8902C",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "C8D5414727DAB8A7FBED7B798C39ECCACE0CE17E" : "OSCWidgets\/",
+    "370309A70B3F9F282FC68CDC816C547C93A95E8B" : "EosSyncLib\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "OSCWidgets",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "OSCWidgets.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/richardwilliamson\/EosSyncLib.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "370309A70B3F9F282FC68CDC816C547C93A95E8B"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/richardwilliamson\/OSCWidgets.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "C8D5414727DAB8A7FBED7B798C39ECCACE0CE17E"
+    }
+  ]
+}
