@@ -47,6 +47,7 @@ public:
 	virtual void Recv(const QString &path, const OSCArgument *args, size_t count);
 	virtual void SetLabel(const QString &label);
     virtual bool HasFeedbackPath() const {return true;}
+	virtual void HasToggle() const {return true;}
 	
 signals:
 	void pressed(ToyButtonWidget*);
@@ -55,6 +56,9 @@ signals:
 private slots:
 	void onPressed();
 	void onReleased();
+
+protected:
+	bool m_IsPressed;
 };
 
 ////////////////////////////////////////////////////////////////////////////////

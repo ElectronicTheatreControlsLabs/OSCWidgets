@@ -155,6 +155,14 @@ EditPanel::EditPanel(QWidget *parent)
 	m_Max2 = new QLineEdit(this);
 	connect(m_Max2, SIGNAL(editingFinished()), this, SLOT(onEditingFinished()));
 	layout->addWidget(m_Max2, row, 2);
+	
+	**row;
+	m_toggleLabel = new QLabel(tr("Toggle"), this);
+	layout->addWidget(m_toggleLabel, row, 0);
+	m_toggle = new QCheckBox(tr("Toggle"), this);
+	m_toggle->setToolTip( tr("set button to toggle on/off on press"));
+	connect(m_toggle, SIGNAL(editingFinished()), this, SLOT(onEditingFinished()));
+	layout->addWidget(m__toggle, row, 1, 1, 2);
 
 	++row;
 	m_BPMLabel = new QLabel(tr("BPM"), this);
@@ -606,6 +614,18 @@ void EditPanel::SetBPMEnabled(bool b)
 {
 	m_BPMLabel->setEnabled(b);
 	m_BPM->setEnabled(b);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void EditPanel::SetToggle(bool b)
+{
+	m_toggle->setChecked(b);
+}
+void EditPanel::setToggleEnabled(bool b)
+{
+  	m_toggleLabel->setEnabled(b);
+	m_toggle->setEnabled(b);
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -89,6 +89,9 @@ public:
 	virtual void SetBPM(const QString &bpm) {m_BPM = bpm;}
 	virtual bool HasBPM() const {return false;}
 	virtual const QString& GetHelpText() const {return m_HelpText;}
+	virtual void SetToggle(const bool toggle){m_Toggle = toggle;}
+	virtual bool HasToggle() const {return false;}
+	
 	virtual void SetLabel(const QString &label);
 	virtual void Recv(const QString &path, const OSCArgument *args, size_t count);
 	virtual bool Save(EosLog &log, const QString &path, QStringList &lines);
@@ -119,6 +122,8 @@ protected:
 	QString		m_BPM;
 	EditButton	*m_EditButton;
 	QString		m_HelpText;
+	QBoolean	m_toggle;
+	bool		m_visible;
 	
 	virtual void resizeEvent(QResizeEvent *event);
 	virtual void UpdateMode();

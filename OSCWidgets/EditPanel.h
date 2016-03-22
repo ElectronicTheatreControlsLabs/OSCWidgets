@@ -106,6 +106,8 @@ public:
 	virtual void SetBPM(const QString &n);
 	virtual void SetBPMEnabled(bool b);
 	virtual void SetHelpText(const QString &text);
+	virtual void SetToggle(bool b);
+	virtual void setToggleEnabled(bool b);
 	
 signals:
 	void edited();
@@ -152,6 +154,8 @@ protected:
 	QLabel		*m_HiddenLabel;
 	QCheckBox	*m_Hidden;
 	QLabel		*m_Help;
+	QLabel		*m_toggleLabel;
+	QCheckBox	*m_toggle;
 	
 	virtual void closeEvent(QCloseEvent *event);
 	virtual void UpdateLocal(bool primaryPath);
