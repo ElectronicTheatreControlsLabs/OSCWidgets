@@ -156,13 +156,13 @@ EditPanel::EditPanel(QWidget *parent)
 	connect(m_Max2, SIGNAL(editingFinished()), this, SLOT(onEditingFinished()));
 	layout->addWidget(m_Max2, row, 2);
 	
-	**row;
+	++row;
 	m_toggleLabel = new QLabel(tr("Toggle"), this);
 	layout->addWidget(m_toggleLabel, row, 0);
 	m_toggle = new QCheckBox(tr("Toggle"), this);
 	m_toggle->setToolTip( tr("set button to toggle on/off on press"));
 	connect(m_toggle, SIGNAL(editingFinished()), this, SLOT(onEditingFinished()));
-	layout->addWidget(m__toggle, row, 1, 1, 2);
+	layout->addWidget(m_toggle, row, 1, 1, 2);
 
 	++row;
 	m_BPMLabel = new QLabel(tr("BPM"), this);

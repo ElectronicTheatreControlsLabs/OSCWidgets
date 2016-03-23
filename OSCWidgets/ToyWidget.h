@@ -89,7 +89,7 @@ public:
 	virtual void SetBPM(const QString &bpm) {m_BPM = bpm;}
 	virtual bool HasBPM() const {return false;}
 	virtual const QString& GetHelpText() const {return m_HelpText;}
-	virtual void SetToggle(const bool toggle){m_Toggle = toggle;}
+	virtual void SetToggle(const bool toggle){m_toggle = toggle;}
 	virtual bool HasToggle() const {return false;}
 	
 	virtual void SetLabel(const QString &label);
@@ -122,7 +122,7 @@ protected:
 	QString		m_BPM;
 	EditButton	*m_EditButton;
 	QString		m_HelpText;
-	QBoolean	m_toggle;
+	bool		m_toggle;
 	bool		m_visible;
 	
 	virtual void resizeEvent(QResizeEvent *event);
