@@ -37,6 +37,8 @@ ToyButtonWidget::ToyButtonWidget(QWidget *parent)
 	QPalette pal( m_Widget->palette() );
 	m_Color = pal.color(QPalette::Button);
 	m_TextColor = pal.color(QPalette::ButtonText);
+	
+	m_IsPressed = false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -129,14 +131,22 @@ void ToyButtonWidget::Recv(const QString &path, const OSCArgument *args, size_t 
 
 void ToyButtonWidget::onPressed()
 {
-	emit pressed(this);
+    if (!HasToggle() || !m_IsPressed))
+	{
+	  emit pressed(this);
+	  if (HasToggle()) m_IsPressed = true;
+	} else
+	{
+	  emit released(this);
+	  is_Pressed = false;
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 void ToyButtonWidget::onReleased()
 {
-	emit released(this);
+	if (!HasToggle()) emit released(this);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

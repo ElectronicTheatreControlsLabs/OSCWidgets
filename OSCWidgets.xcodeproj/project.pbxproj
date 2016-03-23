@@ -13,6 +13,7 @@
 		69A527D81C721D50002B7FA1 /* ToyFlicker.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 69A527D51C721D50002B7FA1 /* ToyFlicker.cpp */; };
 		69A527DD1C721E2C002B7FA1 /* moc_FadeButton.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 69A527DB1C721E2C002B7FA1 /* moc_FadeButton.cpp */; };
 		69A527DE1C721E2C002B7FA1 /* moc_ToyFlicker.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 69A527DC1C721E2C002B7FA1 /* moc_ToyFlicker.cpp */; };
+		7900E8261CA20B0400B1DF46 /* QtGui.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 7900E8251CA20B0400B1DF46 /* QtGui.framework */; };
 		971D40B11BD1AB7F00661378 /* EditPanel.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 971D40941BD1AB7F00661378 /* EditPanel.cpp */; };
 		971D40B21BD1AB7F00661378 /* ToyXY.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 971D40961BD1AB7F00661378 /* ToyXY.cpp */; };
 		971D40B31BD1AB7F00661378 /* NetworkThreads.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 971D40971BD1AB7F00661378 /* NetworkThreads.cpp */; };
@@ -44,7 +45,6 @@
 		9766D4441BD9E3D3005BF988 /* Utils.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 9766D4411BD9E3D3005BF988 /* Utils.cpp */; };
 		9766D4461BD9E460005BF988 /* moc_ToyPedal.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 9766D4451BD9E460005BF988 /* moc_ToyPedal.cpp */; };
 		979091D91B1912D400E4291B /* EosUdp_Mac.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 979091D51B1912D400E4291B /* EosUdp_Mac.cpp */; };
-		979091DA1B1912D400E4291B /* EosUdp.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 979091D71B1912D400E4291B /* EosUdp.cpp */; };
 		97BD426D1BAA702B00F534CC /* OSCWidgets.qrc.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 97BD426B1BAA702B00F534CC /* OSCWidgets.qrc.cpp */; };
 		97E137371AB28C3A0056BE05 /* main.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 97E137331AB28C3A0056BE05 /* main.cpp */; };
 		97E137381AB28C3A0056BE05 /* MainWindow.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 97E137341AB28C3A0056BE05 /* MainWindow.cpp */; };
@@ -56,7 +56,6 @@
 		97E1374D1AB28C720056BE05 /* EosTimer.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 97E137441AB28C720056BE05 /* EosTimer.cpp */; };
 		97E1374E1AB28C720056BE05 /* OSCParser.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 97E137461AB28C720056BE05 /* OSCParser.cpp */; };
 		97E137521AB28E0C0056BE05 /* QtCore.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 97E1374F1AB28E0C0056BE05 /* QtCore.framework */; };
-		97E137531AB28E0C0056BE05 /* QtGui.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 97E137501AB28E0C0056BE05 /* QtGui.framework */; };
 		97E137541AB28E0C0056BE05 /* QtNetwork.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 97E137511AB28E0C0056BE05 /* QtNetwork.framework */; };
 		97FE38531B7FB56400B5DE7E /* Toys.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 97FE38511B7FB56400B5DE7E /* Toys.cpp */; };
 		97FE38561B7FC38100B5DE7E /* moc_Toys.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 97FE38551B7FC38100B5DE7E /* moc_Toys.cpp */; };
@@ -72,6 +71,7 @@
 		69A527D61C721D50002B7FA1 /* ToyFlicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToyFlicker.h; path = OSCWidgets/ToyFlicker.h; sourceTree = SOURCE_ROOT; };
 		69A527DB1C721E2C002B7FA1 /* moc_FadeButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moc_FadeButton.cpp; path = OSCWidgets/moc_FadeButton.cpp; sourceTree = SOURCE_ROOT; };
 		69A527DC1C721E2C002B7FA1 /* moc_ToyFlicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moc_ToyFlicker.cpp; path = OSCWidgets/moc_ToyFlicker.cpp; sourceTree = SOURCE_ROOT; };
+		7900E8251CA20B0400B1DF46 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = ../../../../../Library/Frameworks/QtGui.framework; sourceTree = "<group>"; };
 		971D40941BD1AB7F00661378 /* EditPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EditPanel.cpp; path = OSCWidgets/EditPanel.cpp; sourceTree = SOURCE_ROOT; };
 		971D40951BD1AB7F00661378 /* EditPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditPanel.h; path = OSCWidgets/EditPanel.h; sourceTree = SOURCE_ROOT; };
 		971D40961BD1AB7F00661378 /* ToyXY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ToyXY.cpp; path = OSCWidgets/ToyXY.cpp; sourceTree = SOURCE_ROOT; };
@@ -142,9 +142,8 @@
 		97E137451AB28C720056BE05 /* EosTimer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EosTimer.h; path = ../EosSyncLib/EosSyncLib/EosTimer.h; sourceTree = SOURCE_ROOT; };
 		97E137461AB28C720056BE05 /* OSCParser.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = OSCParser.cpp; path = ../EosSyncLib/EosSyncLib/OSCParser.cpp; sourceTree = SOURCE_ROOT; };
 		97E137471AB28C720056BE05 /* OSCParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OSCParser.h; path = ../EosSyncLib/EosSyncLib/OSCParser.h; sourceTree = SOURCE_ROOT; };
-		97E1374F1AB28E0C0056BE05 /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = /Library/Frameworks/QtCore.framework; sourceTree = "<absolute>"; };
-		97E137501AB28E0C0056BE05 /* QtGui.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtGui.framework; path = /Library/Frameworks/QtGui.framework; sourceTree = "<absolute>"; };
-		97E137511AB28E0C0056BE05 /* QtNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtNetwork.framework; path = /Library/Frameworks/QtNetwork.framework; sourceTree = "<absolute>"; };
+		97E1374F1AB28E0C0056BE05 /* QtCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtCore.framework; path = "/Users/richard/Dropbox (Personal)/projects/qt/5.6/clang_64/lib/QtCore.framework"; sourceTree = "<absolute>"; };
+		97E137511AB28E0C0056BE05 /* QtNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QtNetwork.framework; path = "/Users/richard/Dropbox (Personal)/projects/qt/5.6/clang_64/lib/QtNetwork.framework"; sourceTree = "<absolute>"; };
 		97FE38511B7FB56400B5DE7E /* Toys.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Toys.cpp; path = OSCWidgets/Toys.cpp; sourceTree = SOURCE_ROOT; };
 		97FE38521B7FB56400B5DE7E /* Toys.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Toys.h; path = OSCWidgets/Toys.h; sourceTree = SOURCE_ROOT; };
 		97FE38551B7FC38100B5DE7E /* moc_Toys.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moc_Toys.cpp; path = OSCWidgets/moc_Toys.cpp; sourceTree = SOURCE_ROOT; };
@@ -155,8 +154,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7900E8261CA20B0400B1DF46 /* QtGui.framework in Frameworks & Libraries */,
 				97E137521AB28E0C0056BE05 /* QtCore.framework in Frameworks & Libraries */,
-				97E137531AB28E0C0056BE05 /* QtGui.framework in Frameworks & Libraries */,
 				97E137541AB28E0C0056BE05 /* QtNetwork.framework in Frameworks & Libraries */,
 			);
 			name = "Frameworks & Libraries";
@@ -309,13 +308,14 @@
 				97E137471AB28C720056BE05 /* OSCParser.h */,
 			);
 			name = Sources;
+			path = "../EosSyncLib-master/EosSyncLib";
 			sourceTree = "<group>";
 		};
 		97E137581AB291620056BE05 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
 				97E1374F1AB28E0C0056BE05 /* QtCore.framework */,
-				97E137501AB28E0C0056BE05 /* QtGui.framework */,
+				7900E8251CA20B0400B1DF46 /* QtGui.framework */,
 				97E137511AB28E0C0056BE05 /* QtNetwork.framework */,
 			);
 			name = Frameworks;
@@ -412,7 +412,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Developer/Tools/Qt/moc OSCWidgets/ToyActivity.h -o OSCWidgets/moc_ToyActivity.cpp";
+			shellScript = "/Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin/moc OSCWidgets/ToyActivity.h -o OSCWidgets/moc_ToyActivity.cpp";
 		};
 		69A527D91C721D76002B7FA1 /* moc ToyFlicker */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -428,7 +428,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Developer/Tools/Qt/moc OSCWidgets/ToyFlicker.h -o OSCWidgets/moc_ToyFlicker.cpp";
+			shellScript = "/Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin/moc OSCWidgets/ToyFlicker.h -o OSCWidgets/moc_ToyFlicker.cpp";
 		};
 		69A527DA1C721DB9002B7FA1 /* moc FadeButton */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -444,7 +444,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Developer/Tools/Qt/moc OSCWidgets/FadeButton.h -o OSCWidgets/moc_FadeButton.cpp";
+			shellScript = "/Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin/moc OSCWidgets/FadeButton.h -o OSCWidgets/moc_FadeButton.cpp";
 		};
 		971D40C01BD1AC0B00661378 /* moc EditPanel */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -460,7 +460,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Developer/Tools/Qt/moc OSCWidgets/EditPanel.h -o OSCWidgets/moc_EditPanel.cpp";
+			shellScript = "/Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin/moc OSCWidgets/EditPanel.h -o OSCWidgets/moc_EditPanel.cpp";
 		};
 		971D40C11BD1AC8100661378 /* moc SettingsPanel */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -476,7 +476,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Developer/Tools/Qt/moc OSCWidgets/SettingsPanel.h -o OSCWidgets/moc_SettingsPanel.cpp";
+			shellScript = "/Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin/moc OSCWidgets/SettingsPanel.h -o OSCWidgets/moc_SettingsPanel.cpp";
 		};
 		971D40C21BD1ACC500661378 /* moc Toy */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -492,7 +492,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Developer/Tools/Qt/moc OSCWidgets/Toy.h -o OSCWidgets/moc_Toy.cpp";
+			shellScript = "/Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin/moc OSCWidgets/Toy.h -o OSCWidgets/moc_Toy.cpp";
 		};
 		971D40C31BD1ACFB00661378 /* moc ToyButton */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -508,7 +508,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Developer/Tools/Qt/moc OSCWidgets/ToyButton.h -o OSCWidgets/moc_ToyButton.cpp";
+			shellScript = "/Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin/moc OSCWidgets/ToyButton.h -o OSCWidgets/moc_ToyButton.cpp";
 		};
 		971D40C41BD1AD3500661378 /* moc ToyCmd */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -524,7 +524,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Developer/Tools/Qt/moc OSCWidgets/ToyCmd.h -o OSCWidgets/moc_ToyCmd.cpp";
+			shellScript = "/Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin/moc OSCWidgets/ToyCmd.h -o OSCWidgets/moc_ToyCmd.cpp";
 		};
 		971D40C51BD1AD8100661378 /* moc ToyEncoder */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -540,7 +540,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Developer/Tools/Qt/moc OSCWidgets/ToyEncoder.h -o OSCWidgets/moc_ToyEncoder.cpp";
+			shellScript = "/Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin/moc OSCWidgets/ToyEncoder.h -o OSCWidgets/moc_ToyEncoder.cpp";
 		};
 		971D40C61BD1ADBC00661378 /* moc ToyGrid */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -556,7 +556,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Developer/Tools/Qt/moc OSCWidgets/ToyGrid.h -o OSCWidgets/moc_ToyGrid.cpp";
+			shellScript = "/Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin/moc OSCWidgets/ToyGrid.h -o OSCWidgets/moc_ToyGrid.cpp";
 		};
 		971D40C71BD1ADE700661378 /* moc ToyMetro */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -572,7 +572,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Developer/Tools/Qt/moc OSCWidgets/ToyMetro.h -o OSCWidgets/moc_ToyMetro.cpp";
+			shellScript = "/Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin/moc OSCWidgets/ToyMetro.h -o OSCWidgets/moc_ToyMetro.cpp";
 		};
 		971D40C81BD1AE1500661378 /* moc ToyPedal */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -588,7 +588,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Developer/Tools/Qt/moc OSCWidgets/ToyPedal.h -o OSCWidgets/moc_ToyPedal.cpp";
+			shellScript = "/Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin/moc OSCWidgets/ToyPedal.h -o OSCWidgets/moc_ToyPedal.cpp";
 		};
 		971D40C91BD1AE5600661378 /* moc ToySine */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -604,7 +604,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Developer/Tools/Qt/moc OSCWidgets/ToySine.h -o OSCWidgets/moc_ToySine.cpp";
+			shellScript = "/Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin/moc OSCWidgets/ToySine.h -o OSCWidgets/moc_ToySine.cpp";
 		};
 		971D40CA1BD1AE8900661378 /* moc ToySlider */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -620,7 +620,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Developer/Tools/Qt/moc OSCWidgets/ToySlider.h -o OSCWidgets/moc_ToySlider.cpp";
+			shellScript = "/Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin/moc OSCWidgets/ToySlider.h -o OSCWidgets/moc_ToySlider.cpp";
 		};
 		971D40CB1BD1AEBE00661378 /* moc ToyWidget */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -636,7 +636,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Developer/Tools/Qt/moc OSCWidgets/ToyWidget.h -o OSCWidgets/moc_ToyWidget.cpp";
+			shellScript = "/Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin/moc OSCWidgets/ToyWidget.h -o OSCWidgets/moc_ToyWidget.cpp";
 		};
 		971D40CC1BD1AEF600661378 /* moc ToyXY */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -652,7 +652,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Developer/Tools/Qt/moc OSCWidgets/ToyXY.h -o OSCWidgets/moc_ToyXY.cpp";
+			shellScript = "/Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin/moc OSCWidgets/ToyXY.h -o OSCWidgets/moc_ToyXY.cpp";
 		};
 		9730C2E91AB7C0BB0039899F /* Bundle Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -677,7 +677,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "##### copy Qt plugins ####\nmkdir -p \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats\"\ncp \"/Developer/Applications/Qt/plugins/imageformats/libqgif.dylib\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats\"\ncp \"/Developer/Applications/Qt/plugins/imageformats/libqico.dylib\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats\"\ncp \"/Developer/Applications/Qt/plugins/imageformats/libqjpeg.dylib\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats\"\ncp \"/Developer/Applications/Qt/plugins/imageformats/libqtga.dylib\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats\"\ncp \"/Developer/Applications/Qt/plugins/imageformats/libqtiff.dylib\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats\"\n\n##### copy QtCore ####\nmkdir -p \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtCore.framework/Versions/4\"\ncp -R \"/Library/Frameworks/QtCore.framework/Versions/4/QtCore\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtCore.framework/Versions/4\"\n\n##### copy QtGui ####\nmkdir -p \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtGui.framework/Versions/4\"\ncp -R \"/Library/Frameworks/QtGui.framework/Versions/4/QtGui\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtGui.framework/Versions/4\"\ncp -R \"/Library/Frameworks/QtGui.framework/Versions/4/Resources\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtGui.framework\"\n\n##### copy QtNetwork ####\nmkdir -p \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtNetwork.framework/Versions/4\"\ncp -R \"/Library/Frameworks/QtNetwork.framework/Versions/4/QtNetwork\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtNetwork.framework/Versions/4\"\n\n##### identify bundled Qt frameworks ####\ninstall_name_tool -id @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtCore.framework/Versions/4/QtCore\"\ninstall_name_tool -id @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtGui.framework/Versions/4/QtGui\"\ninstall_name_tool -id @executable_path/../Frameworks/QtNetwork.framework/Versions/4/QtNetwork \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtNetwork.framework/Versions/4/QtNetwork\"\n\n##### redirect executable to use bundled Qt frameworks ####\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/MacOs/${PRODUCT_NAME}\"\ninstall_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/MacOs/${PRODUCT_NAME}\"\ninstall_name_tool -change QtNetwork.framework/Versions/4/QtNetwork @executable_path/../Frameworks/QtNetwork.framework/Versions/4/QtNetwork \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/MacOs/${PRODUCT_NAME}\"\n\n##### redirect bundled frameworks/libraries to use bundled dependecies ####\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtGui.framework/Versions/4/QtGui\"\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtNetwork.framework/Versions/4/QtNetwork\"\n\n#### plugins ####\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqgif.dylib\"\ninstall_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqgif.dylib\"\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqico.dylib\"\ninstall_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqico.dylib\"\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqjpeg.dylib\"\ninstall_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqjpeg.dylib\"\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqtga.dylib\"\ninstall_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqtga.dylib\"\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqtiff.dylib\"\ninstall_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqtiff.dylib\"";
+			shellScript = "##### copy Qt plugins ####\nmkdir -p \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats\"\ncp \" /Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin /Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/plugins/imageformats/libqgif.dylib\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats\"\ncp \" /Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin /Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/plugins/imageformats/libqico.dylib\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats\"\ncp \" /Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin /Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/plugins/imageformats/libqjpeg.dylib\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats\"\ncp \" /Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin /Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64plugins/imageformats/libqtga.dylib\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats\"\ncp \" /Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin /Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/plugins/imageformats/libqtiff.dylib\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats\"\n\n##### copy QtCore ####\nmkdir -p \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtCore.framework/Versions/4\"\ncp -R \"/Library/Frameworks/QtCore.framework/Versions/4/QtCore\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtCore.framework/Versions/4\"\n\n##### copy QtGui ####\nmkdir -p \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtGui.framework/Versions/4\"\ncp -R \"/Library/Frameworks/QtGui.framework/Versions/4/QtGui\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtGui.framework/Versions/4\"\ncp -R \"/Library/Frameworks/QtGui.framework/Versions/4/Resources\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtGui.framework\"\n\n##### copy QtNetwork ####\nmkdir -p \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtNetwork.framework/Versions/4\"\ncp -R \"/Library/Frameworks/QtNetwork.framework/Versions/4/QtNetwork\" \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtNetwork.framework/Versions/4\"\n\n##### identify bundled Qt frameworks ####\ninstall_name_tool -id @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtCore.framework/Versions/4/QtCore\"\ninstall_name_tool -id @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtGui.framework/Versions/4/QtGui\"\ninstall_name_tool -id @executable_path/../Frameworks/QtNetwork.framework/Versions/4/QtNetwork \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtNetwork.framework/Versions/4/QtNetwork\"\n\n##### redirect executable to use bundled Qt frameworks ####\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/MacOs/${PRODUCT_NAME}\"\ninstall_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/MacOs/${PRODUCT_NAME}\"\ninstall_name_tool -change QtNetwork.framework/Versions/4/QtNetwork @executable_path/../Frameworks/QtNetwork.framework/Versions/4/QtNetwork \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/MacOs/${PRODUCT_NAME}\"\n\n##### redirect bundled frameworks/libraries to use bundled dependecies ####\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtGui.framework/Versions/4/QtGui\"\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Frameworks/QtNetwork.framework/Versions/4/QtNetwork\"\n\n#### plugins ####\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqgif.dylib\"\ninstall_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqgif.dylib\"\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqico.dylib\"\ninstall_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqico.dylib\"\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqjpeg.dylib\"\ninstall_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqjpeg.dylib\"\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqtga.dylib\"\ninstall_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqtga.dylib\"\ninstall_name_tool -change QtCore.framework/Versions/4/QtCore @executable_path/../Frameworks/QtCore.framework/Versions/4/QtCore \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqtiff.dylib\"\ninstall_name_tool -change QtGui.framework/Versions/4/QtGui @executable_path/../Frameworks/QtGui.framework/Versions/4/QtGui \"${CONFIGURATION_BUILD_DIR}/${PRODUCT_NAME}.${WRAPPER_EXTENSION}/Contents/Plugins/imageformats/libqtiff.dylib\"";
 		};
 		97E137551AB28E930056BE05 /* moc MainWindow */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -693,7 +693,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Developer/Tools/Qt/moc OSCWidgets/MainWindow.h -o OSCWidgets/moc_MainWindow.cpp";
+			shellScript = "/Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin/moc OSCWidgets/MainWindow.h -o OSCWidgets/moc_MainWindow.cpp";
 		};
 		97FE38541B7FC33500B5DE7E /* moc Toys */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -709,7 +709,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "/Developer/Tools/Qt/moc OSCWidgets/Toys.h -o OSCWidgets/moc_Toys.cpp";
+			shellScript = "/Users/richard/Dropbox\\ \\(Personal\\)/projects/qt/5.6/clang_64/bin/moc OSCWidgets/Toys.h -o OSCWidgets/moc_Toys.cpp";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -725,7 +725,6 @@
 				971D40B11BD1AB7F00661378 /* EditPanel.cpp in Build Sources */,
 				9766D4441BD9E3D3005BF988 /* Utils.cpp in Build Sources */,
 				971D40B51BD1AB7F00661378 /* Toy.cpp in Build Sources */,
-				979091DA1B1912D400E4291B /* EosUdp.cpp in Build Sources */,
 				9766D4431BD9E3D3005BF988 /* ToyPedal.cpp in Build Sources */,
 				971D40DB1BD1AF3D00661378 /* moc_SettingsPanel.cpp in Build Sources */,
 				97E1374E1AB28C720056BE05 /* OSCParser.cpp in Build Sources */,
