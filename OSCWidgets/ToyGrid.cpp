@@ -519,7 +519,9 @@ void ToyGrid::EditWidget(ToyWidget *widget, bool toggle)
 		m_EditPanel->SetRecvPath( QString() );
 		m_EditPanel->SetRecvPathEnabled(false);
 		m_EditPanel->SetFeedbackPath( QString() );
-		m_EditPanel->SetFeedbackPathEnabled(false);		
+		m_EditPanel->SetFeedbackPathEnabled(true); //so that the children can look up to it
+		m_EditPanel->SetFeedbackPath( GetFeedbackPath() );
+		m_EditPanel->SetFeedbackPathEnabled(true);
 		m_EditPanel->SetMin( QString() );
 		m_EditPanel->SetMax( QString() );
 		m_EditPanel->SetMinMaxEnabled(false);
@@ -573,6 +575,18 @@ void ToyGrid::AddRecvWidgets(RECV_WIDGETS &recvWidgets) const
 			recvWidgets.insert( RECV_WIDGETS_PAIR(w->GetFeedbackPath(),w) );
 	}
 }
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ToyGrid::SetFeedbackPath(const QString &feedbackPath)
+{
+	if(m_FeedbackPath != feedbackPath)
+	{
+		m_FeedbackPath = feedbackPath;
+		//UpdateToolTip();
+	}
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -899,6 +913,9 @@ void ToyGrid::onWidgetEdited(ToyWidget *widget)
 
 		m_EditPanel->GetImagePath(str);
 		SetImagePath(str);
+		
+		m_EditPanel->GetFeedbackPath(str);
+		SetFeedbackPath(str);
 		
 		QColor color;
 		m_EditPanel->GetColor(color);

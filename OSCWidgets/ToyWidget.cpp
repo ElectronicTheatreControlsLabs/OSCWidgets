@@ -22,6 +22,7 @@
 #include "EditPanel.h"
 #include "Toy.h"
 #include "Utils.h"
+#include "ToyGrid.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -109,6 +110,21 @@ void ToyWidget::SetFeedbackPath(const QString &feedbackPath)
 		UpdateToolTip();
 	}
 }
+
+const QString& ToyWidget::GetFeedbackPath() const
+{
+
+	//std::cout << m_FeedbackPath << std::endl;
+	qDebug("hello world");
+	qDebug(((ToyGrid*)parent())->GetFeedbackPath().toLatin1());
+	
+	qDebug(m_FeedbackPath.toLatin1());
+
+	
+	return (m_FeedbackPath!=""?m_FeedbackPath:((ToyGrid*)parent())->GetFeedbackPath());
+
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////
 

@@ -362,7 +362,9 @@ void ToyActivityWidget::SetLabel(const QString &label)
 
 void ToyActivityWidget::Recv(const QString &path, const OSCArgument *args, size_t count)
 {
-	if(path == m_FeedbackPath)
+  
+	
+	if(path == GetFeedbackPath())
     {
 		FadeActivity *activity = static_cast<FadeActivity*>(m_Widget);
 

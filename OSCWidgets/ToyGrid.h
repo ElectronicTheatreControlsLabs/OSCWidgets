@@ -119,6 +119,12 @@ public:
 	virtual void GetName(QString &name) const;
 	virtual void ClearLabels();
 	
+	virtual void SetFeedbackPath(const QString &feedbackPath);
+	virtual const QString& GetFeedbackPath() const {return m_FeedbackPath;}
+
+	
+
+	
 private slots:
 	void onEdit();	
 	void onEditToyWidget();
@@ -143,6 +149,9 @@ protected:
 	size_t				m_EditWidgetIndex;
 	QMenu				*m_pContextMenu;
 	bool				m_Loading;
+	
+	QString		m_FeedbackPath;
+
 	
 	virtual ToyWidget* CreateWidget() = 0;
 	virtual QSize GetDefaultWidgetSize() const {return QSize(80,80);}

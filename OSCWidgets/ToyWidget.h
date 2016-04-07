@@ -29,6 +29,7 @@
 class EditButton;
 class OSCArgument;
 class EosLog;
+class ToyGrid;
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -62,7 +63,7 @@ public:
 	virtual bool HasPath2() const {return false;}
 	virtual const QString& GetRecvPath() const {return m_RecvPath;}
 	virtual void SetRecvPath(const QString &recvPath);
-	virtual const QString& GetFeedbackPath() const {return m_FeedbackPath;}
+	virtual const QString& GetFeedbackPath() const;
 	virtual void SetFeedbackPath(const QString &feedbackPath);
 	virtual bool HasFeedbackPath() const {return false;}
 	virtual const QString& GetText() const {return m_Text;}
