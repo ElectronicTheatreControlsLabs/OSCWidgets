@@ -1,48 +1,48 @@
 ﻿2, 10.101.90.101, 8000, 9000, 1, 0, 100
-0, 19, 64, 404, 84, 0, 1, 5, 1, Buttons, , ff282828, 0
-1, local:/activity/8, , , , 1, , ff3c3c3c, ffc8c8c8, , 1, 0, 1, 
-1, /button/2, , , , 2, , ff3c3c3c, ffc8c8c8, 0, 1, 0, 1, 
-1, /button/3, , , , 3, , ff3c3c3c, ffc8c8c8, 0, 1, 0, 1, 
-1, /button/4, , , , 4, , ff3c3c3c, ffc8c8c8, 0, 1, 0, 1, 
-1, /button/5, , , , 5, , ff3c3c3c, ffc8c8c8, 0, 1, 0, 1, 
-1, 437, 81, 164, 110, 0, 1, 2, 1, Pedals, , ff282828, 0
-1, /pedal/1, , , , 1, , ff3c3c3c, ffc8c8c8, 0, 1, 250, 1000, 
-1, /pedal/2, , , , 2, , ff3c3c3c, ffc8c8c8, 0, 1, 250, 1000, 
-2, 26, 193, 304, 254, 0, 1, 5, 1, Faders, , ff282828, 0
-1, /fader/1, , , , 1, , ff3c3c3c, ffc8c8c8, 0, 1, 0, 1, 
-1, /fader/2, , , , 2, , ff3c3c3c, ffc8c8c8, 0, 1, 0, 1, 
-1, /fader/3, , , , 3, , ff3c3c3c, ffc8c8c8, 0, 1, 0, 1, 
-1, /fader/4, , , , 4, , ff3c3c3c, ffc8c8c8, 0, 1, 0, 1, 
-1, /fader/5, , , , 5, , ff3c3c3c, ffc8c8c8, 0, 1, 0, 1, 
-3, 1081, 254, 148, 531, 0, 1, 1, 4, Encoders, , ff282828, 0
-1, /encoder/1, , , , 1, , ff3c3c3c, ffc8c8c8, -1, 1, 0, 1, 
-1, /encoder/2, , , , 2, , ff3c3c3c, ffc8c8c8, -1, 1, 0, 1, 
-1, /encoder/3, , , , 3, , ff3c3c3c, ffc8c8c8, -1, 1, 0, 1, 
-1, /encoder/4, , , , 4, , ff3c3c3c, ffc8c8c8, -1, 1, 0, 1, 
-4, 26, 484, 314, 269, 0, 1, 1, 1, XYs, , ff282828, 0
-1, /xy/1, , , , 1, , ff3c3c3c, ffc8c8c8, -1, 1, -1, 1, 
-6, 351, 680, 504, 210, 0, 1, 1, 6, Commands, , ff282828, 0
-1, /cmd/1, , , , Send, , ff3c3c3c, ffc8c8c8, 0, 1, 0, 1, 
-1, /cmd, , , , no args, , ff3c3c3c, ffc8c8c8, 0, 1, 0, 1, 
-1, /cmd=1.0, , , , float arg, , ff3c3c3c, ffc8c8c8, 0, 1, 0, 1, 
-1, /cmd=1, , , , integer arg, , ff3c3c3c, ffc8c8c8, 0, 1, 0, 1, 
-1, /cmd=hello world, , , , string arg, , ff3c3c3c, ffc8c8c8, 0, 1, 0, 1, 
-1, "/cmd=1.0,hello world", , , , multiple args, , ff3c3c3c, ffc8c8c8, 0, 1, 0, 1, 
-7, 626, 50, 247, 155, 0, 1, 1, 1, Sine Waves, , ff282828, 0
-1, /sine/1, , , , 1, , ff3c3c3c, ffc8c8c8, 0, 1, 0, 1, 60
-5, 909, 52, 324, 150, 0, 1, 4, 1, Metronomes, , ff282828, 0
-1, /metro/1, , , , 1, , ff3c3c3c, ffc8c8c8, , 1, 0, 1, 60
-1, /metro/2, , , , 2, , ff3c3c3c, ffc8c8c8, , 1, 0, 1, 60
-1, /metro/3, , , , 3, , ff3c3c3c, ffc8c8c8, , 1, 0, 1, 60
-1, /metro/4, , , , 4, , ff3c3c3c, ffc8c8c8, , 1, 0, 1, 60
-8, 1276, 62, 76, 260, 0, 1, 1, 1, Flicker, , ff282828, 0
-1, /flicker/1, , , , 1, , ff3c3c3c, ffc8c8c8, 0, 1, , , 600
-9, 896, 683, 137, 195, 0, 1, 2, 4, Activity, , ff282828, 0
-1, , , , /activity/1, 1, , ff368bff, ffffffff, 0.001, 1000.0, 0, 1, 
-1, , , , /activity/2, 2, , ff368bff, ffffffff, 0.001, 1000.0, 0, 1, 
-1, , , , /activity/3, 3, , ff368bff, ffffffff, 0.001, 1000.0, 0, 1, 
-1, , , , /activity/4, 4, , ff368bff, ffffffff, 0.001, 1000.0, 0, 1, 
-1, , , , /activity/5, 5, , ff368bff, ffffffff, 0.001, 1000.0, 0, 1, 
-1, , , , /activity/6, 6, , ff368bff, ffffffff, 0.001, 1000.0, 0, 1, 
-1, , , , /activity/7, 7, , ff368bff, ffffffff, 0.001, 1000.0, 0, 1, 
-1, , , , /activity/8, 8, , ff368bff, ffffffff, 0.001, 1000.0, 0, 1, 
+0, 3, 4, 404, 84, 0, 1, 5, 1, Buttons, , ff282828, 0
+1, /button/1, , , , , 1, , , ff3c3c3c, ffc8c8c8, ffc8c8c8, ff3c3c3c, 0, 1, , , 
+1, /button/2, , , , , 2, , , ff3c3c3c, ffc8c8c8, ffc8c8c8, ff3c3c3c, 0, 1, , , 
+1, /button/3, , , , , 3, , , ff3c3c3c, ffc8c8c8, ffc8c8c8, ff3c3c3c, 0, 1, , , 
+1, /button/4, , , , , 4, , , ff3c3c3c, ffc8c8c8, ffc8c8c8, ff3c3c3c, 0, 1, , , 
+1, /button/5, , , , , 5, , , ff3c3c3c, ffc8c8c8, ffc8c8c8, ff3c3c3c, 0, 1, , , 
+1, 421, 21, 164, 110, 0, 1, 2, 1, Pedals, , ff282828, 0
+1, /pedal/1, , , , , 1, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, 0, 1, 250, 1000, 
+1, /pedal/2, , , , , 2, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, 0, 1, 250, 1000, 
+2, 10, 133, 304, 254, 0, 1, 5, 1, Faders, , ff282828, 0
+1, /fader/1, , , , , 1, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, 0, 1, 0, 1, 
+1, /fader/2, , , , , 2, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, 0, 1, 0, 1, 
+1, /fader/3, , , , , 3, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, 0, 1, 0, 1, 
+1, /fader/4, , , , , 4, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, 0, 1, 0, 1, 
+1, /fader/5, , , , , 5, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, 0, 1, 0, 1, 
+3, 1065, 194, 148, 531, 0, 1, 1, 4, Encoders, , ff282828, 0
+1, /encoder/1, , , , , 1, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, -1, 1, 0, 1, 
+1, /encoder/2, , , , , 2, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, -1, 1, 0, 1, 
+1, /encoder/3, , , , , 3, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, -1, 1, 0, 1, 
+1, /encoder/4, , , , , 4, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, -1, 1, 0, 1, 
+4, 10, 424, 314, 269, 0, 1, 1, 1, XYs, , ff282828, 0
+1, /xy/1, , , , , 1, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, -1, 1, -1, 1, 
+6, 335, 620, 504, 210, 0, 1, 1, 6, Commands, , ff282828, 0
+1, /cmd/1, , , , , Send, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, 0, 1, 0, 1, 
+1, /cmd, , , , , no args, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, 0, 1, 0, 1, 
+1, /cmd=1.0, , , , , float arg, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, 0, 1, 0, 1, 
+1, /cmd=1, , , , , integer arg, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, 0, 1, 0, 1, 
+1, /cmd=hello world, , , , , string arg, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, 0, 1, 0, 1, 
+1, "/cmd=1.0,hello world", , , , , multiple args, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, 0, 1, 0, 1, 
+7, 610, 0, 247, 155, 0, 1, 1, 1, Sine Waves, , ff282828, 0
+1, /sine/1, , , , , 1, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, 0, 1, 0, 1, 60
+5, 893, 0, 324, 150, 0, 1, 4, 1, Metronomes, , ff282828, 0
+1, /metro/1, , , , , 1, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, , 1, 0, 1, 60
+1, /metro/2, , , , , 2, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, , 1, 0, 1, 60
+1, /metro/3, , , , , 3, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, , 1, 0, 1, 60
+1, /metro/4, , , , , 4, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, , 1, 0, 1, 60
+8, 1260, 2, 116, 260, 0, 1, 1, 1, Flicker, , ff282828, 0
+1, /flicker/1, , , , , 1, , , ff3c3c3c, ff000000, ffc8c8c8, ff000000, 0, 1, , , 600
+9, 880, 623, 137, 195, 0, 1, 2, 4, Activity, , ff282828, 0
+1, , , , /activity/1, , 1, , , ff368bff, ff000000, ffffffff, ff000000, 0.001, 1000.0, 0, 1, 
+1, , , , /activity/2, , 2, , , ff368bff, ff000000, ffffffff, ff000000, 0.001, 1000.0, 0, 1, 
+1, , , , /activity/3, , 3, , , ff368bff, ff000000, ffffffff, ff000000, 0.001, 1000.0, 0, 1, 
+1, , , , /activity/4, , 4, , , ff368bff, ff000000, ffffffff, ff000000, 0.001, 1000.0, 0, 1, 
+1, , , , /activity/5, , 5, , , ff368bff, ff000000, ffffffff, ff000000, 0.001, 1000.0, 0, 1, 
+1, , , , /activity/6, , 6, , , ff368bff, ff000000, ffffffff, ff000000, 0.001, 1000.0, 0, 1, 
+1, , , , /activity/7, , 7, , , ff368bff, ff000000, ffffffff, ff000000, 0.001, 1000.0, 0, 1, 
+1, , , , /activity/8, , 8, , , ff368bff, ff000000, ffffffff, ff000000, 0.001, 1000.0, 0, 1, 

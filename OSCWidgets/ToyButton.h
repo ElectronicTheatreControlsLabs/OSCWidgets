@@ -42,11 +42,25 @@ public:
 	
 	virtual void SetText(const QString &text);
 	virtual void SetImagePath(const QString &imagePath);
+	virtual void SetImagePath2(const QString &imagePath2);
+	virtual bool HasImagePath2() const {return true;}
 	virtual void SetColor(const QColor &color);
+	virtual void SetColor2(const QColor &color2);
 	virtual void SetTextColor(const QColor &textColor);
+	virtual void SetTextColor2(const QColor &textColor2);
 	virtual void Recv(const QString &path, const OSCArgument *args, size_t count);
 	virtual void SetLabel(const QString &label);
+	virtual bool HasMinMax2() const {return true;}
     virtual bool HasFeedbackPath() const {return true;}
+	virtual bool HasTriggerPath() const {return true;}
+	virtual bool HasColor2() const {return true;}
+	virtual bool HasTextColor2() const {return true;}
+	virtual bool GetToggle() const {return m_Toggle;}
+	virtual void SetToggle(bool b);
+	virtual bool HasMinOrMax() const {return (!m_Min.isEmpty() || !m_Max.isEmpty());}
+	virtual bool HasMin2OrMax2() const {return (!m_Min2.isEmpty() || !m_Max2.isEmpty());}
+	virtual bool HasToggle() const {return (HasMinOrMax() && HasMin2OrMax2());}
+	virtual bool GetActionFromOSCArguments(const OSCArgument *args, size_t count, bool &toggle, bool &press) const;
 	
 signals:
 	void pressed(ToyButtonWidget*);
@@ -55,6 +69,11 @@ signals:
 private slots:
 	void onPressed();
 	void onReleased();
+
+protected:
+	bool	m_Toggle;
+	
+	virtual void UpdateToggleState();
 };
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -75,6 +94,7 @@ protected:
 	virtual ToyWidget* CreateWidget();
 	
 	virtual bool SendButtonCommand(ToyButtonWidget *button, bool press);
+	virtual bool SendButtonCommand(const QString &path, const QString &minStr, const QString &maxStr, bool press);
 };
 
 ////////////////////////////////////////////////////////////////////////////////

@@ -56,7 +56,7 @@ public:
 	virtual void SetTextColor(const QColor &textColor);
 	virtual void Recv(const QString &path, const OSCArgument *args, size_t count);
 	virtual bool HasMinMax() const {return false;}
-	virtual bool HasFeedbackPath() const {return true;}
+	virtual bool HasTriggerPath() const {return true;}
 	
 signals:
 	void send(ToyCmdWidget*);

@@ -212,11 +212,12 @@ void FadeFlicker::paintEvent(QPaintEvent* /*event*/)
 	clip.addRoundedRect(m_FlickerRect, ROUNDED, ROUNDED);
 	painter.setClipPath(clip);
 
-	if( !m_Image.isNull() )
+	const QPixmap &pixmap = m_Images[m_ImageIndex].pixmap;
+	if( !pixmap.isNull() )
 	{
-		painter.drawPixmap(	m_FlickerRect.x() + qRound((m_FlickerRect.width()-m_Image.width())*0.5),
-							m_FlickerRect.y() + qRound((m_FlickerRect.height()-m_Image.height())*0.5),
-							m_Image );
+		painter.drawPixmap(	m_FlickerRect.x() + qRound((m_FlickerRect.width()-pixmap.width())*0.5),
+							m_FlickerRect.y() + qRound((m_FlickerRect.height()-pixmap.height())*0.5),
+							pixmap );
 	}
 
 	painter.setClipping(false);
@@ -325,7 +326,7 @@ void ToyFlickerWidget::SetText(const QString &text)
 void ToyFlickerWidget::SetImagePath(const QString &imagePath)
 {
 	ToyWidget::SetImagePath(imagePath);
-	static_cast<FadeFlicker*>(m_Widget)->SetImagePath(m_ImagePath);
+	static_cast<FadeFlicker*>(m_Widget)->SetImagePath(0, m_ImagePath);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -408,7 +409,7 @@ void ToyFlickerWidget::SetLabel(const QString &label)
 
 void ToyFlickerWidget::Recv(const QString &path, const OSCArgument *args, size_t count)
 {
-	if(path == m_FeedbackPath)
+	if(path == m_TriggerPath)
 	{
 		bool paused = false;
 

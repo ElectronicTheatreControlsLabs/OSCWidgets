@@ -19,76 +19,74 @@
 // THE SOFTWARE.
 
 #pragma once
-#ifndef FADE_BUTTON_H
-#define FADE_BUTTON_H
+#ifndef LOG_WIDGET_H
+#define LOG_WIDGET_H
 
 #ifndef QT_INCLUDE_H
 #include "QtInclude.h"
 #endif
 
-#ifndef EOS_TIMER_H
-#include "EosTimer.h"
+#ifndef EOS_LOG_H
+#include "EosLog.h"
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class FadeButton
-	: public QPushButton
+class LogWidget
+	: public QWidget
 {
 	Q_OBJECT
-	
-public:
-	enum EnumConstants
-	{
-		NUM_IMAGES	= 2
-	};
-	
-	FadeButton(QWidget *parent);
-	virtual ~FadeButton();
 
-	virtual const QString& GetLabel() const {return m_Label;}
-	virtual void SetLabel(const QString &label);
-	virtual const QString& GetImagePath(size_t index) const;
-	virtual void SetImagePath(size_t index, const QString &imagePath);
-	virtual void SetImageIndex(size_t index);
-    virtual void Press(bool user=true);
-    virtual void Release(bool user=true);
-	virtual void Flash();
-	
+public:
+	LogWidget(size_t maxLineCount, QWidget *parent);
+
+	virtual void Clear();
+	virtual void Log(EosLog::LOG_Q &logQ);
+	virtual QSize sizeHint() const {return QSize(400,150);}
+
 private slots:
-	void onPressed();
-	void onReleased();
-	void onClickTimeout();
-	void onHoverTimeout();
-	
+	void onVScrollChanged(int value);
+	void onHScrollChanged(int value);
+
 protected:
-	struct sImage
+	struct sLine
 	{
-		QString path;
-		QPixmap	pixmap;
+		QString	text;
+		QColor	color;
 	};
-	
-	float		m_Click;
-	QTimer		*m_ClickTimer;
-	EosTimer	m_ClickTimestamp;
-	float		m_Hover;
-	QTimer		*m_HoverTimer;
-	EosTimer	m_HoverTimestamp;
-	QString		m_Label;
-	sImage		m_Images[NUM_IMAGES];
-	size_t		m_ImageIndex;
-	
-	virtual void StartClick();
-	virtual void StopClick();
-	virtual void SetClick(float percent);
-	virtual void StartHover();
-	virtual void StopHover();
-	virtual void SetHover(float percent);
-	virtual void AutoSizeFont();
-	virtual void UpdateImage(size_t index);
+
+	typedef std::vector<sLine> RING_BUFFER;
+
+	struct sRingBufferIndex
+	{
+		sRingBufferIndex()
+			: head(0)
+			, tail(0)
+		{}
+		bool valid() const {return (head!=tail);}
+		bool invalid() const {return (head==tail);}
+		size_t	head;
+		size_t	tail;
+	};
+
+	RING_BUFFER			m_Lines;
+	sRingBufferIndex	m_Index;
+	int					m_LineHeight;
+	int					m_LineWidth;
+	QScrollBar			*m_VScrollBar;
+	QScrollBar			*m_HScrollBar;
+	bool				m_ForwardingWheelEvent;
+	bool				m_AutoScroll;
+
+	virtual size_t GetNumLines() const;
+	virtual void GetContentsRect(QRect &r) const;
+	virtual void UpdateFont();
+	virtual void UpdateVScrollBar();
+	virtual void UpdateHScrollBar();
+	virtual bool event(QEvent *event);
 	virtual void resizeEvent(QResizeEvent *event);
 	virtual void paintEvent(QPaintEvent *event);
-	virtual bool event(QEvent *event);
+	virtual void wheelEvent(QWheelEvent *event);
 };
 
 ////////////////////////////////////////////////////////////////////////////////

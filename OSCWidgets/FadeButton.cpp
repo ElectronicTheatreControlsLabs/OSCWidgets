@@ -27,6 +27,7 @@ FadeButton::FadeButton(QWidget *parent)
 	: QPushButton(parent)
 	, m_Click(0)
 	, m_Hover(0)
+	, m_ImageIndex(0)
 {
 	m_ClickTimer = new QTimer(this);
 	connect(m_ClickTimer, SIGNAL(timeout()), this, SLOT(onClickTimeout()));
@@ -45,7 +46,8 @@ FadeButton::FadeButton(QWidget *parent)
 
 FadeButton::~FadeButton()
 {
-	SetImagePath( QString() );
+	for(size_t i=0; i<NUM_IMAGES; i++)
+		SetImagePath(i, QString());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -61,23 +63,53 @@ void FadeButton::SetLabel(const QString &label)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void FadeButton::SetImagePath(const QString &imagePath)
+const QString& FadeButton::GetImagePath(size_t index) const
 {
-	if(m_ImagePath != imagePath)
+	if(index >= NUM_IMAGES)
+		index = 0;
+	return m_Images[index].path;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void FadeButton::SetImagePath(size_t index, const QString &imagePath)
+{
+	if(index < NUM_IMAGES)
 	{
-		PMC.Destroy(m_ImagePath);
-		m_ImagePath = imagePath;
-		PMC.Create(m_ImagePath);
-		UpdateImage();
+		sImage &img = m_Images[index];
+		
+		if(img.path != imagePath)
+		{
+			PMC.Destroy( img.path );
+			img.path = imagePath;
+			PMC.Create( img.path );
+			UpdateImage(index);
+		}
 	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void FadeButton::UpdateImage()
+void FadeButton::SetImageIndex(size_t index)
 {
-	PMC.GetScaledToFill(m_ImagePath, size(), m_Image);
-	update();
+	if(index<NUM_IMAGES && m_ImageIndex!=index)
+	{
+		m_ImageIndex = index;
+		update();
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void FadeButton::UpdateImage(size_t index)
+{
+	if(index < NUM_IMAGES)
+	{
+		sImage &img = m_Images[index];
+		PMC.GetScaledToFill(img.path, size(), img.pixmap);
+		if(m_ImageIndex == index)
+			update();
+	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -158,24 +190,32 @@ void FadeButton::AutoSizeFont()
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void FadeButton::Press()
+void FadeButton::Press(bool user/* =true */)
 {
 	if( !isDown() )
 	{
 		setDown(true);
-		emit pressed();
+		if( user )
+			emit pressed();
+		else
+			onPressed();
 	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void FadeButton::Release()
+void FadeButton::Release(bool user/* =true */)
 {
 	if( isDown() )
 	{
 		setDown(false);
-		emit released();
-		emit clicked();
+		if( user )
+		{
+			emit released();
+			emit clicked();
+		}
+		else
+			onReleased();
 	}
 }
 
@@ -184,7 +224,10 @@ void FadeButton::Release()
 void FadeButton::resizeEvent(QResizeEvent *event)
 {
 	AutoSizeFont();
-	UpdateImage();
+	
+	for(size_t i=0; i<NUM_IMAGES; i++)
+		UpdateImage(i);
+	
 	QPushButton::resizeEvent(event);
 }
 
@@ -217,12 +260,13 @@ void FadeButton::paintEvent(QPaintEvent* /*event*/)
 	painter.setPen(Qt::NoPen);
 	painter.drawRoundedRect(r, ROUNDED, ROUNDED);
 
-	if( !m_Image.isNull() )
+	sImage &img = m_Images[m_ImageIndex];
+	if( !img.pixmap.isNull() )
 	{
 		painter.setOpacity(1.0-(brightness*0.5));
-		painter.drawPixmap(	r.x() + qRound((r.width()-m_Image.width())*0.5),
-							r.y() + qRound((r.height()-m_Image.height())*0.5),
-							m_Image );
+		painter.drawPixmap(	r.x() + qRound((r.width()-img.pixmap.width())*0.5),
+							r.y() + qRound((r.height()-img.pixmap.height())*0.5),
+							img.pixmap );
 		painter.setOpacity(1.0);
 	}
 	

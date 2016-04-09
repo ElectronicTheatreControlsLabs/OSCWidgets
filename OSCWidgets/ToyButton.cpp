@@ -27,8 +27,10 @@
 
 ToyButtonWidget::ToyButtonWidget(QWidget *parent)
 	: ToyWidget(parent)
+	, m_Toggle(false)
 {
-	m_HelpText = tr("Min = Button Down\nMax = Button Up\n\nOSC Trigger:\nNo Arguments = Click\nArgument(1) = Press\nArgument(0) = Release");
+	m_HelpText = tr("Min = Button Up\nMax = Button Down\n\nLeave Min or Max blank to send single edge\n\nLeave both blank to send without arguments\n\nToggle:\nSpecify Min2 and/or Max2 for toggle behavior\n\nOSC Trigger:\nNo Arguments = Click\nArgument(1) = Press\nArgument(0) = Release");
+	m_Min2 = m_Max2 = QString();
 
 	m_Widget = new FadeButton(this);
 	connect(m_Widget, SIGNAL(pressed()), this, SLOT(onPressed()));
@@ -37,6 +39,10 @@ ToyButtonWidget::ToyButtonWidget(QWidget *parent)
 	QPalette pal( m_Widget->palette() );
 	m_Color = pal.color(QPalette::Button);
 	m_TextColor = pal.color(QPalette::ButtonText);
+	m_Color2 = m_TextColor;
+	m_TextColor2 = m_Color;
+	
+	UpdateToggleState();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -52,7 +58,15 @@ void ToyButtonWidget::SetText(const QString &text)
 void ToyButtonWidget::SetImagePath(const QString &imagePath)
 {
 	ToyWidget::SetImagePath(imagePath);
-	static_cast<FadeButton*>(m_Widget)->SetImagePath(m_ImagePath);
+	static_cast<FadeButton*>(m_Widget)->SetImagePath(0, m_ImagePath);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ToyButtonWidget::SetImagePath2(const QString &imagePath2)
+{
+	ToyWidget::SetImagePath2(imagePath2);
+	static_cast<FadeButton*>(m_Widget)->SetImagePath(1, m_ImagePath2);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -60,9 +74,15 @@ void ToyButtonWidget::SetImagePath(const QString &imagePath)
 void ToyButtonWidget::SetColor(const QColor &color)
 {
 	ToyWidget::SetColor(color);
-	QPalette pal( m_Widget->palette() );
-	pal.setColor(QPalette::Button, m_Color);
-	m_Widget->setPalette(pal);
+	UpdateToggleState();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ToyButtonWidget::SetColor2(const QColor &color2)
+{
+	ToyWidget::SetColor2(color2);
+	UpdateToggleState();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -70,9 +90,15 @@ void ToyButtonWidget::SetColor(const QColor &color)
 void ToyButtonWidget::SetTextColor(const QColor &textColor)
 {
 	ToyWidget::SetTextColor(textColor);
-	QPalette pal( m_Widget->palette() );
-	pal.setColor(QPalette::ButtonText, m_TextColor);
-	m_Widget->setPalette(pal);
+	UpdateToggleState();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ToyButtonWidget::SetTextColor2(const QColor &textColor2)
+{
+	ToyWidget::SetTextColor2(textColor2);
+	UpdateToggleState();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -84,33 +110,78 @@ void ToyButtonWidget::SetLabel(const QString &label)
 
 ////////////////////////////////////////////////////////////////////////////////
 
+void ToyButtonWidget::SetToggle(bool b)
+{
+	if(m_Toggle != b)
+	{
+		m_Toggle = b;
+		UpdateToggleState();
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ToyButtonWidget::UpdateToggleState()
+{
+	FadeButton *button = static_cast<FadeButton*>(m_Widget);
+	
+	bool toggled = (HasToggle() && m_Toggle);
+	
+	QPalette pal( m_Widget->palette() );
+	pal.setColor(QPalette::Button, toggled ? m_Color2 : m_Color);
+	pal.setColor(QPalette::ButtonText, toggled ? m_TextColor2 : m_TextColor);
+	button->setPalette(pal);
+	
+	button->SetImageIndex(toggled ? 1 : 0);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 void ToyButtonWidget::Recv(const QString &path, const OSCArgument *args, size_t count)
 {
-	if(path == m_FeedbackPath)
-    {
-		FadeButton *button = static_cast<FadeButton*>(m_Widget);
+	FadeButton *button = static_cast<FadeButton*>(m_Widget);
 
-        bool edge = false;
-        
-        if(args && count>0)
-        {
-            bool press = false;
-            if( args[0].GetBool(press) )
-            {
-                edge = true;
-                
-                if( press )
-                    button->Press();
-                else
-                    button->Release();
-            }
-        }
-        
-        if( !edge )
-        {
-            button->Press();
-            button->Release();
-        }
+	bool isFeedback = (path == m_FeedbackPath);
+	bool isTrigger = (!isFeedback && path==m_TriggerPath);
+	if(isFeedback || isTrigger)
+    {
+		bool toggle = false;
+		bool press = false;
+		bool gotAction = GetActionFromOSCArguments(args, count, toggle, press);
+		if( isTrigger )
+		{
+			if( gotAction )
+			{
+				if( press )
+					button->Press();
+				else
+					button->Release();
+			}
+			else
+			{
+				button->Press();
+				button->Release();
+			}
+		}
+		else if( HasToggle() )
+		{
+			if( gotAction )
+				SetToggle(toggle);
+			else
+				SetToggle( !GetToggle() );
+		}
+		else if( gotAction )
+		{
+			if( press )
+				button->Press(/*user*/false);
+			else
+				button->Release(/*user*/false);
+		}
+		else
+		{
+			button->Press(/*user*/false);
+			button->Release(/*user*/false);
+		}
     }
     else
     {
@@ -127,6 +198,45 @@ void ToyButtonWidget::Recv(const QString &path, const OSCArgument *args, size_t 
 
 ////////////////////////////////////////////////////////////////////////////////
 
+bool ToyButtonWidget::GetActionFromOSCArguments(const OSCArgument *args, size_t count, bool &toggle, bool &press) const
+{
+	if(args && count!=0)
+	{
+		float f = 0;
+		if( args[0].GetFloat(f) )
+		{
+			if(!m_Min.isEmpty() && OSC_IS_ABOUTF(f,m_Min.toFloat()))
+			{
+				toggle = false;
+				press = false;
+				return true;
+			}
+			else if(!m_Max.isEmpty() && OSC_IS_ABOUTF(f,m_Max.toFloat()))
+			{
+				toggle = false;
+				press = true;
+				return true;
+			}
+			else if(!m_Min2.isEmpty() && OSC_IS_ABOUTF(f,m_Min2.toFloat()))
+			{
+				toggle = true;
+				press = false;
+				return true;
+			}
+			else if(!m_Max2.isEmpty() && OSC_IS_ABOUTF(f,m_Max2.toFloat()))
+			{
+				toggle = true;
+				press = true;
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 void ToyButtonWidget::onPressed()
 {
 	emit pressed(this);
@@ -137,6 +247,9 @@ void ToyButtonWidget::onPressed()
 void ToyButtonWidget::onReleased()
 {
 	emit released(this);
+	
+	if( HasToggle() )
+		SetToggle( !m_Toggle );
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -165,72 +278,89 @@ bool ToyButtonGrid::SendButtonCommand(ToyButtonWidget *button, bool press)
 		button &&
 		!button->GetPath().isEmpty() )
 	{
-		const QString &minStr = button->GetMin();
-		const QString &maxStr = button->GetMax();
-		
-		int edgeCount = 0;
-		float value = 0;
-		if( minStr.isEmpty() )
+		bool hasMinMax = button->HasMinOrMax();
+		bool hasMinMax2 = button->HasMin2OrMax2();
+
+		if( hasMinMax )
 		{
-			if( !maxStr.isEmpty() )
-			{
-				// only have max field, so always send it
-				bool ok = false;
-				value = maxStr.toFloat(&ok);
-				if( ok )
-					edgeCount = 1;
-			}
+			if(hasMinMax2 && button->GetToggle())
+				return SendButtonCommand(button->GetPath(), button->GetMin2(), button->GetMax2(), press);
+			else
+				return SendButtonCommand(button->GetPath(), button->GetMin(), button->GetMax(), press);
 		}
-		else if( maxStr.isEmpty() )
+		else if( hasMinMax2 )
+			return SendButtonCommand(button->GetPath(), button->GetMin2(), button->GetMax2(), press);
+		
+		return SendButtonCommand(button->GetPath(), QString(), QString(), press);
+	}
+	
+	return false;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+bool ToyButtonGrid::SendButtonCommand(const QString &path, const QString &minStr, const QString &maxStr, bool press)
+{
+	bool shouldSend = false;
+	bool forceStrArg = false;
+	QString value;
+
+	if( minStr.isEmpty() )
+	{
+		if( maxStr.isEmpty() )
 		{
-			// only have min field, so always send it
-			bool ok = false;
-			value = minStr.toFloat(&ok);
-			if( ok )
-				edgeCount = 1;
+			// none
+			if( press )
+				shouldSend = true;
 		}
 		else
 		{
-			// have both min & max fields
-			bool minOk = false;
-			float nMin = minStr.toFloat(&minOk);
-			bool maxOk = false;
-			float nMax = maxStr.toFloat(&maxOk);
-			if( minOk )
+			// max only
+			if( press )
 			{
-				if( maxOk )
-				{
-					edgeCount = 2;
-					value = (press ? nMax : nMin);
-				}
-				else
-				{
-					value = nMin;
-					edgeCount = 1;
-				}
+				value = maxStr;
+				shouldSend = true;
 			}
-			else if( maxOk )
-			{
-				value = nMax;
-				edgeCount = 1;
-			}
-		}
-		
-		if(press || edgeCount>1)
-		{
-			QString path( button->GetPath() );
-			bool local = Utils::MakeLocalOSCPath(false, path);
-			OSCPacketWriter packetWriter( path.toUtf8().constData() );
-			if(edgeCount > 0)
-				packetWriter.AddFloat32(value);
-			
-			size_t size;
-			char *data = packetWriter.Create(size);
-			if(data && m_pClient->ToyClient_Send(local,data,size))
-				return true;
 		}
 	}
-	
+	else if( maxStr.isEmpty() )
+	{
+		// min only
+		if( !press )
+		{
+			value = minStr;
+			shouldSend = true;
+		}
+	}
+	else
+	{
+		// both
+		value = (press ? maxStr : minStr);
+		shouldSend = true;
+		if(!OSCArgument::IsFloatString(minStr.toUtf8().constData()) || !OSCArgument::IsFloatString(maxStr.toUtf8().constData()))
+			forceStrArg = true;	// if either is non-numeric, send both as strings
+	}
+
+	if( shouldSend )
+	{
+		QString oscPath(path);
+		bool local = Utils::MakeLocalOSCPath(false, oscPath);
+		OSCPacketWriter packetWriter( oscPath.toUtf8().constData() );
+		if( !value.isEmpty() )
+		{
+			QByteArray ba( value.toUtf8() );
+			if(!forceStrArg && OSCArgument::IsFloatString(ba.constData()))
+				packetWriter.AddFloat32( value.toFloat() );
+			else
+				packetWriter.AddString( ba.constData() );
+		}
+
+		size_t size;
+		char *data = packetWriter.Create(size);
+		if(data && m_pClient->ToyClient_Send(local,data,size))
+			return true;
+	}
+
 	return false;
 }
 

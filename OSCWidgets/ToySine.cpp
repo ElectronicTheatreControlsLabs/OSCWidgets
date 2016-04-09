@@ -158,11 +158,12 @@ void FadeSine::paintEvent(QPaintEvent* /*event*/)
 	clip.addRoundedRect(r, ROUNDED, ROUNDED);
 	painter.setClipPath(clip);
 
-	if( !m_Image.isNull() )
+	const QPixmap &pixmap = m_Images[m_ImageIndex].pixmap;
+	if( !pixmap.isNull() )
 	{
-		painter.drawPixmap(	r.x() + qRound((r.width()-m_Image.width())*0.5),
-							r.y() + qRound((r.height()-m_Image.height())*0.5),
-							m_Image );
+		painter.drawPixmap(	r.x() + qRound((r.width()-pixmap.width())*0.5),
+							r.y() + qRound((r.height()-pixmap.height())*0.5),
+							pixmap );
 	}
 
 	painter.setClipping(false);
@@ -286,7 +287,7 @@ void ToySineWidget::SetText(const QString &text)
 void ToySineWidget::SetImagePath(const QString &imagePath)
 {
 	ToyWidget::SetImagePath(imagePath);
-	static_cast<FadeSine*>(m_Widget)->SetImagePath(m_ImagePath);
+	static_cast<FadeSine*>(m_Widget)->SetImagePath(0, m_ImagePath);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -329,7 +330,7 @@ void ToySineWidget::SetLabel(const QString &label)
 
 void ToySineWidget::Recv(const QString &path, const OSCArgument *args, size_t count)
 {
-	if(path == m_FeedbackPath)
+	if(path == m_TriggerPath)
 	{
 		bool paused = false;
 

@@ -113,7 +113,7 @@ public:
 	virtual void SetImagePath(const QString &imagePath);
 	virtual void SetColor(const QColor &color);
 	virtual void SetTextColor(const QColor &textColor);
-	virtual bool HasFeedbackPath() const {return true;}
+	virtual bool HasTriggerPath() const {return true;}
 	virtual bool HasMinMax2() const {return true;}
 	virtual void SetMin2(const QString &n);
 	virtual void SetMax2(const QString &n);

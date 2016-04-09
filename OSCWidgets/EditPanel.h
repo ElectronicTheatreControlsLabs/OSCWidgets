@@ -55,6 +55,22 @@ protected:
 
 ////////////////////////////////////////////////////////////////////////////////
 
+class ButtonRow
+	: public QWidget
+{
+public:
+	ButtonRow(QWidget *parent);
+	
+	virtual QPushButton* AddButton();
+	virtual QPushButton* AddButton(const QString &text);
+	virtual FadeButton* AddFadeButton();
+	
+protected:
+	virtual void AddWidget(QWidget *w);
+};
+
+////////////////////////////////////////////////////////////////////////////////
+
 class EditPanel
 	: public QWidget
 {
@@ -75,23 +91,35 @@ public:
 	virtual void SetText(const QString &text);
 	virtual void GetImagePath(QString &imagePath) const;
 	virtual void SetImagePath(const QString &imagePath);
+	virtual void GetImagePath2(QString &imagePath2) const;
+	virtual void SetImagePath2(const QString &imagePath2);
+	virtual void SetImagePath2Enabled(bool b);
 	virtual void GetPath(QString &path) const;
 	virtual void SetPath(const QString &path);
 	virtual void SetPathEnabled(bool b);
 	virtual void GetPath2(QString &path) const;
 	virtual void SetPath2(const QString &path);
 	virtual void SetPath2Enabled(bool b);
-	virtual void GetRecvPath(QString &recvPath) const;
-	virtual void SetRecvPath(const QString &recvPath);
-	virtual void SetRecvPathEnabled(bool b);
+	virtual void GetLabelPath(QString &labelPath) const;
+	virtual void SetLabelPath(const QString &labelPath);
+	virtual void SetLabelPathEnabled(bool b);
 	virtual void GetFeedbackPath(QString &feedbackPath) const;
 	virtual void SetFeedbackPath(const QString &feedbackPath);
-	virtual void SetFeedbackPathEnabled(bool b);	
+	virtual void SetFeedbackPathEnabled(bool b);
+	virtual void GetTriggerPath(QString &triggerPath) const;
+	virtual void SetTriggerPath(const QString &triggerPath);
+	virtual void SetTriggerPathEnabled(bool b);	
 	virtual void GetColor(QColor &color) const;
 	virtual void SetColor(const QColor &color);
+	virtual void GetColor2(QColor &color2) const;
+	virtual void SetColor2(const QColor &color2);
+	virtual void SetColor2Enabled(bool b);
 	virtual void GetTextColor(QColor &textColor) const;
 	virtual void SetTextColor(const QColor &textColor);
 	virtual void SetTextColorEnabled(bool b);
+	virtual void GetTextColor2(QColor &textColor2) const;
+	virtual void SetTextColor2(const QColor &textColor2);
+	virtual void SetTextColor2Enabled(bool b);
 	virtual void GetMin(QString &n) const;
 	virtual void SetMin(const QString &n);
 	virtual void GetMax(QString &n) const;
@@ -119,43 +147,54 @@ private slots:
 	void onPath2TextChanged(const QString &text);
 	void onLocalStateChanged(int state);
 	void onImagePathButtonClicked(bool checked);
+	void onImagePath2ButtonClicked(bool checked);
 	void onColorClicked(bool checked);
+	void onColor2Clicked(bool checked);
 	void onTextColorClicked(bool checked);
+	void onTextColor2Clicked(bool checked);
 	void onDoneClicked(bool checked);
 	
 protected:
-	QLabel		*m_GridLabel;
-	QSpinBox	*m_Cols;	
-	QSpinBox	*m_Rows;
-	QLineEdit	*m_Text;
-	FadeButton	*m_ImagePathButton;
-	QString		m_ImagePath;
-	QLabel		*m_PathLabel;
-	QLineEdit	*m_Path;
-	QLabel		*m_Path2Label;
-	QLineEdit	*m_Path2;
-	QCheckBox	*m_Local;
-	QLabel		*m_RecvPathLabel;
-	QLineEdit	*m_RecvPath;
-	QLabel		*m_FeedbackPathLabel;
-	QLineEdit	*m_FeedbackPath;
-	QPushButton	*m_Color;
-	QPushButton	*m_TextColor;
-	QLabel		*m_MinMaxLabel;
-	QLineEdit	*m_Min;
-	QLineEdit	*m_Max;
-	QLabel		*m_MinMax2Label;
-	QLineEdit	*m_Min2;
-	QLineEdit	*m_Max2;
-	QLabel		*m_BPMLabel;
-	QLineEdit	*m_BPM;
-	QLabel		*m_HiddenLabel;
-	QCheckBox	*m_Hidden;
-	QLabel		*m_Help;
+	QLabel			*m_GridLabel;
+	QSpinBox		*m_Cols;	
+	QSpinBox		*m_Rows;
+	QLineEdit		*m_Text;
+	FadeButton		*m_ImagePathButton;
+	QString			m_ImagePath;
+	FadeButton		*m_ImagePath2Button;
+	QString			m_ImagePath2;
+	QLabel			*m_PathLabel;
+	QLineEdit		*m_Path;
+	QLabel			*m_Path2Label;
+	QLineEdit		*m_Path2;
+	QCheckBox		*m_Local;
+	QLabel			*m_LabelPathLabel;
+	QLineEdit		*m_LabelPath;
+	QLabel			*m_FeedbackPathLabel;
+	QLineEdit		*m_FeedbackPath;
+	QLabel			*m_TriggerPathLabel;
+	QLineEdit		*m_TriggerPath;
+	QPushButton		*m_Color;
+	QPushButton		*m_Color2;
+	QPushButton		*m_TextColor;
+	QPushButton		*m_TextColor2;
+	QLabel			*m_MinMaxLabel;
+	QLineEdit		*m_Min;
+	QLineEdit		*m_Max;
+	QLabel			*m_MinMax2Label;
+	QLineEdit		*m_Min2;
+	QLineEdit		*m_Max2;
+	QLabel			*m_BPMLabel;
+	QLineEdit		*m_BPM;
+	QLabel			*m_HiddenLabel;
+	QCheckBox		*m_Hidden;
+	QLabel			*m_Help;
+	unsigned int	m_IgnoreEdits;
 	
 	virtual void closeEvent(QCloseEvent *event);
 	virtual void UpdateLocal(bool primaryPath);
 	virtual void SetToolTips(const QString &text, QWidget *label, QWidget *widget);
+	virtual bool GetImageFile(QString &path);
 };
 
 ////////////////////////////////////////////////////////////////////////////////

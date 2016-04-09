@@ -192,12 +192,13 @@ void FadePedal::paintEvent(QPaintEvent* /*event*/)
 		if(m_Hover > 0)
 			brightness += (m_Hover*0.2f);
 
-		if( !m_Image.isNull() )
+		const QPixmap &pixmap = m_Images[m_ImageIndex].pixmap;
+		if( !pixmap.isNull() )
 		{
 			painter.setOpacity(1.0-(brightness*0.5));
-			painter.drawPixmap(	r.x() + qRound((r.width()-m_Image.width())*0.5),
-								r.y() + qRound((r.height()-m_Image.height())*0.5),
-								m_Image );
+			painter.drawPixmap(	r.x() + qRound((r.width()-pixmap.width())*0.5),
+								r.y() + qRound((r.height()-pixmap.height())*0.5),
+								pixmap );
 			painter.setOpacity(1.0);
 		}
 	
@@ -213,15 +214,15 @@ void FadePedal::paintEvent(QPaintEvent* /*event*/)
 		QColor lineColor(brushColor);
 		Utils::MakeContrastingColor(1.0f, lineColor);
 	
-		if( !m_Image.isNull() )
+		if( !pixmap.isNull() )
 		{
 			QPainterPath clip;
 			clip.addRoundedRect(r, ROUNDED, ROUNDED);
 			painter.setClipPath(clip);
 
-			painter.drawPixmap(	r.x() + qRound((r.width()-m_Image.width())*0.5),
-								r.y() + qRound((r.height()-m_Image.height())*0.5),
-								m_Image );
+			painter.drawPixmap(	r.x() + qRound((r.width()-pixmap.width())*0.5),
+								r.y() + qRound((r.height()-pixmap.height())*0.5),
+								pixmap );
 
 			painter.setClipping(false);
 		}
@@ -375,7 +376,7 @@ void ToyPedalWidget::SetText(const QString &text)
 void ToyPedalWidget::SetImagePath(const QString &imagePath)
 {
 	ToyWidget::SetImagePath(imagePath);
-	static_cast<FadePedal*>(m_Widget)->SetImagePath(m_ImagePath);
+	static_cast<FadePedal*>(m_Widget)->SetImagePath(0, m_ImagePath);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -427,7 +428,7 @@ void ToyPedalWidget::SetLabel(const QString &label)
 
 void ToyPedalWidget::Recv(const QString &path, const OSCArgument *args, size_t count)
 {
-    if(path == m_FeedbackPath)
+    if(path == m_TriggerPath)
 	{
 		FadePedal *pedal = static_cast<FadePedal*>(m_Widget);
 

@@ -61,20 +61,38 @@ public:
 	virtual const QString& GetPath2() const {return m_Path2;}
 	virtual void SetPath2(const QString &path);
 	virtual bool HasPath2() const {return false;}
+<<<<<<< HEAD
 	virtual const QString& GetRecvPath() const {return m_RecvPath;}
 	virtual void SetRecvPath(const QString &recvPath);
 	virtual const QString& GetRawFeedbackPath() const {return m_FeedbackPath;}; //the path as stored in object incl %x or simply blank
 	virtual QString& GetFeedbackPath(); //the path once manipulated
+=======
+	virtual const QString& GetLabelPath() const {return m_LabelPath;}
+	virtual void SetLabelPath(const QString &labelPath);
+	virtual const QString& GetFeedbackPath() const {return m_FeedbackPath;}
+>>>>>>> ElectronicTheatreControlsLabs/master
 	virtual void SetFeedbackPath(const QString &feedbackPath);
 	virtual bool HasFeedbackPath() const {return false;}
+	virtual const QString& GetTriggerPath() const {return m_TriggerPath;}
+	virtual void SetTriggerPath(const QString &triggerPath);
+	virtual bool HasTriggerPath() const {return false;}
 	virtual const QString& GetText() const {return m_Text;}
 	virtual void SetText(const QString &text) {m_Text = text;}
 	virtual const QString& GetImagePath() const {return m_ImagePath;}
 	virtual void SetImagePath(const QString &imagePath) {m_ImagePath = imagePath;}
+	virtual const QString& GetImagePath2() const {return m_ImagePath2;}
+	virtual void SetImagePath2(const QString &imagePath2) {m_ImagePath2 = imagePath2;}
+	virtual bool HasImagePath2() const {return false;}
 	virtual const QColor& GetColor() const {return m_Color;}
 	virtual void SetColor(const QColor &color) {m_Color = color;}
+	virtual const QColor& GetColor2() const {return m_Color2;}
+	virtual void SetColor2(const QColor &color2) {m_Color2 = color2;}
+	virtual bool HasColor2() const {return false;}
 	virtual const QColor& GetTextColor() const {return m_TextColor;}
 	virtual void SetTextColor(const QColor &textColor) {m_TextColor = textColor;}
+	virtual const QColor& GetTextColor2() const {return m_TextColor2;}
+	virtual void SetTextColor2(const QColor &textColor2) {m_TextColor2 = textColor2;}
+	virtual bool HasTextColor2() const {return false;}
 	virtual bool GetSelected() const;
 	virtual void SetSelected(bool selected);
 	virtual const QString& GetMin() const {return m_Min;}
@@ -111,14 +129,21 @@ protected:
 	bool		m_Visible;
 	QString		m_Path;
 	QString		m_Path2;
-	QString		m_RecvPath;
+	QString		m_LabelPath;
 	QString		m_FeedbackPath;
+<<<<<<< HEAD
 	QString		m_ActFeedbackPath; //once we have swapped out wildcards etc, needs to be cached here I think
 
+=======
+	QString		m_TriggerPath;
+>>>>>>> ElectronicTheatreControlsLabs/master
 	QString		m_Text;
 	QString		m_ImagePath;
+	QString		m_ImagePath2;
 	QColor		m_Color;
+	QColor		m_Color2;
 	QColor		m_TextColor;
+	QColor		m_TextColor2;
 	QWidget		*m_Widget;
 	QString		m_Min;
 	QString		m_Max;

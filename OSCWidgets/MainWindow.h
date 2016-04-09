@@ -38,6 +38,11 @@
 #include "NetworkThreads.h"
 #endif
 
+#ifndef LOG_FILE_H
+#include "LogFile.h"
+#endif
+
+class LogWidget;
 class SettingsPanel;
 class AdvancedPanel;
 
@@ -177,13 +182,10 @@ private:
 
 	EosLog				m_Log;
 	EosLog::LOG_Q		m_TempLogQ;
-	QListWidget			*m_LogWidget;
+	LogWidget			*m_LogWidget;
 	QSettings			m_Settings;
 	int					m_LogDepth;
-	int					m_FileDepth;
-	int					m_FileLineCount;
-	QFile				m_LogFile;
-	QTextStream			m_LogStream;
+	LogFile				m_LogFile;
 	QString				m_FilePath;
 	bool				m_Unsaved;
 	QAction				*m_MenuActionFrames;
@@ -215,8 +217,6 @@ private:
 	virtual bool SaveFile(const QString &path, bool setLastFile);
 	virtual bool SaveSettings(QStringList &lines);
 	virtual bool LoadSettings(QStringList &lines, int &index);
-	virtual void InitLogFile();
-	virtual void ShutdownLogFile();
 	virtual void ClearRecvQ();
 	virtual void ProcessRecvQ();
 	virtual void ClearNetEventQ();

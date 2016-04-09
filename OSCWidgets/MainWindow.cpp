@@ -20,12 +20,13 @@
 
 #include "MainWindow.h"
 #include "SettingsPanel.h"
+#include "LogWidget.h"
 #include "Utils.h"
 #include <time.h>
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#define APP_VERSION	"0.2"
+#define APP_VERSION	"0.6"
 
 #define MIN_OPACITY 10
 
@@ -177,9 +178,7 @@ MainWindow::MainWindow(QWidget* parent/*=0*/, Qt::WindowFlags f/*=0*/)
 	: QWidget(parent, f)
 	, m_Settings("ETC", "OSCWidgets")
 	, m_LogDepth(200)
-	, m_FileDepth(10000)
 	, m_Unsaved(false)
-	, m_FileLineCount(0)
 	, m_UdpOutThread(0)
 	, m_TcpClientThread(0)
 	, m_ToyTreeToyIndex(0)
@@ -205,12 +204,10 @@ MainWindow::MainWindow(QWidget* parent/*=0*/, Qt::WindowFlags f/*=0*/)
 		m_LogDepth = 1;
 	m_Settings.setValue(SETTING_LOG_DEPTH, m_LogDepth);
 
-	m_FileDepth = m_Settings.value(SETTING_FILE_DEPTH, m_FileDepth).toInt();
-	
 	LoadAdvancedSettings();
 	SaveAdvancedSettings();
 
-	InitLogFile();
+	m_LogFile.Initialize(QDir(QDir::tempPath()).absoluteFilePath("OSCWidgets.txt"), m_Settings.value(SETTING_FILE_DEPTH,10000).toInt());
 
 	QGridLayout *layout = new QGridLayout(this);
 
@@ -258,15 +255,7 @@ MainWindow::MainWindow(QWidget* parent/*=0*/, Qt::WindowFlags f/*=0*/)
 	QGridLayout *logLayout = new QGridLayout(logBase);
 	leftSplitter->addWidget(logBase);
 
-	m_LogWidget = new QListWidget(logBase);
-	QPalette logPal( m_LogWidget->palette() );
-	logPal.setColor(QPalette::Base, BG_COLOR);
-	m_LogWidget->setPalette(logPal);
-	m_LogWidget->setSelectionMode(QAbstractItemView::NoSelection);
-	m_LogWidget->setMovement(QListView::Static);
-	QFont fnt("Monospace");
-	fnt.setStyleHint(QFont::TypeWriter);
-	m_LogWidget->setFont(fnt);
+	m_LogWidget = new LogWidget(m_LogDepth, logBase);
 	logLayout->addWidget(m_LogWidget, 0, 0);
 
 	m_Log.AddInfo( QString("OSCWidgets v%1").arg(APP_VERSION).toUtf8().constData() );
@@ -304,8 +293,8 @@ MainWindow::~MainWindow()
 		delete m_Toys;
 		m_Toys = 0;
 	}
-	
-	ShutdownLogFile();
+
+	m_LogFile.Shutdown();
 
 	m_SystemTray->setContextMenu(0);
 
@@ -365,49 +354,14 @@ QMenuBar* MainWindow::InitMenuBar(bool systemMenuBar)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void MainWindow::InitLogFile()
-{
-	if(m_FileDepth > 0)
-	{
-		m_LogFile.setFileName( QDir(QDir::tempPath()).absoluteFilePath("OSCWidgets.txt") );
-		if( m_LogFile.open(QIODevice::WriteOnly|QIODevice::Truncate|QIODevice::Text) )
-		{
-			m_LogStream.setDevice( &m_LogFile );
-			m_LogStream.setCodec("UTF-8");
-			m_LogStream.setGenerateByteOrderMark(true);
-		}
-	}
-
-	m_FileLineCount = 0;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-void MainWindow::ShutdownLogFile()
-{
-	if( m_LogFile.isOpen() )
-	{
-		m_LogStream.flush();
-		m_LogFile.close();
-	}
-
-	m_FileLineCount = 0;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
 void MainWindow::FlushLogQ(EosLog::LOG_Q &logQ)
 {
 	if( !logQ.empty() )
 	{
-		m_LogWidget->setUpdatesEnabled(false);
-
-		QScrollBar *vs = m_LogWidget->verticalScrollBar();
-		bool dontAutoScroll = (vs && vs->isEnabled() && vs->isVisible() && vs->value()<vs->maximum());
-
-		for(EosLog::LOG_Q::const_iterator i=logQ.begin(); i!=logQ.end(); i++)
+		// add timestamp text
+		for(EosLog::LOG_Q::iterator i=logQ.begin(); i!=logQ.end(); i++)
 		{
-			const EosLog::sLogMsg logMsg = *i;
+			EosLog::sLogMsg &logMsg = *i;
 
 			tm *t = localtime( &logMsg.timestamp );
 
@@ -415,62 +369,20 @@ void MainWindow::FlushLogQ(EosLog::LOG_Q &logQ)
 			if( logMsg.text.c_str() )
 				msgText = QString::fromUtf8( logMsg.text.c_str() );
 
-			QString itemText = QString("[ %1:%2:%3 ]  %4")
+			QString itemText = QString("[%1:%2:%3] %4")
 				.arg(t->tm_hour, 2)
 				.arg(t->tm_min, 2, 10, QChar('0'))
 				.arg(t->tm_sec, 2, 10, QChar('0'))
 				.arg( msgText );
 
-			if( m_LogFile.isOpen() )
-			{
-				m_LogStream << itemText;
-				m_LogStream << "\n";
+			logMsg.text = itemText.toUtf8().constData();
+		}
 
-				if(++m_FileLineCount > m_FileDepth)
-				{
-					ShutdownLogFile();
-					InitLogFile();
-				}
-			}
+		// add to widget
+		m_LogWidget->Log(logQ);
 
-			QListWidgetItem *item = new QListWidgetItem(itemText);
-			switch( logMsg.type )
-			{
-				case EosLog::LOG_MSG_TYPE_DEBUG:
-					item->setForeground(MUTED_COLOR);
-					break;
-
-				case EosLog::LOG_MSG_TYPE_WARNING:
-					item->setForeground(WARNING_COLOR);
-					break;
-
-				case EosLog::LOG_MSG_TYPE_ERROR:
-					item->setForeground(ERROR_COLOR);
-					break;
-
-				case EosLog::LOG_MSG_TYPE_RECV:
-					item->setForeground(RECV_COLOR);
-					break;
-
-				case EosLog::LOG_MSG_TYPE_SEND:
-					item->setForeground(SEND_COLOR);
-					break;
-			}
-
-			m_LogWidget->addItem(item);
-
-			while(m_LogWidget->count() > m_LogDepth)
-			{
-				QListWidgetItem *item = m_LogWidget->takeItem(0);
-				if( item )
-					delete item;
-			}
-		}		
-
-		m_LogWidget->setUpdatesEnabled(true);
-	
-		if(	!dontAutoScroll )
-			m_LogWidget->setCurrentRow(m_LogWidget->count() - 1);
+		// add to file
+		m_LogFile.Log(logQ);
 	}
 }
 
@@ -1099,19 +1011,17 @@ void MainWindow::onSaveAsFileClicked()
 
 void MainWindow::onClearLogClicked()
 {
-	m_LogWidget->clear();
+	m_LogWidget->Clear();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 
 void MainWindow::onOpenLogClicked()
 {
-	if( m_LogFile.exists() )
-	{
-		if( m_LogFile.isOpen() )
-			m_LogStream.flush();
-		QDesktopServices::openUrl( QUrl::fromLocalFile(m_LogFile.fileName()) );
-	}
+	const QString &path = m_LogFile.GetPath();
+
+	if( QFileInfo(path).exists() )
+		QDesktopServices::openUrl( QUrl::fromLocalFile(path) );
 }
 
 ////////////////////////////////////////////////////////////////////////////////

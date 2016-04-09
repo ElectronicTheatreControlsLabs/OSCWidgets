@@ -40,6 +40,7 @@ public:
 	virtual void SetLabel(const QString &label);
 	virtual void SetPos(const QPointF &pos);
 	virtual void RecvPos(const QPointF &pos);
+	virtual void TriggerPos(const QPointF &pos);
 	virtual const QPointF& GetPos() const {return m_Pos;}
 	virtual bool GetMouseDown() const {return m_MouseDown;}
 
@@ -94,6 +95,7 @@ public:
 	virtual void SetTextColor(const QColor &textColor);
 	virtual bool HasPath2() const {return true;}
 	virtual bool HasFeedbackPath() const {return true;}
+	virtual bool HasTriggerPath() const {return true;}
 	virtual bool HasMinMax2() const {return true;}
 	virtual void SetLabel(const QString &label);
 	virtual void Recv(const QString &path, const OSCArgument *args, size_t count);	

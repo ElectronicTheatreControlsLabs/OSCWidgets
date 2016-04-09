@@ -40,6 +40,7 @@ public:
 	virtual void SetLabel(const QString &label);
 	virtual void SetPercent(float percent);
 	virtual void RecvPercent(float percent);
+	virtual void TriggerPercent(float percent);
 	virtual float GetPercent() const {return m_Percent;}
 	virtual bool GetMouseDown() const {return m_MouseDown;}
 
@@ -92,6 +93,7 @@ public:
 	virtual void SetColor(const QColor &color);
 	virtual void SetTextColor(const QColor &textColor);
 	virtual bool HasFeedbackPath() const {return true;}
+	virtual bool HasTriggerPath() const {return true;}
 	virtual void SetLabel(const QString &label);
 	virtual void Recv(const QString &path, const OSCArgument *args, size_t count);	
 	

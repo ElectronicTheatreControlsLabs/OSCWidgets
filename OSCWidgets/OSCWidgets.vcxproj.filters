@@ -177,6 +177,15 @@
     <ClCompile Include="moc\moc_ToyActivity.cpp">
       <Filter>OSCWidgets\Source Files\moc</Filter>
     </ClCompile>
+    <ClCompile Include="LogFile.cpp">
+      <Filter>OSCWidgets\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="LogWidget.cpp">
+      <Filter>OSCWidgets\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="moc\moc_LogWidget.cpp">
+      <Filter>OSCWidgets\Source Files\moc</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QtInclude.h">
@@ -219,6 +228,9 @@
       <Filter>OSCWidgets\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Utils.h">
+      <Filter>OSCWidgets\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="LogFile.h">
       <Filter>OSCWidgets\Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -275,6 +287,9 @@
       <Filter>OSCWidgets\Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="ToyActivity.h">
+      <Filter>OSCWidgets\Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="LogWidget.h">
       <Filter>OSCWidgets\Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

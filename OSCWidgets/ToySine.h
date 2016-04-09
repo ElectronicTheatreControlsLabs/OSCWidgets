@@ -88,7 +88,7 @@ public:
 	virtual void SetImagePath(const QString &imagePath);
 	virtual void SetColor(const QColor &color);
 	virtual void SetTextColor(const QColor &textColor);
-	virtual bool HasFeedbackPath() const {return true;}
+	virtual bool HasTriggerPath() const {return true;}
 	virtual void SetBPM(const QString &bpm);
 	virtual bool HasBPM() const {return true;}
 	virtual void SetLabel(const QString &label);

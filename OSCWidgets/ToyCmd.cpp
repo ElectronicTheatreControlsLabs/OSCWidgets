@@ -91,7 +91,7 @@ void ToyCmdWidget::SetText(const QString &text)
 void ToyCmdWidget::SetImagePath(const QString &imagePath)
 {
 	ToyWidget::SetImagePath(imagePath);
-	m_Send->SetImagePath(imagePath);
+	m_Send->SetImagePath(0, imagePath);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -136,7 +136,7 @@ void ToyCmdWidget::SetTextColor(const QColor &textColor)
 
 void ToyCmdWidget::Recv(const QString &path, const OSCArgument *args, size_t count)
 {
-	if(path == m_FeedbackPath)
+	if(path == m_TriggerPath)
     {
         bool edge = false;
         

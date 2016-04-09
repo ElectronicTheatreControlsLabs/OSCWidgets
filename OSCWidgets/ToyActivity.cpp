@@ -36,23 +36,9 @@ FadeActivity::FadeActivity(QWidget *parent)
 	, m_FadeState(FADE_OFF)
 	, m_FadeElapsed(0)
 {
+	setAttribute(Qt::WA_PaintOnScreen);
 	m_ActivityTimer = new QTimer(this);
 	connect(m_ActivityTimer, SIGNAL(timeout()), this, SLOT(onUpdate()));
-}
-
-////////////////////////////////////////////////////////////////////////////////
-
-void FadeActivity::SetDefaultFadeTiming(bool flash)
-{
-	sFadeTiming fadeTiming;
-	if( flash )
-	{
-		fadeTiming.in = 0;
-		fadeTiming.hold = 0;
-		fadeTiming.out = 1500;
-	}
-
-	SetFadeTiming(fadeTiming);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -98,6 +84,14 @@ void FadeActivity::SetOn(bool b)
 				onUpdate();
 				break;
 
+			case FADE_IN:
+				onUpdate();
+				break;
+
+			case FADE_ON:
+				m_FadeElapsed = 0;
+				break;
+
 			case FADE_OUT:
 				m_FadeElapsed = static_cast<unsigned int>( qRound((1.0f-GetFadePercent())*m_FadeTiming.in) );
 				m_FadeState = FADE_IN;
@@ -119,6 +113,10 @@ void FadeActivity::SetOn(bool b)
 				m_FadeElapsed = 0;
 				m_FadeState = FADE_OUT;
 				StartActivityTimer();
+				onUpdate();
+				break;
+
+			case FADE_OUT:
 				onUpdate();
 				break;
 		}
@@ -177,8 +175,6 @@ float FadeActivity::GetFadePercent() const
 
 void FadeActivity::onUpdate()
 {
-	float opacity = GetFadeOpacity();
-
 	m_FadeElapsed += m_ActivityEosTimer.Restart();
 
 	switch( m_FadeState )
@@ -189,7 +185,6 @@ void FadeActivity::onUpdate()
 				{
 					m_FadeState = FADE_ON;
 					m_FadeElapsed = 0;
-					onUpdate();
 				}
 			}
 			break;
@@ -204,7 +199,6 @@ void FadeActivity::onUpdate()
 				{
 					m_FadeState = FADE_OUT;
 					m_FadeElapsed = 0;
-					onUpdate();
 				}
 			}
 			break;
@@ -224,8 +218,7 @@ void FadeActivity::onUpdate()
 			break;
 	}
 
-	if(opacity != GetFadeOpacity())
-		update();
+	update();
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -240,7 +233,8 @@ void FadeActivity::paintEvent(QPaintEvent* /*event*/)
 
 	painter.setOpacity( GetFadeOpacity() );
 
-	if( m_Image.isNull() )
+	const QPixmap &pixmap = m_Images[m_ImageIndex].pixmap;
+	if( pixmap.isNull() )
 	{
 		painter.setPen(Qt::NoPen);
 		painter.setBrush( palette().color(QPalette::Button) );
@@ -248,9 +242,9 @@ void FadeActivity::paintEvent(QPaintEvent* /*event*/)
 	}
 	else
 	{
-		painter.drawPixmap(	r.x() + qRound((r.width()-m_Image.width())*0.5),
-							r.y() + qRound((r.height()-m_Image.height())*0.5),
-							m_Image );
+		painter.drawPixmap(	r.x() + qRound((r.width()-pixmap.width())*0.5),
+							r.y() + qRound((r.height()-pixmap.height())*0.5),
+							pixmap );
 	}
 
 	painter.setOpacity(1.0);
@@ -299,10 +293,13 @@ void FadeActivity::paintEvent(QPaintEvent* /*event*/)
 
 ToyActivityWidget::ToyActivityWidget(QWidget *parent)
 	: ToyWidget(parent)
+	, m_FadeDuration( static_cast<unsigned int>(FadeActivity::FADE_HOLD_INFINITE) )
+	, m_HoldDuration( static_cast<unsigned int>(FadeActivity::FADE_HOLD_INFINITE) )
 {
 	m_Min = "0.001";
 	m_Max = "1000.0";
-	m_HelpText = tr("If Min or Max blank, flash on any activity\n\nOSC Trigger:\nNo Arguments = Flash\nArgument(inside Min/Max range) = On\nArgument(outside Min/Max range) = Off");
+	m_Min2 = m_Max2 = QString();
+	m_HelpText = tr("If Min or Max blank, flash on any activity\n\nOSC Trigger:\nNo Arguments = Flash\nArgument(inside Min/Max range) = On\nArgument(outside Min/Max range) = Off\n\nOptional:\nMin2 = Fade Duration (ms)\nMax2 = Hold Duration (ms)");
 
 	m_Widget = new FadeActivity(this);	
 
@@ -328,7 +325,7 @@ void ToyActivityWidget::SetText(const QString &text)
 void ToyActivityWidget::SetImagePath(const QString &imagePath)
 {
 	ToyWidget::SetImagePath(imagePath);
-	static_cast<FadeActivity*>(m_Widget)->SetImagePath(m_ImagePath);
+	static_cast<FadeActivity*>(m_Widget)->SetImagePath(0, m_ImagePath);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -360,6 +357,65 @@ void ToyActivityWidget::SetLabel(const QString &label)
 
 ////////////////////////////////////////////////////////////////////////////////
 
+void ToyActivityWidget::SetMin2(const QString &n)
+{
+	ToyWidget::SetMin2(n);
+
+	if( m_Min2.isEmpty() )
+		m_FadeDuration = static_cast<unsigned int>(FadeActivity::FADE_HOLD_INFINITE);
+	else
+		m_FadeDuration = m_Min2.toUInt();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ToyActivityWidget::SetMax2(const QString &n)
+{
+	ToyWidget::SetMax2(n);
+
+	if( m_Max2.isEmpty() )
+		m_HoldDuration = static_cast<unsigned int>(FadeActivity::FADE_HOLD_INFINITE);
+	else
+		m_HoldDuration = m_Max2.toUInt();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ToyActivityWidget::MakeFadeTiming(bool flash, FadeActivity::sFadeTiming &fadeTiming)
+{
+	if(m_FadeDuration == static_cast<unsigned int>(FadeActivity::FADE_HOLD_INFINITE))
+	{
+		// not specified, use default
+		fadeTiming.in = fadeTiming.out = 200;
+	}
+	else
+	{
+		// use specified duration
+		fadeTiming.in = fadeTiming.out = m_FadeDuration;
+	}
+
+	if( flash )
+	{
+		if(m_HoldDuration == static_cast<unsigned int>(FadeActivity::FADE_HOLD_INFINITE))
+		{
+			// not specified, use default
+			fadeTiming.hold = 0;
+		}
+		else
+		{
+			// use specified duration
+			fadeTiming.hold = m_HoldDuration;
+		}
+	}
+	else
+	{
+		// hold forever
+		fadeTiming.hold = static_cast<unsigned int>(FadeActivity::FADE_HOLD_INFINITE);
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 void ToyActivityWidget::Recv(const QString &path, const OSCArgument *args, size_t count)
 {
   
@@ -373,7 +429,9 @@ void ToyActivityWidget::Recv(const QString &path, const OSCArgument *args, size_
 			args==0 ||
 			count==0 )
 		{
-			activity->SetDefaultFadeTiming(/*flash*/true);
+			FadeActivity::sFadeTiming fadeTiming;
+			MakeFadeTiming(/*flash*/true, fadeTiming);
+			activity->SetFadeTiming(fadeTiming);
 			activity->SetOn(true);
 		}
 		else
@@ -391,7 +449,9 @@ void ToyActivityWidget::Recv(const QString &path, const OSCArgument *args, size_
 					on = true;
 			}
 
-			activity->SetDefaultFadeTiming(/*flash*/false);
+			FadeActivity::sFadeTiming fadeTiming;
+			MakeFadeTiming(/*flash*/false, fadeTiming);
+			activity->SetFadeTiming(fadeTiming);
 			activity->SetOn(on);
 		}
 

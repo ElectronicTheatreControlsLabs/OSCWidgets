@@ -1,0 +1,7 @@
+﻿2, 10.101.90.101, 8000, 9000, 1, 0, 100
+0, 526, 78, 404, 84, 0, 1, 5, 1, Buttons, , ff282828, 0
+1, /button/1, , , , , 1, , , ff3c3c3c, ffc8c8c8, ffc8c8c8, ff3c3c3c, , 0, , 1, 
+1, /button/2, , , , , 2, , , ff3c3c3c, ffc8c8c8, ffc8c8c8, ff3c3c3c, , 2, , 3, 
+1, /button/3, , , , , 3, , , ff3c3c3c, ffc8c8c8, ffc8c8c8, ff3c3c3c, , 4, , 5, 
+1, /button/4, , , , , 4, , , ff3c3c3c, ffc8c8c8, ffc8c8c8, ff3c3c3c, , 6, , 7, 
+1, /button/5, , , , , 5, , , ff3c3c3c, ffc8c8c8, ffc8c8c8, ff3c3c3c, , 8, , 9, 

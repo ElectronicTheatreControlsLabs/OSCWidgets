@@ -19,76 +19,39 @@
 // THE SOFTWARE.
 
 #pragma once
-#ifndef FADE_BUTTON_H
-#define FADE_BUTTON_H
+#ifndef LOG_FILE_H
+#define LOG_FILE_H
 
 #ifndef QT_INCLUDE_H
 #include "QtInclude.h"
 #endif
 
-#ifndef EOS_TIMER_H
-#include "EosTimer.h"
+#ifndef EOS_LOG_H
+#include "EosLog.h"
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////
 
-class FadeButton
-	: public QPushButton
+class LogFile
+	: private QThread
 {
-	Q_OBJECT
-	
 public:
-	enum EnumConstants
-	{
-		NUM_IMAGES	= 2
-	};
-	
-	FadeButton(QWidget *parent);
-	virtual ~FadeButton();
+	LogFile();
+	virtual ~LogFile();
 
-	virtual const QString& GetLabel() const {return m_Label;}
-	virtual void SetLabel(const QString &label);
-	virtual const QString& GetImagePath(size_t index) const;
-	virtual void SetImagePath(size_t index, const QString &imagePath);
-	virtual void SetImageIndex(size_t index);
-    virtual void Press(bool user=true);
-    virtual void Release(bool user=true);
-	virtual void Flash();
-	
-private slots:
-	void onPressed();
-	void onReleased();
-	void onClickTimeout();
-	void onHoverTimeout();
-	
+	virtual void Initialize(const QString &path, int fileDepth);
+	virtual void Shutdown();
+	virtual void Log(EosLog::LOG_Q &logQ);
+	virtual const QString& GetPath() const {return m_Path;}
+
 protected:
-	struct sImage
-	{
-		QString path;
-		QPixmap	pixmap;
-	};
-	
-	float		m_Click;
-	QTimer		*m_ClickTimer;
-	EosTimer	m_ClickTimestamp;
-	float		m_Hover;
-	QTimer		*m_HoverTimer;
-	EosTimer	m_HoverTimestamp;
-	QString		m_Label;
-	sImage		m_Images[NUM_IMAGES];
-	size_t		m_ImageIndex;
-	
-	virtual void StartClick();
-	virtual void StopClick();
-	virtual void SetClick(float percent);
-	virtual void StartHover();
-	virtual void StopHover();
-	virtual void SetHover(float percent);
-	virtual void AutoSizeFont();
-	virtual void UpdateImage(size_t index);
-	virtual void resizeEvent(QResizeEvent *event);
-	virtual void paintEvent(QPaintEvent *event);
-	virtual bool event(QEvent *event);
+	bool			m_Run;
+	QString			m_Path;
+	int				m_FileDepth;
+	EosLog::LOG_Q	m_Q;
+	QMutex			m_Mutex;
+
+	virtual void run();
 };
 
 ////////////////////////////////////////////////////////////////////////////////

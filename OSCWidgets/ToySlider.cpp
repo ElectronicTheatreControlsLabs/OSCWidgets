@@ -104,6 +104,14 @@ void FadeSlider::RecvPercent(float percent)
 
 ////////////////////////////////////////////////////////////////////////////////
 
+void FadeSlider::TriggerPercent(float percent)
+{
+	if( !m_MouseDown )
+		SetPercentPrivate(percent, /*user*/true);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
 void FadeSlider::AutoSizeFont()
 {
 	QFont fnt( font() );
@@ -220,11 +228,12 @@ void FadeSlider::paintEvent(QPaintEvent* /*event*/)
 		clip.addRoundedRect(r, ROUNDED, ROUNDED);
 		painter.setClipPath(clip);
 
-		if( !m_Image.isNull() )
+		const QPixmap &pixmap = m_Images[m_ImageIndex].pixmap;
+		if( !pixmap.isNull() )
 		{
-			painter.drawPixmap(	r.x() + qRound((r.width()-m_Image.width())*0.5),
-								r.y() + qRound((r.height()-m_Image.height())*0.5),
-								m_Image );
+			painter.drawPixmap(	r.x() + qRound((r.width()-pixmap.width())*0.5),
+								r.y() + qRound((r.height()-pixmap.height())*0.5),
+								pixmap );
 		}
 
 		painter.setClipping(false);
@@ -235,7 +244,7 @@ void FadeSlider::paintEvent(QPaintEvent* /*event*/)
 
 		painter.setClipping(true);
 
-		if( !m_Image.isNull() )
+		if( !pixmap.isNull() )
 			painter.setOpacity(0.8);
 
 		int y = PercentToPos(m_Percent);
@@ -352,7 +361,7 @@ void ToySliderWidget::SetText(const QString &text)
 void ToySliderWidget::SetImagePath(const QString &imagePath)
 {
 	ToyWidget::SetImagePath(imagePath);
-	static_cast<FadeSlider*>(m_Widget)->SetImagePath(m_ImagePath);
+	static_cast<FadeSlider*>(m_Widget)->SetImagePath(0, m_ImagePath);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -388,7 +397,9 @@ void ToySliderWidget::Recv(const QString &path, const OSCArgument *args, size_t 
 {
 	if(args && count>0)
 	{
-		if(path == m_FeedbackPath)
+		bool isFeedback = (path == m_FeedbackPath);
+		bool isTrigger = (!isFeedback && path==m_TriggerPath);
+		if(isFeedback || isTrigger)
 		{
 			FadeSlider *slider = static_cast<FadeSlider*>(m_Widget);
 
@@ -400,7 +411,15 @@ void ToySliderWidget::Recv(const QString &path, const OSCArgument *args, size_t 
 			float maxValue = m_Max.toFloat();
 			float range = (maxValue - minValue);
 			value = ((range==0) ? 0 : (value-minValue)/range);
-			slider->RecvPercent( qBound(0.0f,value,1.0f) );
+			if(value < 0)
+				value = 0;
+			else if(value > 1.0f)
+				value = 1.0f;
+
+			if( isFeedback )
+				slider->RecvPercent(value);
+			else
+				slider->TriggerPercent(value);
 		}
 		else
 		{

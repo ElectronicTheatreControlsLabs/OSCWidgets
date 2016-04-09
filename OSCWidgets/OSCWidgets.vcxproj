@@ -87,7 +87,10 @@
     <ClCompile Include="..\..\EosSyncLib\EosSyncLib\OSCParser.cpp" />
     <ClCompile Include="EditPanel.cpp" />
     <ClCompile Include="FadeButton.cpp" />
+    <ClCompile Include="LogFile.cpp" />
+    <ClCompile Include="LogWidget.cpp" />
     <ClCompile Include="moc\moc_FadeButton.cpp" />
+    <ClCompile Include="moc\moc_LogWidget.cpp" />
     <ClCompile Include="moc\moc_ToyActivity.cpp" />
     <ClCompile Include="moc\moc_ToyFlicker.cpp" />
     <ClCompile Include="ToyActivity.cpp" />
@@ -227,6 +230,17 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\qt\4.8.1\bin\moc.exe ToyActivity.h -o moc\moc_ToyActivity.cpp</Command>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">moc ToyActivity.h</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">moc\moc_ToyActivity.cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\qt\4.8.1\bin\moc.exe</AdditionalInputs>
+    </CustomBuild>
+    <ClInclude Include="LogFile.h" />
+    <CustomBuild Include="LogWidget.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\qt\4.8.1\bin\moc.exe LogWidget.h -o moc\moc_LogWidget.cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc LogWidget.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc\moc_LogWidget.cpp</Outputs>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">C:\qt\4.8.1\bin\moc.exe</AdditionalInputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\qt\4.8.1\bin\moc.exe LogWidget.h -o moc\moc_LogWidget.cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">moc LogWidget.h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">moc\moc_LogWidget.cpp</Outputs>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">C:\qt\4.8.1\bin\moc.exe</AdditionalInputs>
     </CustomBuild>
     <ClInclude Include="Utils.h" />

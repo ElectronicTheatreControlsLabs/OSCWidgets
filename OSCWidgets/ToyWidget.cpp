@@ -91,11 +91,11 @@ void ToyWidget::UpdateVisible()
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void ToyWidget::SetRecvPath(const QString &recvPath)
+void ToyWidget::SetLabelPath(const QString &labelPath)
 {
-	if(m_RecvPath != recvPath)
+	if(m_LabelPath != labelPath)
 	{
-		m_RecvPath = recvPath;
+		m_LabelPath = labelPath;
 		UpdateToolTip();
 	}
 }
@@ -138,6 +138,17 @@ QString& ToyWidget::GetFeedbackPath() //does this need to be const??
 
 }
 
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ToyWidget::SetTriggerPath(const QString &triggerPath)
+{
+	if(m_TriggerPath != triggerPath)
+	{
+		m_TriggerPath = triggerPath;
+		UpdateToolTip();
+	}
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -192,18 +203,25 @@ void ToyWidget::UpdateToolTip()
 			tip = tr("\nOSC Output 2: %1").arg(m_Path2);
 	}
 
-	if( !m_RecvPath.isEmpty() )
+	if( !m_LabelPath.isEmpty() )
 	{
 		if( !tip.isEmpty() )
 			tip.append("\n");
-		tip.append( tr("OSC Label: %1").arg(m_RecvPath) );
+		tip.append( tr("OSC Label: %1").arg(m_LabelPath) );
 	}
 
 	if( !m_FeedbackPath.isEmpty() )
 	{
 		if( !tip.isEmpty() )
 			tip.append("\n");
-		tip.append( tr("OSC Trigger: %1").arg(m_FeedbackPath) );
+		tip.append( tr("OSC Feedback: %1").arg(m_FeedbackPath) );
+	}
+
+	if( !m_TriggerPath.isEmpty() )
+	{
+		if( !tip.isEmpty() )
+			tip.append("\n");
+		tip.append( tr("OSC Trigger: %1").arg(m_TriggerPath) );
 	}
 
 	m_Widget->setToolTip(tip);
@@ -229,16 +247,23 @@ bool ToyWidget::Save(EosLog &log, const QString &path, QStringList &lines)
 
 	QString imagePath(m_ImagePath);
 	Toy::ResourceAbsolutePathToRelative(&log, path, imagePath);
+	
+	QString imagePath2(m_ImagePath2);
+	Toy::ResourceAbsolutePathToRelative(&log, path, imagePath2);
 
 	line.append( QString("%1").arg(static_cast<int>(m_Visible ? 1 : 0)) );
 	line.append( QString(", %1").arg(Utils::QuotedString(m_Path)) );
 	line.append( QString(", %1").arg(Utils::QuotedString(m_Path2)) );
-	line.append( QString(", %1").arg(Utils::QuotedString(m_RecvPath)) );
+	line.append( QString(", %1").arg(Utils::QuotedString(m_LabelPath)) );
 	line.append( QString(", %1").arg(Utils::QuotedString(m_FeedbackPath)) );
+	line.append( QString(", %1").arg(Utils::QuotedString(m_TriggerPath)) );
 	line.append( QString(", %1").arg(Utils::QuotedString(m_Text)) );
 	line.append( QString(", %1").arg(Utils::QuotedString(imagePath)) );
+	line.append( QString(", %1").arg(Utils::QuotedString(imagePath2)) );
 	line.append( QString(", %1").arg(m_Color.rgba(),0,16) );
+	line.append( QString(", %1").arg(m_Color2.rgba(),0,16) );
 	line.append( QString(", %1").arg(m_TextColor.rgba(),0,16) );
+	line.append( QString(", %1").arg(m_TextColor2.rgba(),0,16) );
 	line.append( QString(", %1").arg(m_Min) );
 	line.append( QString(", %1").arg(m_Max) );
 	line.append( QString(", %1").arg(m_Min2) );
@@ -269,44 +294,60 @@ bool ToyWidget::Load(EosLog &log, const QString &path, QStringList &lines, int &
 			SetPath2( items[2] );
 
 		if(items.size() > 3)
-			SetRecvPath( items[3] );
+			SetLabelPath( items[3] );
 
 		if(HasFeedbackPath() && items.size() > 4)
 			SetFeedbackPath( items[4] );
 
-		if(items.size() > 5)
-			SetText( items[5] );
+		if(HasTriggerPath() && items.size() > 5)
+			SetTriggerPath( items[5] );
 
 		if(items.size() > 6)
+			SetText( items[6] );
+
+		if(items.size() > 7)
 		{
-			QString imagePath( items[6] );
+			QString imagePath( items[7] );
 			Toy::ResourceRelativePathToAbsolute(&log, path, imagePath);
 			SetImagePath(imagePath);
 		}
-
-		if(items.size() > 7)
-			SetColor( items[7].toUInt(0,16) );
-
-		if(items.size() > 8)
-			SetTextColor( items[8].toUInt(0,16) );
+		
+		if(HasImagePath2() && items.size()>8)
+		{
+			QString imagePath2( items[8] );
+			Toy::ResourceRelativePathToAbsolute(&log, path, imagePath2);
+			SetImagePath2(imagePath2);
+		}
 
 		if(items.size() > 9)
-			SetMin( items[9] );
+			SetColor( items[9].toUInt(0,16) );
+		
+		if(HasColor2() && items.size()>10)
+			SetColor2( items[10].toUInt(0,16) );
 
-		if(items.size() > 10)
-			SetMax( items[10] );
+		if(items.size() > 11)
+			SetTextColor( items[11].toUInt(0,16) );
+		
+		if(HasTextColor2() && items.size()>12)
+			SetTextColor2( items[12].toUInt(0,16) );
+
+		if(items.size() > 13)
+			SetMin( items[13] );
+
+		if(items.size() > 14)
+			SetMax( items[14] );
 
 		if( HasMinMax2() )
 		{
-			if(items.size() > 11)
-				SetMin2( items[11] );
+			if(items.size() > 15)
+				SetMin2( items[15] );
 
-			if(items.size() > 12)
-				SetMax2( items[12] );
+			if(items.size() > 16)
+				SetMax2( items[16] );
 		}
 
-		if(HasBPM() && items.size()>13)
-			SetBPM( items[13] );
+		if(HasBPM() && items.size()>17)
+			SetBPM( items[17] );
 
 		return true;
 	}

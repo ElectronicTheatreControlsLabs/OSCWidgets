@@ -46,9 +46,9 @@ public:
 	struct sFadeTiming
 	{
 		sFadeTiming()
-			: in(200)
-			, hold( static_cast<unsigned int>(FADE_HOLD_INFINITE) )
-			, out(500)
+			: in(0)
+			, hold(0)
+			, out(0)
 		{}
 
 		bool operator==(const sFadeTiming &other) const;
@@ -63,7 +63,6 @@ public:
 
 	virtual void SetText(const QString &text);
 	virtual void SetFadeTiming(const sFadeTiming &fadeTiming);
-	virtual void SetDefaultFadeTiming(bool flash);
 	virtual void SetOn(bool b);
 
 private slots:
@@ -102,10 +101,19 @@ public:
 	virtual void SetImagePath(const QString &imagePath);
 	virtual void SetColor(const QColor &color);
 	virtual void SetTextColor(const QColor &textColor);
+	virtual void SetMin2(const QString &n);
+	virtual void SetMax2(const QString &n);
 	virtual void Recv(const QString &path, const OSCArgument *args, size_t count);
 	virtual void SetLabel(const QString &label);
 	virtual bool HasPath() const {return false;}
+	virtual bool HasMinMax2() const {return true;}
     virtual bool HasFeedbackPath() const {return true;}
+
+protected:
+	unsigned int	m_FadeDuration;
+	unsigned int	m_HoldDuration;
+
+	virtual void MakeFadeTiming(bool flash, FadeActivity::sFadeTiming &fadeTiming);
 };
 
 ////////////////////////////////////////////////////////////////////////////////

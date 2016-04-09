@@ -59,7 +59,6 @@
 
 #include <QtGui/QApplication>
 #include <QtGui/QWidget>
-#include <QtGui/QListWidget>
 #include <QtGui/QGridLayout>
 #include <QtGui/QPushButton>
 #include <QtGui/QPlastiqueStyle>
