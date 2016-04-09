@@ -63,7 +63,8 @@ public:
 	virtual bool HasPath2() const {return false;}
 	virtual const QString& GetRecvPath() const {return m_RecvPath;}
 	virtual void SetRecvPath(const QString &recvPath);
-	virtual const QString& GetFeedbackPath() const;
+	virtual const QString& GetRawFeedbackPath() const {return m_FeedbackPath;}; //the path as stored in object incl %x or simply blank
+	virtual QString& GetFeedbackPath(); //the path once manipulated
 	virtual void SetFeedbackPath(const QString &feedbackPath);
 	virtual bool HasFeedbackPath() const {return false;}
 	virtual const QString& GetText() const {return m_Text;}
@@ -95,6 +96,10 @@ public:
 	virtual bool Save(EosLog &log, const QString &path, QStringList &lines);
 	virtual bool Load(EosLog &log, const QString &path, QStringList &lines, int &index);
 	
+	virtual void setRow(const int row) {m_row = row;}
+	virtual void setCol(const int col) {m_col = col;}
+	virtual void setNum(const int num)  {m_num = num;}
+	
 signals:
 	void edit(ToyWidget*);
 	
@@ -108,6 +113,8 @@ protected:
 	QString		m_Path2;
 	QString		m_RecvPath;
 	QString		m_FeedbackPath;
+	QString		m_ActFeedbackPath; //once we have swapped out wildcards etc, needs to be cached here I think
+
 	QString		m_Text;
 	QString		m_ImagePath;
 	QColor		m_Color;
@@ -124,6 +131,10 @@ protected:
 	virtual void resizeEvent(QResizeEvent *event);
 	virtual void UpdateMode();
 	virtual void UpdateToolTip();
+	
+	unsigned int m_row;
+	unsigned int m_col;
+	unsigned int m_num;
 };
 
 ////////////////////////////////////////////////////////////////////////////////

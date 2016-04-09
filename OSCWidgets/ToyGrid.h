@@ -120,7 +120,7 @@ public:
 	virtual void ClearLabels();
 	
 	virtual void SetFeedbackPath(const QString &feedbackPath);
-	virtual const QString& GetFeedbackPath() const {return m_FeedbackPath;}
+	virtual const QString& GetRawFeedbackPath() const {return m_FeedbackPath;}
 
 	
 

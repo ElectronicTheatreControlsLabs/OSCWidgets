@@ -224,7 +224,7 @@ void ToyGrid::SetGridSize(const QSize &gridSize)
 	if(gs.height() < 1)
 		gs.setHeight(1);
 	
-	if(m_GridSize != gs)
+	if(m_GridSize != gs) //grid size has changed.. update
 	{
 		QSize widgetSize(0, 0);
 		if( !m_List.empty() )
@@ -237,8 +237,8 @@ void ToyGrid::SetGridSize(const QSize &gridSize)
 		// remove excess
 		while(m_List.size() > numWidgets)
 		{
-			m_List.back()->deleteLater();
-			m_List.pop_back();
+			m_List.back()->deleteLater(); //mark the list widget
+			m_List.pop_back(); //pop it off the array
 		}
 		
 		// add new
@@ -255,6 +255,7 @@ void ToyGrid::SetGridSize(const QSize &gridSize)
 					widget->show();
 				
 				connect(widget, SIGNAL(edit(ToyWidget*)), this, SLOT(onWidgetEdited(ToyWidget*)));
+				
 			}
 			else
 				break;
@@ -263,6 +264,26 @@ void ToyGrid::SetGridSize(const QSize &gridSize)
 		setMinimumSize(m_GridSize.width()*24, m_GridSize.height()*24);
 		
 		m_EditWidgetIndex = m_List.size();
+		
+		//iterate through all widgets and tell them their position - better to do now to save calling every time we need info?
+		
+		int curRow = 0;
+		int curCol = 0;
+		for (int i=0; i<m_List.size(); i++)
+		{
+		  
+		  ToyWidget *w = m_List.at(i);
+		  w->setNum(i);
+		  w->setRow(curRow);
+		  w->setCol(curCol);
+		  
+		  curCol++;
+		  if (curCol >= gs.width())
+		  {
+			curCol = 0;
+			curRow++;
+		  }
+		}
 		
 		if( !m_Loading )
 		{
@@ -451,7 +472,7 @@ void ToyGrid::EditWidget(ToyWidget *widget, bool toggle)
 		m_EditPanel->SetRecvPathEnabled(true);
 		if( widget->HasFeedbackPath() )
 		{
-			m_EditPanel->SetFeedbackPath( widget->GetFeedbackPath() );
+			m_EditPanel->SetFeedbackPath( widget->GetRawFeedbackPath() );
 			m_EditPanel->SetFeedbackPathEnabled(true);
 		}
 		else
@@ -520,7 +541,7 @@ void ToyGrid::EditWidget(ToyWidget *widget, bool toggle)
 		m_EditPanel->SetRecvPathEnabled(false);
 		m_EditPanel->SetFeedbackPath( QString() );
 		m_EditPanel->SetFeedbackPathEnabled(true); //so that the children can look up to it
-		m_EditPanel->SetFeedbackPath( GetFeedbackPath() );
+		m_EditPanel->SetFeedbackPath( GetRawFeedbackPath() );
 		m_EditPanel->SetFeedbackPathEnabled(true);
 		m_EditPanel->SetMin( QString() );
 		m_EditPanel->SetMax( QString() );
@@ -625,6 +646,7 @@ bool ToyGrid::Save(EosLog &log, const QString &path, QStringList &lines)
 
 bool ToyGrid::Load(EosLog &log, const QString &path, QStringList &lines, int &index)
 {
+	//items[] is a row of the csv,
 	if(index>=0 && index<lines.size())
 	{
 		m_Loading = true;
@@ -861,7 +883,7 @@ void ToyGrid::onWidgetEdited(ToyWidget *widget)
 		if( widget->HasFeedbackPath() )
 		{
 			m_EditPanel->GetFeedbackPath(str);
-			if(widget->GetFeedbackPath() != str)
+			if(widget->GetRawFeedbackPath() != str)
 			{
 				widget->SetFeedbackPath(str);
 				recvWidgetsDirty = true;
@@ -915,7 +937,11 @@ void ToyGrid::onWidgetEdited(ToyWidget *widget)
 		SetImagePath(str);
 		
 		m_EditPanel->GetFeedbackPath(str);
-		SetFeedbackPath(str);
+		if (m_FeedbackPath!=str)
+		{
+			SetFeedbackPath(str);
+			emit recvWidgetsChanged();
+		}
 		
 		QColor color;
 		m_EditPanel->GetColor(color);

@@ -111,17 +111,30 @@ void ToyWidget::SetFeedbackPath(const QString &feedbackPath)
 	}
 }
 
-const QString& ToyWidget::GetFeedbackPath() const
+QString& ToyWidget::GetFeedbackPath() //does this need to be const??
 {
 
-	//std::cout << m_FeedbackPath << std::endl;
-	qDebug("hello world");
-	qDebug(((ToyGrid*)parent())->GetFeedbackPath().toLatin1());
-	
-	qDebug(m_FeedbackPath.toLatin1());
+	//work out which we want
+		
+	m_ActFeedbackPath = QString(m_FeedbackPath!=""?m_FeedbackPath:((ToyGrid*)parent())->GetRawFeedbackPath());
+	//swap out constructs
+	//{r} = the row in the grid (0 based)
+	//{r1} = the row in the grid (1 based)
+	//{c} = the column in the grid (0 based)
+	//{c1} = the column in the grid (1 based)
+	//{n} = the number of the item in the grid (0 based)
+	//{n1} = the number of the item in the grid (1 based)
 
 	
-	return (m_FeedbackPath!=""?m_FeedbackPath:((ToyGrid*)parent())->GetFeedbackPath());
+	m_ActFeedbackPath.replace(QString("{r1}"), QString("%1").arg(m_row+1));
+	m_ActFeedbackPath.replace(QString("{r}"), QString("%1").arg(m_row));
+	m_ActFeedbackPath.replace(QString("{c1}"), QString("%1").arg(m_col+1));
+	m_ActFeedbackPath.replace(QString("{c}"), QString("%1").arg(m_col));
+	m_ActFeedbackPath.replace(QString("{n1}"), QString("%1").arg(m_num+1));
+	m_ActFeedbackPath.replace(QString("{n}"), QString("%1").arg(m_num));
+	
+	
+	return m_ActFeedbackPath;
 
 }
 
