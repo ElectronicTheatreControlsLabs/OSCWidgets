@@ -96,7 +96,7 @@ static const uint qt_meta_data_EditPanel[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-      12,   14, // methods
+      15,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -116,8 +116,11 @@ static const uint qt_meta_data_EditPanel[] = {
      164,   98,   19,   19, 0x08,
      189,  220,   19,   19, 0x08,
      228,  220,   19,   19, 0x08,
-     249,  220,   19,   19, 0x08,
-     274,  220,   19,   19, 0x08,
+     260,  220,   19,   19, 0x08,
+     281,  220,   19,   19, 0x08,
+     303,  220,   19,   19, 0x08,
+     328,  220,   19,   19, 0x08,
+     354,  220,   19,   19, 0x08,
 
        0        // eod
 };
@@ -130,8 +133,10 @@ static const char qt_meta_stringdata_EditPanel[] = {
     "onPath2TextChanged(QString)\0"
     "onLocalStateChanged(int)\0"
     "onImagePathButtonClicked(bool)\0checked\0"
-    "onColorClicked(bool)\0onTextColorClicked(bool)\0"
-    "onDoneClicked(bool)\0"
+    "onImagePath2ButtonClicked(bool)\0"
+    "onColorClicked(bool)\0onColor2Clicked(bool)\0"
+    "onTextColorClicked(bool)\0"
+    "onTextColor2Clicked(bool)\0onDoneClicked(bool)\0"
 };
 
 void EditPanel::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -149,9 +154,12 @@ void EditPanel::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, v
         case 6: _t->onPath2TextChanged((*reinterpret_cast< const QString(*)>(_a[1]))); break;
         case 7: _t->onLocalStateChanged((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 8: _t->onImagePathButtonClicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 9: _t->onColorClicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 10: _t->onTextColorClicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
-        case 11: _t->onDoneClicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 9: _t->onImagePath2ButtonClicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 10: _t->onColorClicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 11: _t->onColor2Clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 12: _t->onTextColorClicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 13: _t->onTextColor2Clicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
+        case 14: _t->onDoneClicked((*reinterpret_cast< bool(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -189,9 +197,9 @@ int EditPanel::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 12)
+        if (_id < 15)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 12;
+        _id -= 15;
     }
     return _id;
 }

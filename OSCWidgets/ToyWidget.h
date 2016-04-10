@@ -61,18 +61,15 @@ public:
 	virtual const QString& GetPath2() const {return m_Path2;}
 	virtual void SetPath2(const QString &path);
 	virtual bool HasPath2() const {return false;}
-<<<<<<< HEAD
-	virtual const QString& GetRecvPath() const {return m_RecvPath;}
-	virtual void SetRecvPath(const QString &recvPath);
-	virtual const QString& GetRawFeedbackPath() const {return m_FeedbackPath;}; //the path as stored in object incl %x or simply blank
+	
 	virtual QString& GetFeedbackPath(); //the path once manipulated
-=======
-	virtual const QString& GetLabelPath() const {return m_LabelPath;}
-	virtual void SetLabelPath(const QString &labelPath);
-	virtual const QString& GetFeedbackPath() const {return m_FeedbackPath;}
->>>>>>> ElectronicTheatreControlsLabs/master
 	virtual void SetFeedbackPath(const QString &feedbackPath);
 	virtual bool HasFeedbackPath() const {return false;}
+	virtual const QString& GetRawFeedbackPath() const {return m_FeedbackPath;}; //the path as stored in object incl %x or simply blank
+	
+	virtual const QString& GetLabelPath() const {return m_LabelPath;}
+	virtual void SetLabelPath(const QString &labelPath);
+
 	virtual const QString& GetTriggerPath() const {return m_TriggerPath;}
 	virtual void SetTriggerPath(const QString &triggerPath);
 	virtual bool HasTriggerPath() const {return false;}
@@ -131,12 +128,8 @@ protected:
 	QString		m_Path2;
 	QString		m_LabelPath;
 	QString		m_FeedbackPath;
-<<<<<<< HEAD
 	QString		m_ActFeedbackPath; //once we have swapped out wildcards etc, needs to be cached here I think
-
-=======
 	QString		m_TriggerPath;
->>>>>>> ElectronicTheatreControlsLabs/master
 	QString		m_Text;
 	QString		m_ImagePath;
 	QString		m_ImagePath2;

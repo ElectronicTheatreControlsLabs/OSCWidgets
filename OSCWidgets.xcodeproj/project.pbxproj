@@ -16,6 +16,9 @@
 		798972FF1CB7074000325481 /* QtGui.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 97E137501AB28E0C0056BE05 /* QtGui.framework */; };
 		798973001CB7075600325481 /* QtNetwork.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 97E137511AB28E0C0056BE05 /* QtNetwork.framework */; };
 		798973011CB707B400325481 /* QtCore.framework in Frameworks & Libraries */ = {isa = PBXBuildFile; fileRef = 97E1374F1AB28E0C0056BE05 /* QtCore.framework */; };
+		79ABC6C61CBAF7B200550E72 /* LogFile.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 79ABC6C21CBAF7B200550E72 /* LogFile.cpp */; };
+		79ABC6C71CBAF7B200550E72 /* LogWidget.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 79ABC6C41CBAF7B200550E72 /* LogWidget.cpp */; };
+		79ABC6CB1CBAF8C000550E72 /* moc_LogWidget.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 79ABC6C91CBAF8C000550E72 /* moc_LogWidget.cpp */; };
 		971D40B11BD1AB7F00661378 /* EditPanel.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 971D40941BD1AB7F00661378 /* EditPanel.cpp */; };
 		971D40B21BD1AB7F00661378 /* ToyXY.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 971D40961BD1AB7F00661378 /* ToyXY.cpp */; };
 		971D40B31BD1AB7F00661378 /* NetworkThreads.cpp in Build Sources */ = {isa = PBXBuildFile; fileRef = 971D40971BD1AB7F00661378 /* NetworkThreads.cpp */; };
@@ -72,6 +75,11 @@
 		69A527D61C721D50002B7FA1 /* ToyFlicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ToyFlicker.h; path = OSCWidgets/ToyFlicker.h; sourceTree = SOURCE_ROOT; };
 		69A527DB1C721E2C002B7FA1 /* moc_FadeButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moc_FadeButton.cpp; path = OSCWidgets/moc_FadeButton.cpp; sourceTree = SOURCE_ROOT; };
 		69A527DC1C721E2C002B7FA1 /* moc_ToyFlicker.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moc_ToyFlicker.cpp; path = OSCWidgets/moc_ToyFlicker.cpp; sourceTree = SOURCE_ROOT; };
+		79ABC6C21CBAF7B200550E72 /* LogFile.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LogFile.cpp; path = OSCWidgets/LogFile.cpp; sourceTree = SOURCE_ROOT; };
+		79ABC6C31CBAF7B200550E72 /* LogFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogFile.h; path = OSCWidgets/LogFile.h; sourceTree = SOURCE_ROOT; };
+		79ABC6C41CBAF7B200550E72 /* LogWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = LogWidget.cpp; path = OSCWidgets/LogWidget.cpp; sourceTree = SOURCE_ROOT; };
+		79ABC6C51CBAF7B200550E72 /* LogWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = LogWidget.h; path = OSCWidgets/LogWidget.h; sourceTree = SOURCE_ROOT; };
+		79ABC6C91CBAF8C000550E72 /* moc_LogWidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moc_LogWidget.cpp; path = OSCWidgets/moc_LogWidget.cpp; sourceTree = SOURCE_ROOT; };
 		971D40941BD1AB7F00661378 /* EditPanel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = EditPanel.cpp; path = OSCWidgets/EditPanel.cpp; sourceTree = SOURCE_ROOT; };
 		971D40951BD1AB7F00661378 /* EditPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EditPanel.h; path = OSCWidgets/EditPanel.h; sourceTree = SOURCE_ROOT; };
 		971D40961BD1AB7F00661378 /* ToyXY.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ToyXY.cpp; path = OSCWidgets/ToyXY.cpp; sourceTree = SOURCE_ROOT; };
@@ -177,6 +185,7 @@
 		971D40BF1BD1AB8800661378 /* moc */ = {
 			isa = PBXGroup;
 			children = (
+				79ABC6C91CBAF8C000550E72 /* moc_LogWidget.cpp */,
 				971D40CD1BD1AF3D00661378 /* moc_EditPanel.cpp */,
 				69A527DB1C721E2C002B7FA1 /* moc_FadeButton.cpp */,
 				9730C2E51AB7C0230039899F /* moc_MainWindow.cpp */,
@@ -237,6 +246,10 @@
 		97E137321AB28C2A0056BE05 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				79ABC6C21CBAF7B200550E72 /* LogFile.cpp */,
+				79ABC6C31CBAF7B200550E72 /* LogFile.h */,
+				79ABC6C41CBAF7B200550E72 /* LogWidget.cpp */,
+				79ABC6C51CBAF7B200550E72 /* LogWidget.h */,
 				971D40BF1BD1AB8800661378 /* moc */,
 				971D40941BD1AB7F00661378 /* EditPanel.cpp */,
 				971D40951BD1AB7F00661378 /* EditPanel.h */,
@@ -328,6 +341,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 17B3380A4D6A7D415E7F2E1E /* Build configuration list for PBXNativeTarget "OSCWidgets" */;
 			buildPhases = (
+				79ABC6C81CBAF7E300550E72 /* moc LogWidget */,
 				971D40C01BD1AC0B00661378 /* moc EditPanel */,
 				97E137551AB28E930056BE05 /* moc MainWindow */,
 				971D40C11BD1AC8100661378 /* moc SettingsPanel */,
@@ -445,6 +459,22 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/usr/local/Cellar/qt/4.8.7_2/bin/moc OSCWidgets/FadeButton.h -o OSCWidgets/moc_FadeButton.cpp";
+		};
+		79ABC6C81CBAF7E300550E72 /* moc LogWidget */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				OSCWidgets/LogWidget.h,
+			);
+			name = "moc LogWidget";
+			outputPaths = (
+				OSCWidgets/moc_LogWidget.cpp,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/Cellar/qt/4.8.7_2/bin/moc OSCWidgets/LogWidget.h -o OSCWidgets/moc_LogWidget.cpp";
 		};
 		971D40C01BD1AC0B00661378 /* moc EditPanel */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -718,6 +748,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79ABC6C71CBAF7B200550E72 /* LogWidget.cpp in Build Sources */,
 				97E137381AB28C3A0056BE05 /* MainWindow.cpp in Build Sources */,
 				971D40E31BD1AF3E00661378 /* moc_ToySine.cpp in Build Sources */,
 				97E137481AB28C720056BE05 /* EosLog.cpp in Build Sources */,
@@ -731,11 +762,13 @@
 				97E1374E1AB28C720056BE05 /* OSCParser.cpp in Build Sources */,
 				69A527D71C721D50002B7FA1 /* FadeButton.cpp in Build Sources */,
 				971D40BA1BD1AB7F00661378 /* ToyMetro.cpp in Build Sources */,
+				79ABC6CB1CBAF8C000550E72 /* moc_LogWidget.cpp in Build Sources */,
 				97BD426D1BAA702B00F534CC /* OSCWidgets.qrc.cpp in Build Sources */,
 				971D40E11BD1AF3E00661378 /* moc_ToyMetro.cpp in Build Sources */,
 				971D40B71BD1AB7F00661378 /* ToyCmd.cpp in Build Sources */,
 				97E137371AB28C3A0056BE05 /* main.cpp in Build Sources */,
 				971D40BE1BD1AB7F00661378 /* ToyWidget.cpp in Build Sources */,
+				79ABC6C61CBAF7B200550E72 /* LogFile.cpp in Build Sources */,
 				971D40DF1BD1AF3E00661378 /* moc_ToyEncoder.cpp in Build Sources */,
 				971D40B31BD1AB7F00661378 /* NetworkThreads.cpp in Build Sources */,
 				971D40BC1BD1AB7F00661378 /* ToySine.cpp in Build Sources */,

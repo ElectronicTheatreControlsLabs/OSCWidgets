@@ -576,15 +576,12 @@ void ToyGrid::EditWidget(ToyWidget *widget, bool toggle)
 		m_EditPanel->SetLabelPath( QString() );
 		m_EditPanel->SetLabelPathEnabled(false);
 		m_EditPanel->SetFeedbackPath( QString() );
-<<<<<<< HEAD
 		m_EditPanel->SetFeedbackPathEnabled(true); //so that the children can look up to it
 		m_EditPanel->SetFeedbackPath( GetRawFeedbackPath() );
 		m_EditPanel->SetFeedbackPathEnabled(true);
-=======
 		m_EditPanel->SetFeedbackPathEnabled(false);
 		m_EditPanel->SetTriggerPath( QString() );
 		m_EditPanel->SetTriggerPathEnabled(false);
->>>>>>> ElectronicTheatreControlsLabs/master
 		m_EditPanel->SetMin( QString() );
 		m_EditPanel->SetMax( QString() );
 		m_EditPanel->SetMinMaxEnabled(false);
