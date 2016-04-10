@@ -121,6 +121,8 @@ public:
 	
 	virtual void SetFeedbackPath(const QString &feedbackPath);
 	virtual const QString& GetRawFeedbackPath() const {return m_FeedbackPath;}
+	
+	virtual int getPageNumber() {return m_pageNumber;}
 
 	
 
@@ -135,6 +137,8 @@ private slots:
 	void onDone();
 	void onGridResized(const QSize &size);
 	void onClearLabels();
+	void upPressed();
+	void downPressed();
 	
 protected:
 	ToyWidget::EnumMode	m_Mode;
@@ -150,7 +154,15 @@ protected:
 	QMenu				*m_pContextMenu;
 	bool				m_Loading;
 	
+	int					m_pageNumber;
+	
+	
 	QString		m_FeedbackPath;
+	
+	QPushButton	*m_upButton;
+	QPushButton	*m_downButton;
+	
+	QLabel		*m_pageNumberLabel;
 
 	
 	virtual ToyWidget* CreateWidget() = 0;

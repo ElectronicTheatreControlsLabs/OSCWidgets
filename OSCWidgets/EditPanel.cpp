@@ -549,9 +549,11 @@ void EditPanel::GetFeedbackPath(QString &feedbackPath) const
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void EditPanel::SetFeedbackPath(const QString &feedbackPath)
+void EditPanel::SetFeedbackPath(const QString &feedbackPath, const QString &placeholderText)
 {
 	m_FeedbackPath->setText(feedbackPath);
+	m_FeedbackPath->setPlaceholderText(placeholderText);
+  
 }
 
 ////////////////////////////////////////////////////////////////////////////////

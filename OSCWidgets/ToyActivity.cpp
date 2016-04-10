@@ -494,8 +494,9 @@ void ToyActivityGrid::ApplyDefaultSettings(ToyWidget *widget, size_t index)
 	QString pathName;
 	Toy::GetDefaultPathName(m_Type, pathName);
 
-	QString path = QString("/%1/{n1}").arg(pathName);
-	widget->SetFeedbackPath(path);
+	//QString path = QString("/%1/{n1}").arg(pathName);
+	widget->SetFeedbackPath("");
+	SetFeedbackPath(QString("/%1/{n1}").arg(pathName));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

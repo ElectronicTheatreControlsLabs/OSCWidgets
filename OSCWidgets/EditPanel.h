@@ -104,7 +104,7 @@ public:
 	virtual void SetLabelPath(const QString &labelPath);
 	virtual void SetLabelPathEnabled(bool b);
 	virtual void GetFeedbackPath(QString &feedbackPath) const;
-	virtual void SetFeedbackPath(const QString &feedbackPath);
+	virtual void SetFeedbackPath(const QString &feedbackPath, const QString &placeholderText);
 	virtual void SetFeedbackPathEnabled(bool b);
 	virtual void GetTriggerPath(QString &triggerPath) const;
 	virtual void SetTriggerPath(const QString &triggerPath);

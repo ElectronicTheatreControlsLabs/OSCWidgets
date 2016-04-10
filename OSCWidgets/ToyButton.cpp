@@ -141,7 +141,7 @@ void ToyButtonWidget::Recv(const QString &path, const OSCArgument *args, size_t 
 {
 	FadeButton *button = static_cast<FadeButton*>(m_Widget);
 
-	bool isFeedback = (path == m_FeedbackPath);
+	bool isFeedback = (path == GetFeedbackPath());
 	bool isTrigger = (!isFeedback && path==m_TriggerPath);
 	if(isFeedback || isTrigger)
     {

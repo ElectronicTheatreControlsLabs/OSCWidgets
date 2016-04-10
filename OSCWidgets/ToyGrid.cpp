@@ -162,6 +162,17 @@ ToyGrid::ToyGrid(EnumToyType type, Client *pClient, QWidget *parent, Qt::WindowF
 	
 	SetColor( palette().color(QPalette::Window) );
 	UpdateImagePath();
+	
+	m_upButton = new QPushButton("up", this);
+	m_downButton = new QPushButton("down", this);
+	connect(m_upButton, SIGNAL(pressed()), this, SLOT(upPressed()));
+	connect(m_downButton, SIGNAL(pressed()), this, SLOT(downPressed()));
+	
+	m_pageNumber = 0;
+	
+	m_pageNumberLabel = new QLabel("0", this);
+	m_pageNumberLabel->setAlignment(Qt::AlignHCenter|Qt::AlignCenter);
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -312,8 +323,12 @@ void ToyGrid::ApplyDefaultSettings(ToyWidget *widget, size_t index)
 	QString pathName;
 	Toy::GetDefaultPathName(m_Type, pathName);
 
-	QString path = QString("/%1/%2").arg(pathName).arg(index);
-	widget->SetPath(path);
+//	QString path = QString("/%1/%2").arg(pathName).arg(index);
+  
+	widget->SetPath(QString("")); //instead of path
+	
+	SetFeedbackPath(QString("/%1/{pn1}").arg(pathName)); //use wildcard for default path
+	
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -402,19 +417,38 @@ void ToyGrid::UpdateLayout()
 void ToyGrid::UpdateLayoutForRect(const QRect &r)
 {
 	if( !m_GridSize.isEmpty() )
-	{
-		int w = (r.width() - MARGIN2)/m_GridSize.width();
+	{		
+		//assume that we are showing the up/down buttons
+		int widthCount = m_GridSize.width()+1;  //if we weren't showing we wouldn't add to this!
+		
+		int w = (r.width() - MARGIN2)/widthCount;
 		int h = (r.height() - MARGIN2)/m_GridSize.height();
 		int x = (r.x() + MARGIN);
 		int y = (r.y() + MARGIN);
 		int col = 0;
+		
+		//first of all add the up/down/page number
+		
+		//assume that the page number is 0.2, the buttons 0.4 each
+		
+		int b_h = r.height()*0.4;
+		int l_h = b_h/2;
+		
+		m_upButton->setGeometry(x, y, w, b_h);  //make the buttons half the height of the grid..
+	  
+		m_pageNumberLabel->setGeometry(x, y+b_h, w, l_h);
+
+		m_downButton->setGeometry(x, y+b_h+l_h, w, b_h);
+		
+		x+=w;
+		
 		for(WIDGET_LIST::const_iterator i=m_List.begin(); i!=m_List.end(); i++)
 		{
 			(*i)->setGeometry(x, y, w, h);
 			if(++col >= m_GridSize.width())
 			{
 				col = 0;
-				x = (r.x() + MARGIN);
+				x = (r.x() + MARGIN +w); //we wouldn't add w if we weren't showing up/down
 				y += h;
 			}
 			else
@@ -482,12 +516,12 @@ void ToyGrid::EditWidget(ToyWidget *widget, bool toggle)
 		m_EditPanel->SetLabelPathEnabled(true);
 		if( widget->HasFeedbackPath() )
 		{
-			m_EditPanel->SetFeedbackPath( widget->GetRawFeedbackPath() );
+			m_EditPanel->SetFeedbackPath( widget->GetRawFeedbackPath(), GetRawFeedbackPath() );
 			m_EditPanel->SetFeedbackPathEnabled(true);
 		}
 		else
 		{
-			m_EditPanel->SetFeedbackPath( QString() );
+			m_EditPanel->SetFeedbackPath( QString(), "");
 			m_EditPanel->SetFeedbackPathEnabled(false);
 		}
 		if( widget->HasTriggerPath() )
@@ -575,11 +609,8 @@ void ToyGrid::EditWidget(ToyWidget *widget, bool toggle)
 		m_EditPanel->SetPath2Enabled(false);
 		m_EditPanel->SetLabelPath( QString() );
 		m_EditPanel->SetLabelPathEnabled(false);
-		m_EditPanel->SetFeedbackPath( QString() );
 		m_EditPanel->SetFeedbackPathEnabled(true); //so that the children can look up to it
-		m_EditPanel->SetFeedbackPath( GetRawFeedbackPath() );
-		m_EditPanel->SetFeedbackPathEnabled(true);
-		m_EditPanel->SetFeedbackPathEnabled(false);
+		m_EditPanel->SetFeedbackPath( GetRawFeedbackPath(), "");
 		m_EditPanel->SetTriggerPath( QString() );
 		m_EditPanel->SetTriggerPathEnabled(false);
 		m_EditPanel->SetMin( QString() );
@@ -1052,6 +1083,29 @@ void ToyGrid::onGridResized(const QSize &size)
 void ToyGrid::onClearLabels()
 {
 	ClearLabels();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ToyGrid::upPressed()
+{
+	m_pageNumber ++;
+	emit recvWidgetsChanged();
+
+//	emit changed();
+	m_pageNumberLabel->setNum(m_pageNumber);
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ToyGrid::downPressed()
+{
+	m_pageNumber --;
+	emit recvWidgetsChanged();
+
+//	emit changed();
+	m_pageNumberLabel->setNum(m_pageNumber);
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////

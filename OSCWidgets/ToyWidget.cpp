@@ -124,14 +124,39 @@ QString& ToyWidget::GetFeedbackPath() //does this need to be const??
 	//{c1} = the column in the grid (1 based)
 	//{n} = the number of the item in the grid (0 based)
 	//{n1} = the number of the item in the grid (1 based)
-
 	
+	//if any of the above preceded by p (ie{pr}) then the offset version is used
+	
+	qDebug(m_ActFeedbackPath.toLatin1());
+
 	m_ActFeedbackPath.replace(QString("{r1}"), QString("%1").arg(m_row+1));
 	m_ActFeedbackPath.replace(QString("{r}"), QString("%1").arg(m_row));
 	m_ActFeedbackPath.replace(QString("{c1}"), QString("%1").arg(m_col+1));
 	m_ActFeedbackPath.replace(QString("{c}"), QString("%1").arg(m_col));
 	m_ActFeedbackPath.replace(QString("{n1}"), QString("%1").arg(m_num+1));
 	m_ActFeedbackPath.replace(QString("{n}"), QString("%1").arg(m_num));
+	
+	int page = ((ToyGrid*)parent())->getPageNumber();
+	QSize size = ((ToyGrid*)parent())->GetGridSize();
+	
+	//so for each page we have size.height rows
+	int row = page*size.height() + m_row;
+	
+	m_ActFeedbackPath.replace(QString("{pr1}"), QString("%1").arg(row+1));
+	m_ActFeedbackPath.replace(QString("{pr}"), QString("%1").arg(row));
+	
+	//for each col we have size.width cols
+	int col = page*size.width() + m_col;
+	m_ActFeedbackPath.replace(QString("{pc1}"), QString("%1").arg(col+1));
+	m_ActFeedbackPath.replace(QString("{pc}"), QString("%1").arg(col));
+	
+	//for each page we have width*size cells
+	
+	int num = page * (size.height()*size.width())+m_num;
+	m_ActFeedbackPath.replace(QString("{pn1}"), QString("%1").arg(num+1));
+	m_ActFeedbackPath.replace(QString("{pn}"), QString("%1").arg(num));
+	
+	qDebug(m_ActFeedbackPath.toLatin1());
 	
 	
 	return m_ActFeedbackPath;

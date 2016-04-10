@@ -205,7 +205,7 @@ static const uint qt_meta_data_ToyGrid[] = {
        6,       // revision
        0,       // classname
        0,    0, // classinfo
-       9,   14, // methods
+      11,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -222,6 +222,8 @@ static const uint qt_meta_data_ToyGrid[] = {
      113,   17,   17,   17, 0x08,
      122,  143,   17,   17, 0x08,
      148,   17,   17,   17, 0x08,
+     164,   17,   17,   17, 0x08,
+     176,   17,   17,   17, 0x08,
 
        0        // eod
 };
@@ -231,7 +233,8 @@ static const char qt_meta_stringdata_ToyGrid[] = {
     "onDelete()\0onToggleMainWindow()\0"
     "onWidgetEdited(ToyWidget*)\0widget\0"
     "onEdited()\0onDone()\0onGridResized(QSize)\0"
-    "size\0onClearLabels()\0"
+    "size\0onClearLabels()\0upPressed()\0"
+    "downPressed()\0"
 };
 
 void ToyGrid::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, void **_a)
@@ -249,6 +252,8 @@ void ToyGrid::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, voi
         case 6: _t->onDone(); break;
         case 7: _t->onGridResized((*reinterpret_cast< const QSize(*)>(_a[1]))); break;
         case 8: _t->onClearLabels(); break;
+        case 9: _t->upPressed(); break;
+        case 10: _t->downPressed(); break;
         default: ;
         }
     }
@@ -286,9 +291,9 @@ int ToyGrid::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 9)
+        if (_id < 11)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 9;
+        _id -= 11;
     }
     return _id;
 }
