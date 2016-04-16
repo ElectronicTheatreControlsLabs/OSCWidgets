@@ -55,10 +55,14 @@ public:
 	virtual void SetVisible(bool b);
 	virtual bool HasVisible() const {return true;}
 	virtual void UpdateVisible();
-	virtual const QString& GetPath() const {return m_Path;}
+	
+	virtual QString& GetPath();
+	virtual const QString& GetRawPath() const {return m_Path;}
 	virtual void SetPath(const QString &path);
 	virtual bool HasPath() const {return true;}
-	virtual const QString& GetPath2() const {return m_Path2;}
+
+	virtual QString& GetPath2();
+	virtual const QString& GetRawPath2() const {return m_Path2;}
 	virtual void SetPath2(const QString &path);
 	virtual bool HasPath2() const {return false;}
 	
@@ -66,15 +70,20 @@ public:
 	virtual void SetFeedbackPath(const QString &feedbackPath);
 	virtual bool HasFeedbackPath() const {return false;}
 	virtual const QString& GetRawFeedbackPath() const {return m_FeedbackPath;}; //the path as stored in object incl %x or simply blank
-	
-	virtual const QString& GetLabelPath() const {return m_LabelPath;}
+
+	virtual QString& GetLabelPath();
+	virtual const QString& GetRawLabelPath() const {return m_LabelPath;}
 	virtual void SetLabelPath(const QString &labelPath);
 
-	virtual const QString& GetTriggerPath() const {return m_TriggerPath;}
+	virtual QString& GetTriggerPath();
+	virtual const QString& GetRawTriggerPath() const {return m_TriggerPath;}
 	virtual void SetTriggerPath(const QString &triggerPath);
 	virtual bool HasTriggerPath() const {return false;}
-	virtual const QString& GetText() const {return m_Text;}
+	
+	virtual QString& GetText();
+	virtual const QString& GetRawText() const {return m_Text;}
 	virtual void SetText(const QString &text) {m_Text = text;}
+	
 	virtual const QString& GetImagePath() const {return m_ImagePath;}
 	virtual void SetImagePath(const QString &imagePath) {m_ImagePath = imagePath;}
 	virtual const QString& GetImagePath2() const {return m_ImagePath2;}
@@ -115,6 +124,8 @@ public:
 	virtual void setCol(const int col) {m_col = col;}
 	virtual void setNum(const int num)  {m_num = num;}
 	
+	virtual void replaceWildcards(QString &string);
+	
 signals:
 	void edit(ToyWidget*);
 	
@@ -125,23 +136,32 @@ protected:
 	EnumMode	m_Mode;
 	bool		m_Visible;
 	QString		m_Path;
+	QString		m_ActPath;
 	QString		m_Path2;
+	QString		m_ActPath2;
 	QString		m_LabelPath;
+	QString		m_ActLabelPath;
 	QString		m_FeedbackPath;
 	QString		m_ActFeedbackPath; //once we have swapped out wildcards etc, needs to be cached here I think
 	QString		m_TriggerPath;
+	QString		m_ActTriggerPath;
 	QString		m_Text;
+	QString		m_ActText; //the actual text after we have swapped wildcards etrc
 	QString		m_ImagePath;
 	QString		m_ImagePath2;
 	QColor		m_Color;
 	QColor		m_Color2;
 	QColor		m_TextColor;
 	QColor		m_TextColor2;
-	QWidget		*m_Widget;
+	QWidget		*m_Widget;  //the underlying widget that we act upon..
 	QString		m_Min;
+	QString		m_ActMin;
 	QString		m_Max;
+	QString		m_ActMax;
 	QString		m_Min2;
+	QString		m_ActMin2;
 	QString		m_Max2;
+	QString		m_ActMax2;
 	QString		m_BPM;
 	EditButton	*m_EditButton;
 	QString		m_HelpText;

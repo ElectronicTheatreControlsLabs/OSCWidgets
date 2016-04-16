@@ -176,6 +176,9 @@ void FadePedal::resizeEvent(QResizeEvent *event)
 
 void FadePedal::paintEvent(QPaintEvent* /*event*/)
 {
+  
+	setText(((ToyPedalWidget*)parent())->GetText());
+
 	float lastValue = (m_Ticks.empty() ? 0 : m_Ticks.back().value);
 	float angle = (35 * lastValue);
 
@@ -368,7 +371,7 @@ ToyPedalWidget::ToyPedalWidget(QWidget *parent)
 void ToyPedalWidget::SetText(const QString &text)
 {
 	ToyWidget::SetText(text);
-	static_cast<FadePedal*>(m_Widget)->setText(m_Text);
+	static_cast<FadePedal*>(m_Widget)->setText(GetText());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -428,7 +431,7 @@ void ToyPedalWidget::SetLabel(const QString &label)
 
 void ToyPedalWidget::Recv(const QString &path, const OSCArgument *args, size_t count)
 {
-    if(path == m_TriggerPath)
+    if(path == GetTriggerPath())
 	{
 		FadePedal *pedal = static_cast<FadePedal*>(m_Widget);
 

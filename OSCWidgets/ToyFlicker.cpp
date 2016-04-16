@@ -205,6 +205,8 @@ void FadeFlicker::resizeEvent(QResizeEvent *event)
 void FadeFlicker::paintEvent(QPaintEvent* /*event*/)
 {
 	QPainter painter(this);
+  
+    SetText(((ToyFlickerWidget*)parent())->GetText()); //TODO BAD RICHARD
 
 	painter.setRenderHints(QPainter::Antialiasing|QPainter::TextAntialiasing);
 
@@ -318,7 +320,7 @@ ToyFlickerWidget::ToyFlickerWidget(QWidget *parent)
 void ToyFlickerWidget::SetText(const QString &text)
 {
 	ToyWidget::SetText(text);
-	static_cast<FadeFlicker*>(m_Widget)->SetText(m_Text);
+	static_cast<FadeFlicker*>(m_Widget)->SetText(GetText());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -409,7 +411,7 @@ void ToyFlickerWidget::SetLabel(const QString &label)
 
 void ToyFlickerWidget::Recv(const QString &path, const OSCArgument *args, size_t count)
 {
-	if(path == m_TriggerPath)
+	if(path == GetTriggerPath())
 	{
 		bool paused = false;
 

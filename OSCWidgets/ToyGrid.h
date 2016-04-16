@@ -120,7 +120,20 @@ public:
 	virtual void ClearLabels();
 	
 	virtual void SetFeedbackPath(const QString &feedbackPath);
-	virtual const QString& GetRawFeedbackPath() const {return m_FeedbackPath;}
+	virtual const QString& GetFeedbackPath() const {return m_FeedbackPath;}
+	
+	virtual void SetPath(const QString &Path);
+	virtual const QString& GetPath() const {return m_Path;}
+	
+	virtual void SetPath2(const QString &Path2);
+	virtual const QString& GetPath2() const {return m_Path2;}
+	
+	virtual void SetLabelPath(const QString &labelPath);
+	virtual const QString& GetLabelPath() const {return m_LabelPath;}
+	
+	virtual void SetTriggerPath(const QString &triggerPath);
+	virtual const QString& GetTriggerPath() const {return m_TriggerPath;}
+  
 	
 	virtual int getPageNumber() {return m_pageNumber;}
 
@@ -158,6 +171,11 @@ protected:
 	
 	
 	QString		m_FeedbackPath;
+	QString		m_Path;
+	QString		m_Path2;
+	QString		m_LabelPath;
+	QString		m_TriggerPath;
+
 	
 	QPushButton	*m_upButton;
 	QPushButton	*m_downButton;

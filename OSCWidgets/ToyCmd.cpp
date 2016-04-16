@@ -136,7 +136,7 @@ void ToyCmdWidget::SetTextColor(const QColor &textColor)
 
 void ToyCmdWidget::Recv(const QString &path, const OSCArgument *args, size_t count)
 {
-	if(path == m_TriggerPath)
+	if(path == GetTriggerPath())
     {
         bool edge = false;
         

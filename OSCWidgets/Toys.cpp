@@ -222,6 +222,7 @@ void Toys::BuildRecvWidgetsTable()
 	
 	for(TOY_LIST::const_iterator i=m_List.begin(); i!=m_List.end(); i++)
 		(*i)->AddRecvWidgets(m_RecvWidgets);
+  
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -378,7 +379,7 @@ void Toys::Disconnected()
 ////////////////////////////////////////////////////////////////////////////////
 
 void Toys::onRecvWidgetsChanged()
-{
+{ //called to refresh the OSC
 	BuildRecvWidgetsTable();
 }
 

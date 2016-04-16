@@ -148,6 +148,9 @@ void FadeSine::resizeEvent(QResizeEvent *event)
 void FadeSine::paintEvent(QPaintEvent* /*event*/)
 {
 	QPainter painter(this);
+  
+	SetText(((ToySineWidget*)parent())->GetText());
+
 
 	painter.setRenderHints(QPainter::Antialiasing|QPainter::TextAntialiasing);
 	
@@ -279,7 +282,7 @@ ToySineWidget::ToySineWidget(QWidget *parent)
 void ToySineWidget::SetText(const QString &text)
 {
 	ToyWidget::SetText(text);
-	static_cast<FadeSine*>(m_Widget)->SetText(m_Text);
+	static_cast<FadeSine*>(m_Widget)->SetText(GetText());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -330,7 +333,7 @@ void ToySineWidget::SetLabel(const QString &label)
 
 void ToySineWidget::Recv(const QString &path, const OSCArgument *args, size_t count)
 {
-	if(path == m_TriggerPath)
+	if(path == GetTriggerPath())
 	{
 		bool paused = false;
 

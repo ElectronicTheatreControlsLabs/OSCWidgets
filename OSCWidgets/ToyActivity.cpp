@@ -176,7 +176,7 @@ float FadeActivity::GetFadePercent() const
 void FadeActivity::onUpdate()
 {
 	m_FadeElapsed += m_ActivityEosTimer.Restart();
-
+	
 	switch( m_FadeState )
 	{
 		case FADE_IN:
@@ -225,6 +225,9 @@ void FadeActivity::onUpdate()
 
 void FadeActivity::paintEvent(QPaintEvent* /*event*/)
 {
+
+	SetText(((ToyActivityWidget*)parent())->GetText()); //PUTTING THIS HERE IS BAD BUT I DON'T KNOW WHAT ELSE TO DO!!
+
 	QRectF r( rect() );
 	r.adjust(1, 1, -1, -1);
 	
@@ -257,6 +260,7 @@ void FadeActivity::paintEvent(QPaintEvent* /*event*/)
 	}
 	
 	QColor textColor( palette().color(QPalette::ButtonText) );
+	
 
 	if( !text().isEmpty() )
 	{
@@ -317,7 +321,7 @@ ToyActivityWidget::ToyActivityWidget(QWidget *parent)
 void ToyActivityWidget::SetText(const QString &text)
 {
 	ToyWidget::SetText(text);
-	static_cast<FadeActivity*>(m_Widget)->setText(m_Text);
+	static_cast<FadeActivity*>(m_Widget)->setText(GetText());
 }
 
 ////////////////////////////////////////////////////////////////////////////////

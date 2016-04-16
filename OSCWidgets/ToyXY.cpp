@@ -229,6 +229,9 @@ void FadeXY::mouseReleaseEvent(QMouseEvent *event)
 void FadeXY::paintEvent(QPaintEvent* /*event*/)
 {
 	m_Canvas.fill(0);
+  
+	SetText(((ToyWidget*)parent())->GetText());
+
 
 	QRectF r( rect() );
 	r.adjust(1+HALF_BORDER, 1+HALF_BORDER+m_TextMargin, -1-HALF_BORDER, -1-HALF_BORDER-m_LabelMargin);
@@ -368,7 +371,7 @@ const QPointF& ToyXYWidget::GetPos() const
 void ToyXYWidget::SetText(const QString &text)
 {
 	ToyWidget::SetText(text);
-	static_cast<FadeXY*>(m_Widget)->SetText(m_Text);
+	static_cast<FadeXY*>(m_Widget)->SetText(GetText());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -412,8 +415,8 @@ void ToyXYWidget::Recv(const QString &path, const OSCArgument *args, size_t coun
 {
 	if(args && count>0)
 	{
-		bool isFeedback = (path == m_FeedbackPath);
-		bool isTrigger = (!isFeedback && path==m_TriggerPath);
+		bool isFeedback = (path == GetFeedbackPath());
+		bool isTrigger = (!isFeedback && path==GetTriggerPath());
 		if(isFeedback || isTrigger)
 		{
 			FadeXY *xy = static_cast<FadeXY*>(m_Widget);

@@ -370,9 +370,10 @@ void EditPanel::GetText(QString &text) const
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void EditPanel::SetText(const QString &text)
+void EditPanel::SetText(const QString &text, const QString &placeholder)
 {
 	m_Text->setText(text);
+	m_Text->setPlaceholderText(placeholder);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -473,10 +474,11 @@ void EditPanel::GetPath(QString &path) const
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void EditPanel::SetPath(const QString &path)
+void EditPanel::SetPath(const QString &path, const QString &placeholder)
 {
 	m_IgnoreEdits++;
 	m_Path->setText(path);
+	m_Path->setPlaceholderText(placeholder);
 	m_IgnoreEdits--;
 
 	UpdateLocal(/*primaryPath*/true);
@@ -500,10 +502,11 @@ void EditPanel::GetPath2(QString &path) const
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void EditPanel::SetPath2(const QString &path)
+void EditPanel::SetPath2(const QString &path, const QString &placeholder)
 {
 	m_IgnoreEdits++;
 	m_Path2->setText(path);
+	m_Path2->setPlaceholderText(placeholder);
 	m_IgnoreEdits--;
 
 	UpdateLocal(/*primaryPath*/false);
@@ -527,9 +530,10 @@ void EditPanel::GetLabelPath(QString &labelPath) const
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void EditPanel::SetLabelPath(const QString &labelPath)
+void EditPanel::SetLabelPath(const QString &labelPath, const QString &placeholder)
 {
 	m_LabelPath->setText(labelPath);
+	m_LabelPath->setPlaceholderText(placeholder);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -573,9 +577,10 @@ void EditPanel::GetTriggerPath(QString &triggerPath) const
 
 ////////////////////////////////////////////////////////////////////////////////
 
-void EditPanel::SetTriggerPath(const QString &triggerPath)
+void EditPanel::SetTriggerPath(const QString &triggerPath, const QString &placeholder)
 {
 	m_TriggerPath->setText(triggerPath);
+	m_TriggerPath->setPlaceholderText(placeholder);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

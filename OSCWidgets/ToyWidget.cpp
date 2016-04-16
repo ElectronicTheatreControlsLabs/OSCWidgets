@@ -116,7 +116,65 @@ QString& ToyWidget::GetFeedbackPath() //does this need to be const??
 
 	//work out which we want
 		
-	m_ActFeedbackPath = QString(m_FeedbackPath!=""?m_FeedbackPath:((ToyGrid*)parent())->GetRawFeedbackPath());
+	m_ActFeedbackPath = QString(m_FeedbackPath!=""?m_FeedbackPath:((ToyGrid*)parent())->GetFeedbackPath());
+
+	replaceWildcards(m_ActFeedbackPath);
+	
+	return m_ActFeedbackPath;
+
+}
+
+QString& ToyWidget::GetPath()
+{
+	m_ActPath = QString(m_Path!=""?m_Path:((ToyGrid*)parent())->GetPath());
+  
+  	replaceWildcards(m_ActPath);
+
+	return m_ActPath;
+
+}
+
+QString& ToyWidget::GetPath2()
+{
+
+	m_ActPath2 = QString(m_Path2!=""?m_Path2:((ToyGrid*)parent())->GetPath2());
+  
+	replaceWildcards(m_ActPath2);
+
+	return m_ActPath2;
+}
+
+QString& ToyWidget::GetLabelPath()
+{
+	m_ActLabelPath = QString(m_LabelPath!=""?m_LabelPath:((ToyGrid*)parent())->GetLabelPath());
+  
+	replaceWildcards(m_ActLabelPath);
+
+	return m_ActLabelPath;
+}
+
+QString& ToyWidget::GetTriggerPath()
+{
+
+	m_ActTriggerPath = QString(m_TriggerPath!=""?m_TriggerPath:((ToyGrid*)parent())->GetTriggerPath());
+  
+    replaceWildcards(m_ActTriggerPath);
+
+	return m_ActTriggerPath;
+}
+
+QString& ToyWidget::GetText()
+{
+	m_ActText = QString(m_Text!=""?m_Text:((ToyGrid*)parent())->GetText());
+  
+	replaceWildcards(m_ActText);
+
+	return m_ActText;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+void ToyWidget::replaceWildcards(QString &string)
+{
 	//swap out constructs
 	//{r} = the row in the grid (0 based)
 	//{r1} = the row in the grid (1 based)
@@ -127,14 +185,13 @@ QString& ToyWidget::GetFeedbackPath() //does this need to be const??
 	
 	//if any of the above preceded by p (ie{pr}) then the offset version is used
 	
-	qDebug(m_ActFeedbackPath.toLatin1());
 
-	m_ActFeedbackPath.replace(QString("{r1}"), QString("%1").arg(m_row+1));
-	m_ActFeedbackPath.replace(QString("{r}"), QString("%1").arg(m_row));
-	m_ActFeedbackPath.replace(QString("{c1}"), QString("%1").arg(m_col+1));
-	m_ActFeedbackPath.replace(QString("{c}"), QString("%1").arg(m_col));
-	m_ActFeedbackPath.replace(QString("{n1}"), QString("%1").arg(m_num+1));
-	m_ActFeedbackPath.replace(QString("{n}"), QString("%1").arg(m_num));
+	string.replace(QString("{r1}"), QString("%1").arg(m_row+1));
+	string.replace(QString("{r}"), QString("%1").arg(m_row));
+	string.replace(QString("{c1}"), QString("%1").arg(m_col+1));
+	string.replace(QString("{c}"), QString("%1").arg(m_col));
+	string.replace(QString("{n1}"), QString("%1").arg(m_num+1));
+	string.replace(QString("{n}"), QString("%1").arg(m_num));
 	
 	int page = ((ToyGrid*)parent())->getPageNumber();
 	QSize size = ((ToyGrid*)parent())->GetGridSize();
@@ -142,26 +199,23 @@ QString& ToyWidget::GetFeedbackPath() //does this need to be const??
 	//so for each page we have size.height rows
 	int row = page*size.height() + m_row;
 	
-	m_ActFeedbackPath.replace(QString("{pr1}"), QString("%1").arg(row+1));
-	m_ActFeedbackPath.replace(QString("{pr}"), QString("%1").arg(row));
+	string.replace(QString("{pr1}"), QString("%1").arg(row+1));
+	string.replace(QString("{pr}"), QString("%1").arg(row));
 	
 	//for each col we have size.width cols
 	int col = page*size.width() + m_col;
-	m_ActFeedbackPath.replace(QString("{pc1}"), QString("%1").arg(col+1));
-	m_ActFeedbackPath.replace(QString("{pc}"), QString("%1").arg(col));
+	string.replace(QString("{pc1}"), QString("%1").arg(col+1));
+	string.replace(QString("{pc}"), QString("%1").arg(col));
 	
 	//for each page we have width*size cells
 	
 	int num = page * (size.height()*size.width())+m_num;
-	m_ActFeedbackPath.replace(QString("{pn1}"), QString("%1").arg(num+1));
-	m_ActFeedbackPath.replace(QString("{pn}"), QString("%1").arg(num));
-	
-	qDebug(m_ActFeedbackPath.toLatin1());
-	
-	
-	return m_ActFeedbackPath;
+	string.replace(QString("{pn1}"), QString("%1").arg(num+1));
+	string.replace(QString("{pn}"), QString("%1").arg(num));
+
 
 }
+
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -397,3 +451,4 @@ void ToyWidget::onEditButtonClicked(bool /*checked*/)
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+
