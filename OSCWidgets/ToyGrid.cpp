@@ -162,6 +162,17 @@ ToyGrid::ToyGrid(EnumToyType type, Client *pClient, QWidget *parent, Qt::WindowF
 	
 	SetColor( palette().color(QPalette::Window) );
 	UpdateImagePath();
+	
+	m_upButton = new QPushButton("up", this);
+	m_downButton = new QPushButton("down", this);
+	connect(m_upButton, SIGNAL(pressed()), this, SLOT(upPressed()));
+	connect(m_downButton, SIGNAL(pressed()), this, SLOT(downPressed()));
+	
+	m_pageNumber = 0;
+	
+	m_pageNumberLabel = new QLabel("0", this);
+	m_pageNumberLabel->setAlignment(Qt::AlignHCenter|Qt::AlignCenter);
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -224,7 +235,7 @@ void ToyGrid::SetGridSize(const QSize &gridSize)
 	if(gs.height() < 1)
 		gs.setHeight(1);
 	
-	if(m_GridSize != gs)
+	if(m_GridSize != gs) //grid size has changed.. update
 	{
 		QSize widgetSize(0, 0);
 		if( !m_List.empty() )
@@ -237,8 +248,8 @@ void ToyGrid::SetGridSize(const QSize &gridSize)
 		// remove excess
 		while(m_List.size() > numWidgets)
 		{
-			m_List.back()->deleteLater();
-			m_List.pop_back();
+			m_List.back()->deleteLater(); //mark the list widget
+			m_List.pop_back(); //pop it off the array
 		}
 		
 		// add new
@@ -255,6 +266,7 @@ void ToyGrid::SetGridSize(const QSize &gridSize)
 					widget->show();
 				
 				connect(widget, SIGNAL(edit(ToyWidget*)), this, SLOT(onWidgetEdited(ToyWidget*)));
+				
 			}
 			else
 				break;
@@ -263,6 +275,26 @@ void ToyGrid::SetGridSize(const QSize &gridSize)
 		setMinimumSize(m_GridSize.width()*24, m_GridSize.height()*24);
 		
 		m_EditWidgetIndex = m_List.size();
+		
+		//iterate through all widgets and tell them their position - better to do now to save calling every time we need info?
+		
+		int curRow = 0;
+		int curCol = 0;
+		for (int i=0; i<m_List.size(); i++)
+		{
+		  
+		  ToyWidget *w = m_List.at(i);
+		  w->setNum(i);
+		  w->setRow(curRow);
+		  w->setCol(curCol);
+		  
+		  curCol++;
+		  if (curCol >= gs.width())
+		  {
+			curCol = 0;
+			curRow++;
+		  }
+		}
 		
 		if( !m_Loading )
 		{
@@ -291,8 +323,12 @@ void ToyGrid::ApplyDefaultSettings(ToyWidget *widget, size_t index)
 	QString pathName;
 	Toy::GetDefaultPathName(m_Type, pathName);
 
-	QString path = QString("/%1/%2").arg(pathName).arg(index);
-	widget->SetPath(path);
+//	QString path = QString("/%1/%2").arg(pathName).arg(index);
+  
+	widget->SetPath(QString("")); //instead of path
+	
+	SetFeedbackPath(QString("/%1/{pn1}").arg(pathName)); //use wildcard for default path
+	
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -381,19 +417,38 @@ void ToyGrid::UpdateLayout()
 void ToyGrid::UpdateLayoutForRect(const QRect &r)
 {
 	if( !m_GridSize.isEmpty() )
-	{
-		int w = (r.width() - MARGIN2)/m_GridSize.width();
+	{		
+		//assume that we are showing the up/down buttons
+		int widthCount = m_GridSize.width()+1;  //if we weren't showing we wouldn't add to this!
+		
+		int w = (r.width() - MARGIN2)/widthCount;
 		int h = (r.height() - MARGIN2)/m_GridSize.height();
 		int x = (r.x() + MARGIN);
 		int y = (r.y() + MARGIN);
 		int col = 0;
+		
+		//first of all add the up/down/page number
+		
+		//assume that the page number is 0.2, the buttons 0.4 each
+		
+		int b_h = r.height()*0.4;
+		int l_h = b_h/2;
+		
+		m_upButton->setGeometry(x, y, w, b_h);  //make the buttons half the height of the grid..
+	  
+		m_pageNumberLabel->setGeometry(x, y+b_h, w, l_h);
+
+		m_downButton->setGeometry(x, y+b_h+l_h, w, b_h);
+		
+		x+=w;
+		
 		for(WIDGET_LIST::const_iterator i=m_List.begin(); i!=m_List.end(); i++)
 		{
 			(*i)->setGeometry(x, y, w, h);
 			if(++col >= m_GridSize.width())
 			{
 				col = 0;
-				x = (r.x() + MARGIN);
+				x = (r.x() + MARGIN +w); //we wouldn't add w if we weren't showing up/down
 				y += h;
 			}
 			else
@@ -425,7 +480,7 @@ void ToyGrid::EditWidget(ToyWidget *widget, bool toggle)
 	if(widget && widget->GetSelected())
 	{
 		m_EditPanel->SetGridEnabled(false);
-		m_EditPanel->SetText( widget->GetText() );
+		m_EditPanel->SetText( widget->GetRawText(), GetText() );
 		m_EditPanel->SetImagePath( widget->GetImagePath() );
 		if( widget->HasImagePath2() )
 		{
@@ -439,44 +494,44 @@ void ToyGrid::EditWidget(ToyWidget *widget, bool toggle)
 		}
 		if( widget->HasPath() )
 		{
-			m_EditPanel->SetPath( widget->GetPath() );
+			m_EditPanel->SetPath( widget->GetRawPath(), GetPath() );
 			m_EditPanel->SetPathEnabled(true);
 		}
 		else
 		{
-			m_EditPanel->SetPath( QString() );
+			m_EditPanel->SetPath( QString(), QString() );
 			m_EditPanel->SetPathEnabled(false);
 		}
 		if( widget->HasPath2() )
 		{
-			m_EditPanel->SetPath2( widget->GetPath2() );
+			m_EditPanel->SetPath2( widget->GetRawPath2(), GetPath2()  );
 			m_EditPanel->SetPath2Enabled(true);
 		}
 		else
 		{
-			m_EditPanel->SetPath2( QString() );
+			m_EditPanel->SetPath2( QString(), QString() );
 			m_EditPanel->SetPath2Enabled(false);
 		}
-		m_EditPanel->SetLabelPath( widget->GetLabelPath() );
+		m_EditPanel->SetLabelPath( widget->GetRawLabelPath(), GetLabelPath() );
 		m_EditPanel->SetLabelPathEnabled(true);
 		if( widget->HasFeedbackPath() )
 		{
-			m_EditPanel->SetFeedbackPath( widget->GetFeedbackPath() );
+			m_EditPanel->SetFeedbackPath( widget->GetRawFeedbackPath(), GetFeedbackPath() );
 			m_EditPanel->SetFeedbackPathEnabled(true);
 		}
 		else
 		{
-			m_EditPanel->SetFeedbackPath( QString() );
+			m_EditPanel->SetFeedbackPath( QString(), QString());
 			m_EditPanel->SetFeedbackPathEnabled(false);
 		}
 		if( widget->HasTriggerPath() )
 		{
-			m_EditPanel->SetTriggerPath( widget->GetTriggerPath() );
+			m_EditPanel->SetTriggerPath( widget->GetRawTriggerPath(), GetTriggerPath() );
 			m_EditPanel->SetTriggerPathEnabled(true);
 		}
 		else
 		{
-			m_EditPanel->SetTriggerPath( QString() );
+			m_EditPanel->SetTriggerPath( QString(), QString() );
 			m_EditPanel->SetTriggerPathEnabled(false);
 		}
 		if( widget->HasMinMax() )
@@ -543,21 +598,32 @@ void ToyGrid::EditWidget(ToyWidget *widget, bool toggle)
 		m_EditPanel->SetHelpText( widget->GetHelpText() );
 	}
 	else
-	{
+	{  //editing the grid itself
+	
+		ToyWidget *w = m_List.at(0); //get the first object in the list so we can check if the class needs the feature..
+		
 		m_EditPanel->SetGridEnabled(true);
-		m_EditPanel->SetText(m_Text);
+		m_EditPanel->SetText(m_Text, "");
+		
 		m_EditPanel->SetImagePath(m_ImagePath);
 		m_EditPanel->SetImagePath2( QString() );
 		m_EditPanel->SetImagePath2Enabled(false);
-		m_EditPanel->SetPath( QString() );
-		m_EditPanel->SetPathEnabled(false);
-		m_EditPanel->SetPath2Enabled(false);
-		m_EditPanel->SetLabelPath( QString() );
-		m_EditPanel->SetLabelPathEnabled(false);
-		m_EditPanel->SetFeedbackPath( QString() );
-		m_EditPanel->SetFeedbackPathEnabled(false);
-		m_EditPanel->SetTriggerPath( QString() );
-		m_EditPanel->SetTriggerPathEnabled(false);
+		
+		m_EditPanel->SetPathEnabled(w->HasPath());
+		m_EditPanel->SetPath( w->HasPath()?GetPath():"", "" );
+		  
+		m_EditPanel->SetPath2(w->HasPath2()?GetPath2():"", "");
+		m_EditPanel->SetPath2Enabled(w->HasPath2());
+		
+		m_EditPanel->SetLabelPath( GetLabelPath(), "" );
+		m_EditPanel->SetLabelPathEnabled(true);
+		
+		m_EditPanel->SetFeedbackPathEnabled(w->HasFeedbackPath()); //so that the children can look up to it
+		m_EditPanel->SetFeedbackPath( w->HasFeedbackPath()?GetFeedbackPath():"", "");
+		
+		m_EditPanel->SetTriggerPath(w->HasTriggerPath()?GetTriggerPath():"", "" );
+		m_EditPanel->SetTriggerPathEnabled(w->HasTriggerPath());
+		
 		m_EditPanel->SetMin( QString() );
 		m_EditPanel->SetMax( QString() );
 		m_EditPanel->SetMinMaxEnabled(false);
@@ -607,12 +673,71 @@ void ToyGrid::AddRecvWidgets(RECV_WIDGETS &recvWidgets) const
 	for(WIDGET_LIST::const_iterator i=m_List.begin(); i!=m_List.end(); i++)
 	{
 		ToyWidget *w = *i;
-		if( !w->GetLabelPath().isEmpty() )
+		
+		w->GetWidget()->update(); //this isn't quite right - should update the labels with wildcards but hmmm
+
+	   if( !w->GetLabelPath().isEmpty() )
 			recvWidgets.insert( RECV_WIDGETS_PAIR(w->GetLabelPath(),w) );
 		if(w->HasFeedbackPath() && !w->GetFeedbackPath().isEmpty())
 			recvWidgets.insert( RECV_WIDGETS_PAIR(w->GetFeedbackPath(),w) );
 		if(w->HasTriggerPath() && !w->GetTriggerPath().isEmpty())
 			recvWidgets.insert( RECV_WIDGETS_PAIR(w->GetTriggerPath(),w) );
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ToyGrid::SetFeedbackPath(const QString &feedbackPath)
+{
+	if(m_FeedbackPath != feedbackPath)
+	{
+		m_FeedbackPath = feedbackPath;
+		//UpdateToolTip();
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ToyGrid::SetPath(const QString &Path)
+{
+	if(m_Path != Path)
+	{
+		m_Path = Path;
+		//UpdateToolTip();
+	}
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ToyGrid::SetPath2(const QString &Path)
+{
+	if(m_Path2 != Path)
+	{
+		m_Path2 = Path;
+		//UpdateToolTip();
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ToyGrid::SetLabelPath(const QString &Path)
+{
+	if(m_LabelPath != Path)
+	{
+		m_LabelPath = Path;
+		//UpdateToolTip();
+	}
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ToyGrid::SetTriggerPath(const QString &Path)
+{
+	if(m_TriggerPath != Path)
+	{
+		m_TriggerPath = Path;
+		//UpdateToolTip();
 	}
 }
 
@@ -640,7 +765,12 @@ bool ToyGrid::Save(EosLog &log, const QString &path, QStringList &lines)
 	line.append( QString(", %1").arg(Utils::QuotedString(imagePath)) );
 	line.append( QString(", %1").arg(m_Color.rgba(),0,16) );
 	line.append( QString(", %1").arg(static_cast<int>(m_SendOnConnect ? 1 : 0)) );
-
+	line.append( QString(", %1").arg(Utils::QuotedString(m_FeedbackPath)) );
+    line.append( QString(", %1").arg(Utils::QuotedString(m_TriggerPath)) );
+    line.append( QString(", %1").arg(Utils::QuotedString(m_Path)) );
+    line.append( QString(", %1").arg(Utils::QuotedString(m_Path2)) );
+    line.append( QString(", %1").arg(Utils::QuotedString(m_LabelPath)) );
+  
 	lines << line;
 
 	for(WIDGET_LIST::const_iterator i=m_List.begin(); i!=m_List.end(); i++)
@@ -653,6 +783,7 @@ bool ToyGrid::Save(EosLog &log, const QString &path, QStringList &lines)
 
 bool ToyGrid::Load(EosLog &log, const QString &path, QStringList &lines, int &index)
 {
+	//items[] is a row of the csv,
 	if(index>=0 && index<lines.size())
 	{
 		m_Loading = true;
@@ -683,6 +814,21 @@ bool ToyGrid::Load(EosLog &log, const QString &path, QStringList &lines, int &in
 			
 			if(items.size() > 12)
 				SetSendOnConnect(items[12].toInt() != 0);
+		  
+			if (items.size() > 13) //feedback
+			  SetFeedbackPath(items[13]);
+
+			if (items.size() > 14) //trigger
+			  SetTriggerPath(items[14]);
+		  
+			if (items.size() > 15) //path
+			  SetPath(items[15]);
+		  
+			if (items.size() > 16) //path2
+			  SetPath2(items[16]);
+		  
+			if (items.size() > 17) //labelPath
+			  SetLabelPath(items[17]);
 			
 			int numToyWidgets = (gridSize.width() * gridSize.height());
 			for(int i=0; i<numToyWidgets && index<lines.size(); i++)
@@ -758,7 +904,7 @@ void ToyGrid::contextMenuEvent(QContextMenuEvent *event)
 	if(m_EditWidgetIndex < m_List.size())
 	{
 		const ToyWidget *toyWidget = m_List[m_EditWidgetIndex];
-		name = toyWidget->GetText();
+		name = toyWidget->GetRawText();
 		if( name.isEmpty() )
 			Toy::GetDefaultPathName(m_Type, name);
 		menu.addAction(QIcon(":/assets/images/MenuIconEdit.png"), tr("Edit %1...").arg(name), this, SLOT(onEditToyWidget()));
@@ -886,7 +1032,7 @@ void ToyGrid::onWidgetEdited(ToyWidget *widget)
 
 		bool recvWidgetsDirty = false;
 		m_EditPanel->GetLabelPath(str);
-		if(widget->GetLabelPath() != str)
+		if(widget->GetRawLabelPath() != str)
 		{
 			widget->SetLabelPath(str);
 			recvWidgetsDirty = true;
@@ -895,7 +1041,7 @@ void ToyGrid::onWidgetEdited(ToyWidget *widget)
 		if( widget->HasFeedbackPath() )
 		{
 			m_EditPanel->GetFeedbackPath(str);
-			if(widget->GetFeedbackPath() != str)
+			if(widget->GetRawFeedbackPath() != str)
 			{
 				widget->SetFeedbackPath(str);
 				recvWidgetsDirty = true;
@@ -905,7 +1051,7 @@ void ToyGrid::onWidgetEdited(ToyWidget *widget)
 		if( widget->HasTriggerPath() )
 		{
 			m_EditPanel->GetTriggerPath(str);
-			if(widget->GetTriggerPath() != str)
+			if(widget->GetRawTriggerPath() != str)
 			{
 				widget->SetTriggerPath(str);
 				recvWidgetsDirty = true;
@@ -960,8 +1106,13 @@ void ToyGrid::onWidgetEdited(ToyWidget *widget)
 	}
 	else
 	{
+		ToyWidget *w = m_List.at(0); //to check for field use..
+	
 		QSize gridSize(m_EditPanel->GetCols(), m_EditPanel->GetRows());
 		SetGridSize(gridSize);
+	  
+		bool recvWidgetsDirty = false;
+
 	
 		QString str;
 		m_EditPanel->GetText(str);
@@ -970,9 +1121,60 @@ void ToyGrid::onWidgetEdited(ToyWidget *widget)
 		m_EditPanel->GetImagePath(str);
 		SetImagePath(str);
 		
+		if (w->HasFeedbackPath())
+		{
+			m_EditPanel->GetFeedbackPath(str);
+			if (m_FeedbackPath!=str)
+			{
+				SetFeedbackPath(str);
+			  recvWidgetsDirty = true;
+			}
+		}
+		
+		if (w->HasPath())
+		{
+			m_EditPanel->GetPath(str);
+			if (m_Path!=str)
+			{
+			  SetPath(str);
+			  recvWidgetsDirty = true;
+			}
+		
+		}
+	  
+		if (w->HasPath2())
+		{
+		  m_EditPanel->GetPath2(str);
+		  if (m_Path2!=str)
+		  {
+			SetPath2(str);
+			recvWidgetsDirty= true;
+		  }
+		}
+	  
+	  if (w->HasTriggerPath())
+	  {
+		m_EditPanel->GetTriggerPath(str);
+		if (m_TriggerPath!=str)
+		{
+		  SetTriggerPath(str);
+		  recvWidgetsDirty = true;
+		}
+	  }
+	
+	  m_EditPanel->GetLabelPath(str);
+	  if (m_LabelPath!=str)
+	  {
+		SetLabelPath(str);
+		recvWidgetsDirty = true;
+	  }
+		
 		QColor color;
 		m_EditPanel->GetColor(color);
 		SetColor(color);
+	  
+	  if (recvWidgetsDirty)
+		emit recvWidgetsChanged();
 	}
 
 	emit changed();
@@ -1008,6 +1210,36 @@ void ToyGrid::onGridResized(const QSize &size)
 void ToyGrid::onClearLabels()
 {
 	ClearLabels();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ToyGrid::upPressed()
+{
+	m_pageNumber ++;
+	emit recvWidgetsChanged();
+
+//	emit changed();
+	m_pageNumberLabel->setNum(m_pageNumber+1); //we display the page +1 (so the first page is 1 not 0
+}
+
+////////////////////////////////////////////////////////////////////////////////
+
+void ToyGrid::downPressed()
+{
+  
+  if (m_pageNumber>0)
+  {
+	m_pageNumber --;
+	emit recvWidgetsChanged();
+	m_pageNumberLabel->setNum(m_pageNumber+1); //we display the page +1 (so the first page is 1 not 0
+
+  }
+	
+  
+
+//	emit changed();
+
 }
 
 ////////////////////////////////////////////////////////////////////////////////

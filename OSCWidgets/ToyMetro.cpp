@@ -213,6 +213,8 @@ void FadeMetro::resizeEvent(QResizeEvent *event)
 void FadeMetro::paintEvent(QPaintEvent* /*event*/)
 {
 	QPainter painter(this);
+  
+    SetText(((ToyMetroWidget*)parent())->GetText());
 
 	painter.setRenderHints(QPainter::Antialiasing|QPainter::TextAntialiasing);
 
@@ -344,7 +346,7 @@ ToyMetroWidget::ToyMetroWidget(QWidget *parent)
 void ToyMetroWidget::SetText(const QString &text)
 {
 	ToyWidget::SetText(text);
-	static_cast<FadeMetro*>(m_Widget)->SetText(m_Text);
+	static_cast<FadeMetro*>(m_Widget)->SetText(GetText());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -395,7 +397,7 @@ void ToyMetroWidget::SetLabel(const QString &label)
 
 void ToyMetroWidget::Recv(const QString &path, const OSCArgument *args, size_t count)
 {
-	if(path == m_TriggerPath)
+	if(path == GetTriggerPath())
 	{
 		bool paused = false;
 

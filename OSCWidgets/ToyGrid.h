@@ -119,6 +119,27 @@ public:
 	virtual void GetName(QString &name) const;
 	virtual void ClearLabels();
 	
+	virtual void SetFeedbackPath(const QString &feedbackPath);
+	virtual const QString& GetFeedbackPath() const {return m_FeedbackPath;}
+	
+	virtual void SetPath(const QString &Path);
+	virtual const QString& GetPath() const {return m_Path;}
+	
+	virtual void SetPath2(const QString &Path2);
+	virtual const QString& GetPath2() const {return m_Path2;}
+	
+	virtual void SetLabelPath(const QString &labelPath);
+	virtual const QString& GetLabelPath() const {return m_LabelPath;}
+	
+	virtual void SetTriggerPath(const QString &triggerPath);
+	virtual const QString& GetTriggerPath() const {return m_TriggerPath;}
+  
+	
+	virtual int getPageNumber() {return m_pageNumber;}
+
+	
+
+	
 private slots:
 	void onEdit();	
 	void onEditToyWidget();
@@ -129,6 +150,8 @@ private slots:
 	void onDone();
 	void onGridResized(const QSize &size);
 	void onClearLabels();
+	void upPressed();
+	void downPressed();
 	
 protected:
 	ToyWidget::EnumMode	m_Mode;
@@ -143,6 +166,22 @@ protected:
 	size_t				m_EditWidgetIndex;
 	QMenu				*m_pContextMenu;
 	bool				m_Loading;
+	
+	int					m_pageNumber;
+	
+	
+	QString		m_FeedbackPath;
+	QString		m_Path;
+	QString		m_Path2;
+	QString		m_LabelPath;
+	QString		m_TriggerPath;
+
+	
+	QPushButton	*m_upButton;
+	QPushButton	*m_downButton;
+	
+	QLabel		*m_pageNumberLabel;
+
 	
 	virtual ToyWidget* CreateWidget() = 0;
 	virtual QSize GetDefaultWidgetSize() const {return QSize(80,80);}

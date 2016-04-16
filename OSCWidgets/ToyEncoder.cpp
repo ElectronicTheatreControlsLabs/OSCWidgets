@@ -199,6 +199,8 @@ void FadeEncoder::mouseReleaseEvent(QMouseEvent *event)
 void FadeEncoder::paintEvent(QPaintEvent* /*event*/)
 {
 	m_Canvas.fill(0);
+  
+     SetText(((ToyEncoderWidget*)parent())->GetText()); //TODO BAD PLACE FOR THIS TO HAPPEN!!
 
 	QPainter painter;
 	if( painter.begin(&m_Canvas) )
@@ -330,7 +332,7 @@ ToyEncoderWidget::ToyEncoderWidget(QWidget *parent)
 void ToyEncoderWidget::SetText(const QString &text)
 {
 	ToyWidget::SetText(text);
-	static_cast<FadeEncoder*>(m_Widget)->SetText(m_Text);
+	static_cast<FadeEncoder*>(m_Widget)->SetText(GetText());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -372,7 +374,7 @@ void ToyEncoderWidget::SetLabel(const QString &label)
 
 void ToyEncoderWidget::Recv(const QString &path, const OSCArgument *args, size_t count)
 {
-	if(path == m_TriggerPath)
+	if(path == GetTriggerPath())
 	{
 		FadeEncoder *encoder = static_cast<FadeEncoder*>(m_Widget);
 

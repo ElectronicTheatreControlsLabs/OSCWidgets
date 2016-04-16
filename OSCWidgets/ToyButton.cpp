@@ -50,7 +50,7 @@ ToyButtonWidget::ToyButtonWidget(QWidget *parent)
 void ToyButtonWidget::SetText(const QString &text)
 {
 	ToyWidget::SetText(text);
-	static_cast<FadeButton*>(m_Widget)->setText(m_Text);
+	static_cast<FadeButton*>(m_Widget)->setText(GetText());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -141,8 +141,8 @@ void ToyButtonWidget::Recv(const QString &path, const OSCArgument *args, size_t 
 {
 	FadeButton *button = static_cast<FadeButton*>(m_Widget);
 
-	bool isFeedback = (path == m_FeedbackPath);
-	bool isTrigger = (!isFeedback && path==m_TriggerPath);
+	bool isFeedback = (path == GetFeedbackPath());
+	bool isTrigger = (!isFeedback && path==GetTriggerPath());
 	if(isFeedback || isTrigger)
     {
 		bool toggle = false;
@@ -184,7 +184,7 @@ void ToyButtonWidget::Recv(const QString &path, const OSCArgument *args, size_t 
 		}
     }
     else
-    {
+    { //not feedback or trigger, so label..
         std::string str;
         if(args && count>0)
         {
