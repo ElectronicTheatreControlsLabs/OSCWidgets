@@ -897,7 +897,7 @@ bool EditPanel::GetImageFile(QString &path)
 	
 	path = QFileDialog::getOpenFileName(	this,
 											tr("Select Icon"),
-											QDesktopServices::storageLocation(QDesktopServices::PicturesLocation),
+                                            QStandardPaths::writableLocation(QStandardPaths::PicturesLocation),
 											filter );
 	
 	return true;

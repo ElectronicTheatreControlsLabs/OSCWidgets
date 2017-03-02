@@ -124,8 +124,8 @@ void FadeXY::AutoSizeFont()
 
 QPoint FadeXY::PosToWidgetPos(const QPointF &pos)
 {
-	return QPoint(	qRound(width() * pos.x()),
-					m_TextMargin + qRound(height()-m_LabelMargin-m_TextMargin)*(1.0f-pos.y()) );
+    return QPoint(	qRound((double)width() * pos.x()),
+                    m_TextMargin + qRound((double)height()-m_LabelMargin-m_TextMargin)*(1.0f-pos.y()) );
 }
 
 ////////////////////////////////////////////////////////////////////////////////

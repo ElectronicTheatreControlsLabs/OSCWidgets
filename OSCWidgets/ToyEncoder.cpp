@@ -224,12 +224,12 @@ void FadeEncoder::paintEvent(QPaintEvent* /*event*/)
 		
 		if(r.width() > r.height())
 		{
-			r.translate(qRound(r.width()-r.height())*0.5, 0);
+            r.translate(qRound((double)r.width()-r.height())*0.5, 0);
 			r.setWidth( r.height() );
 		}
 		else if(r.height() > r.width())
 		{
-			r.translate(0, qRound(r.height()-r.width())*0.5);
+            r.translate(0, qRound((double)r.height()-r.width())*0.5);
 			r.setHeight( r.width() );
 		}
 

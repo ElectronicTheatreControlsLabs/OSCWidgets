@@ -1,0 +1,3 @@
+[submodule "EosSyncLib"]
+	path = EosSyncLib
+	url = https://github.com/ElectronicTheatreControlsLabs/EosSyncLib

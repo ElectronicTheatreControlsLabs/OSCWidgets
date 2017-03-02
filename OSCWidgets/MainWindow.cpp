@@ -459,7 +459,7 @@ void MainWindow::ClearNetEventQ()
 
 void MainWindow::GetPersistentSavePath(QString &path) const
 {
-	path = QDir(QDesktopServices::storageLocation(QDesktopServices::DataLocation)).absoluteFilePath("save.oscwidgets.txt");
+    path = QDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation)).absoluteFilePath("save.oscwidgets.txt");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -976,7 +976,7 @@ void MainWindow::onOpenFileClicked()
 		if( !lastFile.isEmpty() )
 			dir = QFileInfo(lastFile).absolutePath();
 		if(dir.isEmpty() || !QFileInfo(dir).exists())
-			dir = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+            dir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 		QString path = QFileDialog::getOpenFileName(this, tr("Open"), dir, tr("OSCWidgets File (*.oscwidgets.txt)\nAll Files (*)"), 0, QFileDialog::DontUseNativeDialog);
 		if( !path.isEmpty() )
 		{
@@ -1010,7 +1010,7 @@ void MainWindow::onSaveAsFileClicked()
 	if( !lastFile.isEmpty() )
 		dir = QFileInfo(lastFile).absolutePath();
 	if(dir.isEmpty() || !QFileInfo(dir).exists())
-		dir = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+        dir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 	QString path = QFileDialog::getSaveFileName(this, tr("Save As"), dir, tr("OSCWidgets File (*.oscwidgets.txt)"), 0, QFileDialog::DontUseNativeDialog);
 	if( !path.isEmpty() )
 	{
