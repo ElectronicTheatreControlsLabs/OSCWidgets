@@ -300,7 +300,7 @@ void Utils::RegisterTouchWidget(QWidget &widget)
 #ifdef WIN32
 	if(sm_pFuncRegisterTouchWindow==0 || sm_pFuncUnregisterTouchWindow==0)
 	{
-		HMODULE hModule = GetModuleHandle("user32");
+        HMODULE hModule = GetModuleHandle(L"user32");
 		if( hModule )
 		{
 			sm_pFuncRegisterTouchWindow = GetProcAddress(hModule,"RegisterTouchWindow");
@@ -311,8 +311,8 @@ void Utils::RegisterTouchWidget(QWidget &widget)
 
 	if(sm_pFuncRegisterTouchWindow && sm_pFuncUnregisterTouchWindow)
 	{
-		reinterpret_cast<FuncUnregisterTouchWindow>(sm_pFuncUnregisterTouchWindow)(widget.winId());
-		reinterpret_cast<FuncRegisterTouchWindow>(sm_pFuncRegisterTouchWindow)(widget.winId(),TWF_WANTPALM);
+        reinterpret_cast<FuncUnregisterTouchWindow>(sm_pFuncUnregisterTouchWindow)((HWND)widget.winId());
+        reinterpret_cast<FuncRegisterTouchWindow>(sm_pFuncRegisterTouchWindow)((HWND)widget.winId(),TWF_WANTPALM);
 	}
 #endif
 }
