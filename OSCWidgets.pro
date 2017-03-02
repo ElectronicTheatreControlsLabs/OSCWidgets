@@ -52,7 +52,6 @@ SOURCES = \
    OSCWidgets/main.cpp \
    OSCWidgets/MainWindow.cpp \
    OSCWidgets/NetworkThreads.cpp \
-   #OSCWidgets/OSCWidgets.qrc.cpp \
    OSCWidgets/SettingsPanel.cpp \
    OSCWidgets/Toy.cpp \
    OSCWidgets/ToyActivity.cpp \
