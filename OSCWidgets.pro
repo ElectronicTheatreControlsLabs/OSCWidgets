@@ -4,13 +4,11 @@
 #TARGET = OSCWidgets
 QT += widgets
 QT += network
+CONFIG += c++11
 
 HEADERS = \
    OSCWidgets/EditPanel.h \
    OSCWidgets/EosPlatform.h \
-   OSCWidgets/EosPlatform_Mac.h \
-   OSCWidgets/EosPlatform_Mac_Bridge.h \
-   OSCWidgets/EosPlatform_Mac_Native.h \
    OSCWidgets/FadeButton.h \
    OSCWidgets/LogFile.h \
    OSCWidgets/LogWidget.h \
@@ -52,7 +50,6 @@ HEADERS = \
 SOURCES = \
    OSCWidgets/EditPanel.cpp \
    OSCWidgets/EosPlatform.cpp \
-   OSCWidgets/EosPlatform_Mac.cpp \
    OSCWidgets/FadeButton.cpp \
    OSCWidgets/LogFile.cpp \
    OSCWidgets/LogWidget.cpp \
@@ -94,8 +91,16 @@ SOURCES = \
 RESOURCES     = OSCWidgets/OSCWidgets.qrc
 
 OBJECTIVE_SOURCES += OSCWidgets/EosPlatform_Mac_Native.mm
+mac {
+    HEADERS += \
+        OSCWidgets/EosPlatform_Mac.h \
+        OSCWidgets/EosPlatform_Mac_Bridge.h \
+        OSCWidgets/EosPlatform_Mac_Native.h
+    SOURCES += \
+        OSCWidgets/EosPlatform_Mac.cpp
 
-LIBS += -framework Foundation
+    LIBS += -framework Foundation
+}
 
 INCLUDEPATH = \
     OSCWidgets/. \

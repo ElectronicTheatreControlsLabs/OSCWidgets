@@ -20,7 +20,7 @@
 
 #include "EosPlatform.h"
 
-#ifndef WIN32
+#if __APPLE__
 	#include "EosPlatform_Mac.h"
 #endif
 
@@ -43,10 +43,10 @@ bool EosPlatform::SetSystemIdleAllowed(bool /*b*/, const std::string& /*reason*/
 
 EosPlatform* EosPlatform::Create()
 {
-#ifdef WIN32
-	return (new EosPlatform());
+#if __APPLE__
+    return (new EosPlatform_Mac());
 #else
-	return (new EosPlatform_Mac());
+    return (new EosPlatform());
 #endif
 }
 
