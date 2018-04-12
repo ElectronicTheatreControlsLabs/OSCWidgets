@@ -895,7 +895,6 @@ void ToyGrid::resizeEvent(QResizeEvent *event)
 void ToyGrid::contextMenuEvent(QContextMenuEvent *event)
 {
 	QString name;
-	GetName(name);
 	
 	QMenu menu(this);
 	
@@ -942,6 +941,8 @@ void ToyGrid::contextMenuEvent(QContextMenuEvent *event)
 		menu.addMenu(gridSizeMenu);
 	}
 
+	GetName(name);
+	
 	if( hasLayoutMode )
 		menu.addAction(QIcon(":/assets/images/MenuIconSettings.png"), tr("Layout Mode..."), this, SLOT(onLayoutMode()));
 	else
