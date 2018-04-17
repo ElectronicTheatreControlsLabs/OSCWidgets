@@ -127,6 +127,8 @@ void LogFile::run()
 					break;
 
 				stream.flush();
+
+				msleep(100);
 			}
 
 			stream.flush();
