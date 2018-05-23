@@ -1,4 +1,4 @@
-// Copyright (c) 2016 Electronic Theatre Controls, Inc., http://www.etcconnect.com
+// Copyright (c) 2018 Electronic Theatre Controls, Inc., http://www.etcconnect.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -224,12 +224,12 @@ void FadeEncoder::paintEvent(QPaintEvent* /*event*/)
 		
 		if(r.width() > r.height())
 		{
-			r.translate(qRound(r.width()-r.height())*0.5, 0);
+            r.translate(qRound((double)r.width()-r.height())*0.5, 0);
 			r.setWidth( r.height() );
 		}
 		else if(r.height() > r.width())
 		{
-			r.translate(0, qRound(r.height()-r.width())*0.5);
+            r.translate(0, qRound((double)r.height()-r.width())*0.5);
 			r.setHeight( r.width() );
 		}
 
@@ -452,9 +452,9 @@ void ToyEncoderGrid::onTick(ToyEncoderWidget *encoder, float radians)
 		}
 
 		size_t size;
-		char *data = packetWriter.Create(size);
-		if( data )
-			m_pClient->ToyClient_Send(local, data, size);
+		char *packet = packetWriter.Create(size);
+		if( packet )
+			m_pClient->ToyClient_Send(local, packet, size);
 	}
 }
 

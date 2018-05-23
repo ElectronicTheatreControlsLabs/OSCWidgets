@@ -1,4 +1,4 @@
-// Copyright (c) 2016 Electronic Theatre Controls, Inc., http://www.etcconnect.com
+// Copyright (c) 2018 Electronic Theatre Controls, Inc., http://www.etcconnect.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -46,6 +46,7 @@
 #define BUTTON_BRIGHTESS	0.2f
 #define BUTTON_RAISE		6
 
+#include <QtCore/QtGlobal>
 #include <QtCore/QDateTime>
 #include <QtCore/QMutex>
 #include <QtCore/QTimer>
@@ -57,37 +58,38 @@
 #include <QtCore/QUrl>
 #include <QtCore/QElapsedTimer>
 
-#include <QtGui/QApplication>
-#include <QtGui/QWidget>
-#include <QtGui/QGridLayout>
-#include <QtGui/QPushButton>
-#include <QtGui/QPlastiqueStyle>
-#include <QtGui/QScrollBar>
-#include <QtGui/QLineEdit>
-#include <QtGui/QSpinBox>
-#include <QtGui/QLabel>
-#include <QtGui/QSplitter>
-#include <QtGui/QScrollArea>
-#include <QtGui/QProgressBar>
-#include <QtGui/QTextEdit>
-#include <QtGui/QSpacerItem>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QWidget>
+#include <QtWidgets/QGridLayout>
+#include <QtWidgets/QPushButton>
+#include <QtWidgets/QStyleFactory>
+#include <QtWidgets/QScrollBar>
+#include <QtWidgets/QLineEdit>
+#include <QtWidgets/QSpinBox>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QSplitter>
+#include <QtWidgets/QScrollArea>
+#include <QtWidgets/QProgressBar>
+#include <QtWidgets/QTextEdit>
+#include <QtWidgets/QSpacerItem>
+#include <QtWidgets/QFileDialog>
+#include <QtWidgets/QMessageBox>
+#include <QtWidgets/QColorDialog>
+#include <QtWidgets/QMenu>
+#include <QtWidgets/QComboBox>
+#include <QtWidgets/QDesktopWidget>
+#include <QtWidgets/QTreeWidget>
+#include <QtWidgets/QGroupBox>
+#include <QtWidgets/QCheckBox>
+#include <QtWidgets/QSystemTrayIcon>
+#include <QtWidgets/QMenuBar>
+
 #include <QtGui/QDesktopServices>
-#include <QtGui/QFileDialog>
-#include <QtGui/QMessageBox>
 #include <QtGui/QCloseEvent>
 #include <QtGui/QPainter>
-#include <QtGui/QColorDialog>
-#include <QtGui/QMenu>
-#include <QtGui/QComboBox>
-#include <QtGui/QDesktopWidget>
 #include <QtGui/QImageReader>
 #include <QtGui/QFontDatabase>
-#include <QtGui/QTreeWidget>
-#include <QtGui/QGroupBox>
 #include <QtGui/QMatrix4x4>
-#include <QtGui/QCheckBox>
-#include <QtGui/QSystemTrayIcon>
-#include <QtGui/QMenuBar>
 
 #include <QtNetwork/QNetworkInterface>
 

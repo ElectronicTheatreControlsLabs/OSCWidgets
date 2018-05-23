@@ -1,4 +1,4 @@
-// Copyright (c) 2016 Electronic Theatre Controls, Inc., http://www.etcconnect.com
+// Copyright (c) 2018 Electronic Theatre Controls, Inc., http://www.etcconnect.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -130,7 +130,7 @@ void EosUdpOutThread::run()
 				
 				for(PACKET_Q::const_iterator i=q.begin(); i!=q.end(); i++)
 				{
-					if( udpOut->SendPacket(m_PrivateLog,i->data,i->size) )
+					if( udpOut->SendPacket(m_PrivateLog,i->data,static_cast<int>(i->size)) )
 						logParser.PrintPacket(*this, i->data, i->size);
 					delete[] i->data;
 				}

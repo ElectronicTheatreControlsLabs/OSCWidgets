@@ -1,4 +1,4 @@
-// Copyright (c) 2016 Electronic Theatre Controls, Inc., http://www.etcconnect.com
+// Copyright (c) 2018 Electronic Theatre Controls, Inc., http://www.etcconnect.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -355,8 +355,8 @@ bool ToyButtonGrid::SendButtonCommand(const QString &path, const QString &minStr
 		}
 
 		size_t size;
-		char *data = packetWriter.Create(size);
-		if(data && m_pClient->ToyClient_Send(local,data,size))
+		char *packet = packetWriter.Create(size);
+		if(packet && m_pClient->ToyClient_Send(local,packet,size))
 			return true;
 	}
 

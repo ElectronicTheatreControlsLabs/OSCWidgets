@@ -1,4 +1,4 @@
-// Copyright (c) 2016 Electronic Theatre Controls, Inc., http://www.etcconnect.com
+// Copyright (c) 2018 Electronic Theatre Controls, Inc., http://www.etcconnect.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -25,29 +25,33 @@
 #include "QtInclude.h"
 #include "MainWindow.h"
 #include "Utils.h"
-
-// TODO: image format plugins!
+#include "EosPlatform.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
 int main(int argc, char* argv[])
 {
-	srand( time(0) );
+	srand( static_cast<unsigned int>(time(0)) );
 
-	EosTimer::Init();	
+    EosTimer::Init();
+    
+    EosPlatform *platform = EosPlatform::Create();
+    if( platform )
+    {
+        std::string error;
+        if( !platform->Initialize(error) )
+        {
+            printf("platform initialization failed\n");
+            delete platform;
+            platform = 0;
+        }
+    }
 
 	QApplication app(argc, argv);
-	
-#ifndef WIN32
-	QDir dir( app.applicationDirPath() );
-	dir.cdUp();
-	dir.cd("Plugins");
-	app.setLibraryPaths( QStringList(dir.canonicalPath()) );
-#endif
 
 	app.setDesktopSettingsAware(false);
 	app.setQuitOnLastWindowClosed(false);
-	app.setStyle(new QPlastiqueStyle());
+    app.setStyle(QStyleFactory::create("Fusion"));
 
 	QPalette pal;
 	pal.setColor(QPalette::Window, QColor(40,40,40));
@@ -92,12 +96,15 @@ int main(int argc, char* argv[])
 
 	PixmapCache::Instantiate();
 
-	MainWindow *mainWindow = new MainWindow();
+	MainWindow *mainWindow = new MainWindow(platform);
 	mainWindow->show();
 	int result = app.exec();
 	delete mainWindow;
 
 	PixmapCache::Shutdown();
+    
+    if(platform)
+        delete platform;
 
 	return result;
 }

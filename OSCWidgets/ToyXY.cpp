@@ -1,4 +1,4 @@
-// Copyright (c) 2016 Electronic Theatre Controls, Inc., http://www.etcconnect.com
+// Copyright (c) 2018 Electronic Theatre Controls, Inc., http://www.etcconnect.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -124,8 +124,8 @@ void FadeXY::AutoSizeFont()
 
 QPoint FadeXY::PosToWidgetPos(const QPointF &pos)
 {
-	return QPoint(	qRound(width() * pos.x()),
-					m_TextMargin + qRound(height()-m_LabelMargin-m_TextMargin)*(1.0f-pos.y()) );
+    return QPoint(	qRound((double)width() * pos.x()),
+                    m_TextMargin + qRound((double)height()-m_LabelMargin-m_TextMargin)*(1.0f-pos.y()) );
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -508,9 +508,9 @@ void ToyXYGrid::onPosChanged(ToyXYWidget *xy)
 			packetWriter.AddFloat32(y);
 				
 			size_t size;
-			char *data = packetWriter.Create(size);
-			if( data )
-				m_pClient->ToyClient_Send(local, data, size);
+			char *packet = packetWriter.Create(size);
+			if( packet )
+				m_pClient->ToyClient_Send(local, packet, size);
 		}
 		else
 		{
@@ -521,9 +521,9 @@ void ToyXYGrid::onPosChanged(ToyXYWidget *xy)
 			packetWriter.AddFloat32(x);
 			
 			size_t size;
-			char *data = packetWriter.Create(size);
-			if( data )
-				m_pClient->ToyClient_Send(local, data, size);
+			char *packet = packetWriter.Create(size);
+			if( packet )
+				m_pClient->ToyClient_Send(local, packet, size);
 			
 			// y
 			local = Utils::MakeLocalOSCPath(false, path2);
@@ -531,9 +531,9 @@ void ToyXYGrid::onPosChanged(ToyXYWidget *xy)
 			OSCPacketWriter packetWriter2( path2.toUtf8().constData() );
 			packetWriter2.AddFloat32(y);
 			
-			data = packetWriter2.Create(size);
-			if( data )
-				m_pClient->ToyClient_Send(local, data, size);
+			packet = packetWriter2.Create(size);
+			if( packet )
+				m_pClient->ToyClient_Send(local, packet, size);
 		}
 	}
 }

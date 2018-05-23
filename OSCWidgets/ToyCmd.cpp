@@ -1,4 +1,4 @@
-// Copyright (c) 2016 Electronic Theatre Controls, Inc., http://www.etcconnect.com
+// Copyright (c) 2018 Electronic Theatre Controls, Inc., http://www.etcconnect.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -362,9 +362,9 @@ void ToyCmdGrid::onSend(ToyCmdWidget *cmd)
 		bool local = Utils::MakeLocalOSCPath(false, path);
 	
 		size_t size = 0;
-		char *data = OSCPacketWriter::CreateForString(path.toUtf8(), size);
-		if(data && size!=0)
-			m_pClient->ToyClient_Send(local, data, size);
+		char *packet = OSCPacketWriter::CreateForString(path.toUtf8(), size);
+		if(packet && size!=0)
+			m_pClient->ToyClient_Send(local, packet, size);
 	}
 }
 

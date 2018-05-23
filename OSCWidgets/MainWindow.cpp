@@ -1,4 +1,4 @@
-// Copyright (c) 2016 Electronic Theatre Controls, Inc., http://www.etcconnect.com
+// Copyright (c) 2018 Electronic Theatre Controls, Inc., http://www.etcconnect.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -27,7 +27,7 @@
 
 ////////////////////////////////////////////////////////////////////////////////
 
-#define APP_VERSION	"0.7"
+#define APP_VERSION	"0.8"
 
 #define MIN_OPACITY 10
 
@@ -175,7 +175,7 @@ void OpacityMenu::onTriggeredWithOpacity(int opacity)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-MainWindow::MainWindow(QWidget* parent/*=0*/, Qt::WindowFlags f/*=0*/)
+MainWindow::MainWindow(EosPlatform *platform, QWidget* parent/*=0*/, Qt::WindowFlags f/*=0*/)
 	: QWidget(parent, f)
 	, m_Settings("ETC", "OSCWidgets")
 	, m_LogDepth(200)
@@ -185,7 +185,7 @@ MainWindow::MainWindow(QWidget* parent/*=0*/, Qt::WindowFlags f/*=0*/)
 	, m_ToyTreeToyIndex(0)
 	, m_ToyTreeType(Toy::TOY_INVALID)
 	, m_CloseAllowed(0)
-	, m_Platform(0)
+	, m_pPlatform(platform)
 	, m_SystemIdleAllowed(true)
 {
 	Utils::BlockFakeMouseEvents(true);
@@ -308,13 +308,6 @@ MainWindow::~MainWindow()
 	}
 
 	Utils::BlockFakeMouseEvents(false);
-	
-	if( m_Platform )
-	{
-		m_Platform->Shutdown();
-		delete m_Platform;
-		m_Platform = 0;
-	}
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -459,7 +452,7 @@ void MainWindow::ClearNetEventQ()
 
 void MainWindow::GetPersistentSavePath(QString &path) const
 {
-	path = QDir(QDesktopServices::storageLocation(QDesktopServices::DataLocation)).absoluteFilePath("save.oscwidgets.txt");
+    path = QDir(QStandardPaths::writableLocation(QStandardPaths::DataLocation)).absoluteFilePath("save.oscwidgets.txt");
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -525,6 +518,8 @@ bool MainWindow::SaveFile(const QString &path, bool setLastFile)
 {
 	bool success = true;
 
+	QDir().mkpath( QFileInfo(path).absolutePath() );
+
 	QFile f(path);
 	if( f.open(QIODevice::WriteOnly|QIODevice::Truncate|QIODevice::Text) )
 	{
@@ -559,7 +554,7 @@ bool MainWindow::SaveFile(const QString &path, bool setLastFile)
 	
 	if( !success )
 	{
-		QMessageBox mb(QMessageBox::NoIcon, tr("OSCWidgets"), tr("Unable to save file \"%1\"").arg(m_FilePath), QMessageBox::Ok, this);
+		QMessageBox mb(QMessageBox::NoIcon, tr("OSCWidgets"), tr("Unable to save file \"%1\"\n\n%2").arg(path).arg(f.errorString()), QMessageBox::Ok, this);
 		mb.setIconPixmap( QPixmap(":/assets/images/IconWarning.png") );
 		mb.exec();
 	}
@@ -826,7 +821,7 @@ void MainWindow::PopulateToyTree()
 				MakeToyIcon(*toy, QSize(16,16), icon);
 				child->setIcon(TOY_TREE_COL_ITEM, icon);
 				child->setText(TOY_TREE_COL_ITEM, toy->GetText());
-				unsigned int toyIndex = (j - toys.begin());
+				unsigned int toyIndex = static_cast<unsigned int>(j - toys.begin());
 				child->setData(TOY_TREE_COL_ITEM, TOY_TREE_ROLE_TOY_INDEX, toyIndex);
 				item->addChild(child);
 				hasToys = true;
@@ -976,7 +971,7 @@ void MainWindow::onOpenFileClicked()
 		if( !lastFile.isEmpty() )
 			dir = QFileInfo(lastFile).absolutePath();
 		if(dir.isEmpty() || !QFileInfo(dir).exists())
-			dir = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+            dir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 		QString path = QFileDialog::getOpenFileName(this, tr("Open"), dir, tr("OSCWidgets File (*.oscwidgets.txt)\nAll Files (*)"), 0, QFileDialog::DontUseNativeDialog);
 		if( !path.isEmpty() )
 		{
@@ -1010,7 +1005,7 @@ void MainWindow::onSaveAsFileClicked()
 	if( !lastFile.isEmpty() )
 		dir = QFileInfo(lastFile).absolutePath();
 	if(dir.isEmpty() || !QFileInfo(dir).exists())
-		dir = QDesktopServices::storageLocation(QDesktopServices::DocumentsLocation);
+        dir = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
 	QString path = QFileDialog::getSaveFileName(this, tr("Save As"), dir, tr("OSCWidgets File (*.oscwidgets.txt)"), 0, QFileDialog::DontUseNativeDialog);
 	if( !path.isEmpty() )
 	{
@@ -1299,20 +1294,20 @@ void MainWindow::onSystemTrayActivated(QSystemTrayIcon::ActivationReason reason)
 
 ////////////////////////////////////////////////////////////////////////////////
 
-bool MainWindow::ToyClient_Send(bool local, char *data, size_t size)
+bool MainWindow::ToyClient_Send(bool local, char *buf, size_t size)
 {
-	if(data && size!=0)
+	if(buf && size!=0)
 	{
 		if( local )
 		{
-			m_Toys->Recv(data, size);
-			delete[] data;
+			m_Toys->Recv(buf, size);
+			delete[] buf;
 			return true;
 		}
 		else
 		{
 			sPacket packet;
-			packet.data = data;
+			packet.data = buf;
 			packet.size = size;
 			
 			if( m_UdpOutThread )
@@ -1326,7 +1321,7 @@ bool MainWindow::ToyClient_Send(bool local, char *data, size_t size)
 					return true;
 			}
 
-			delete[] data;
+			delete[] buf;
 		}
 	}
 	
@@ -1347,55 +1342,36 @@ void MainWindow::SetSystemIdleAllowed(bool b)
 	if(m_SystemIdleAllowed != b)
 	{
 		m_SystemIdleAllowed = b;
-		
-		if( m_SystemIdleAllowed )
-		{
-			if( m_Platform )
-			{
-				std::string error;
-				if( m_Platform->SetSystemIdleAllowed(true,"widgets stopped",error) )
-				{
-					m_Log.AddInfo("widgets stopped, system idle allowed");
-				}
-				else
-				{
-					error.insert(0, "failed to allow system idle, ");
-					m_Log.AddDebug(error);
-				}
-			}
-		}
-		else
-		{
-			if(m_Platform == 0)
-			{
-				m_Platform = EosPlatform::Create();
-				
-				if( m_Platform )
-				{
-					std::string error;
-					if( !m_Platform->Initialize(error) )
-					{
-						m_Log.AddError("platform initialization failed");
-						m_Platform->Shutdown();
-						m_Platform = 0;
-					}
-				}
-			}
-			
-			if( m_Platform )
-			{
-				std::string error;
-				if( m_Platform->SetSystemIdleAllowed(false,"widgets started",error) )
-				{
-					m_Log.AddInfo("widgets started, system idle disabled");
-				}
-				else
-				{
-					error.insert(0, "failed to disable system idle, ");
-					m_Log.AddDebug(error);
-				}
-			}
-		}
+        
+        if(m_pPlatform)
+        {
+            if( m_SystemIdleAllowed )
+            {
+                std::string error;
+                if( m_pPlatform->SetSystemIdleAllowed(true,"widgets stopped",error) )
+                {
+                    m_Log.AddInfo("widgets stopped, system idle allowed");
+                }
+                else
+                {
+                    error.insert(0, "failed to allow system idle, ");
+                    m_Log.AddDebug(error);
+                }
+            }
+            else
+            {
+                std::string error;
+                if( m_pPlatform->SetSystemIdleAllowed(false,"widgets started",error) )
+                {
+                    m_Log.AddInfo("widgets started, system idle disabled");
+                }
+                else
+                {
+                    error.insert(0, "failed to disable system idle, ");
+                    m_Log.AddDebug(error);
+                }
+            }
+        }
 	}
 }
 

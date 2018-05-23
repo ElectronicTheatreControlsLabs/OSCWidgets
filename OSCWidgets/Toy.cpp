@@ -1,4 +1,4 @@
-// Copyright (c) 2016 Electronic Theatre Controls, Inc., http://www.etcconnect.com
+// Copyright (c) 2018 Electronic Theatre Controls, Inc., http://www.etcconnect.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -37,6 +37,7 @@
 #ifdef WIN32
 	#include <Windows.h>
 	#include "resource.h"
+	#include <QtWinExtras/QtWin>
 #endif
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -161,7 +162,7 @@ void Toy::SetDefaultWindowIcon(QWidget &w)
 			HICON hIcon = static_cast<HICON>( LoadImage(GetModuleHandle(0),MAKEINTRESOURCE(IDI_ICON1),IMAGE_ICON,iconSizes[i],iconSizes[i],LR_LOADTRANSPARENT) );
 			if( hIcon )
 			{
-				sIcon->addPixmap( QPixmap::fromWinHICON(hIcon) );
+                sIcon->addPixmap( QtWin::fromHICON(hIcon) );
 				DestroyIcon(hIcon);
 			}
 		}

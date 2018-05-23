@@ -1,5 +1,5 @@
 
-// Copyright (c) 2016 Electronic Theatre Controls, Inc., http://www.etcconnect.com
+// Copyright (c) 2018 Electronic Theatre Controls, Inc., http://www.etcconnect.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -183,7 +183,7 @@ void LogWidget::UpdateVScrollBar()
 		{
 			size_t range = (lineCount - linesPerPage);
 			m_VScrollBar->setMinimum(0);
-			m_VScrollBar->setMaximum(range);
+			m_VScrollBar->setMaximum(static_cast<int>(range));
 			m_VScrollBar->setEnabled(true);
 		}
 	}

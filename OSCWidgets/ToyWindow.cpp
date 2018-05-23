@@ -1124,7 +1124,7 @@ void ToyWindow::SetGridSize(const QSize &gridSize)
 		emit changed();
 	}
 	
-	m_GridSize = QSize(m_Tabs.size(), 1);
+	m_GridSize = QSize(static_cast<int>(m_Tabs.size()), 1);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -1154,20 +1154,20 @@ void ToyWindow::UpdateTabs()
 	{
 		sTab &tab = m_Tabs[i];
 		bool selected = (i == m_TabIndex);
-		QPalette pal( tab.button->palette() );
+		QPalette tabPal( tab.button->palette() );
 		if( selected )
 		{
-			pal.setColor(QPalette::Button, m_Color2);
-			pal.setColor(QPalette::ButtonText, m_TextColor);
+			tabPal.setColor(QPalette::Button, m_Color2);
+			tabPal.setColor(QPalette::ButtonText, m_TextColor);
 		}
 		else
 		{
 			QColor translucent(m_Color2);
 			translucent.setAlpha(40);
-			pal.setColor(QPalette::Button, translucent);
-			pal.setColor(QPalette::ButtonText, m_Color2);
+			tabPal.setColor(QPalette::Button, translucent);
+			tabPal.setColor(QPalette::ButtonText, m_Color2);
 		}
-		tab.button->setPalette(pal);
+		tab.button->setPalette(tabPal);
 		tab.widget->setVisible(selected);
 	}
 }

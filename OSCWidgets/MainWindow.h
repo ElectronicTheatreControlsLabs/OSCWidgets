@@ -1,4 +1,4 @@
-// Copyright (c) 2016 Electronic Theatre Controls, Inc., http://www.etcconnect.com
+// Copyright (c) 2018 Electronic Theatre Controls, Inc., http://www.etcconnect.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -133,7 +133,7 @@ class MainWindow
 	Q_OBJECT
 
 public:
-	MainWindow(QWidget *parent=0, Qt::WindowFlags f=0);
+	MainWindow(EosPlatform *platform, QWidget *parent=0, Qt::WindowFlags f=0);
 	virtual ~MainWindow();
 	
 	virtual void FlushLogQ(EosLog::LOG_Q &logQ);
@@ -206,7 +206,7 @@ private:
 	QSystemTrayIcon		*m_SystemTray;
 	QMenu				*m_SystemTrayMenu;
 	unsigned int		m_CloseAllowed;
-	EosPlatform			*m_Platform;
+	EosPlatform			*m_pPlatform;
 	bool				m_SystemIdleAllowed;
 
 	virtual void Start();

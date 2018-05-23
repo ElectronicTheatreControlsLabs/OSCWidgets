@@ -1,4 +1,4 @@
-// Copyright (c) 2016 Electronic Theatre Controls, Inc., http://www.etcconnect.com
+// Copyright (c) 2018 Electronic Theatre Controls, Inc., http://www.etcconnect.com
 //
 // Permission is hereby granted, free of charge, to any person obtaining a copy
 // of this software and associated documentation files (the "Software"), to deal
@@ -276,9 +276,9 @@ void FadeFlicker::paintEvent(QPaintEvent* /*event*/)
 							pauseSize );
 		painter.drawRoundedRect(pauseRect, ROUNDED, ROUNDED);
 
-		int w = qRound(pauseSize * 0.35);
-		int h = qRound(pauseSize * 0.7);
-		pauseRect.adjust(w, h, -w, -h);
+		int pw = qRound(pauseSize * 0.35);
+		int ph = qRound(pauseSize * 0.7);
+		pauseRect.adjust(pw, ph, -pw, -ph);
 		painter.setPen( QPen(color,pauseSize*0.1,Qt::SolidLine,Qt::RoundCap) );
 		painter.drawLine(pauseRect.left(), pauseRect.top(), pauseRect.left(), pauseRect.bottom());
 		painter.drawLine(pauseRect.right(), pauseRect.top(), pauseRect.right(), pauseRect.bottom());
@@ -588,9 +588,9 @@ void ToyFlickerGrid::onValueChanged(ToyFlickerWidget *flicker, float value)
 		}
 
 		size_t size;
-		char *data = packetWriter.Create(size);
-		if( data )
-			m_pClient->ToyClient_Send(local, data, size);
+		char *packet = packetWriter.Create(size);
+		if( packet )
+			m_pClient->ToyClient_Send(local, packet, size);
 	}
 }
 
