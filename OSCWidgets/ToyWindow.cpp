@@ -774,6 +774,9 @@ bool ToyWindowTab::event(QEvent *event)
 		case QEvent::PaletteChange:
 			UpdateGridBackground();
 			break;
+
+		default:
+			break;
 	}
 	
 	return QWidget::event(event);
