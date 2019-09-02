@@ -217,6 +217,9 @@ bool LogWidget::event(QEvent *event)
 		case QEvent::FontChange:
 			UpdateFont();
 			break;
+
+		default:
+			break;
 	}
 
 	return QWidget::event(event);
